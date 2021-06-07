@@ -16,9 +16,14 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
         
-      - name: Github Action for LaTeX
-        uses: xu-cheng/latex-action@v2
-        with:
-          root_file: thesis.tex
-          working_directory: .
+      # - name: Github Action for LaTeX
+      #   uses: xu-cheng/latex-action@v2
+      #   with:
+      #     root_file: thesis.tex
+      #     working_directory: .
+      - name: Run LaTeX Docker CMD
+        run: |
+          chmod +x "${GITHUB_WORKSPACE}/.github/latexdockercmd.sh"
+          "${GITHUB_WORKSPACE}/.github/latexdockercmd.sh pdflatex thesis.tex"
+
 
