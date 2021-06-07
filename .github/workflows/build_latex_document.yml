@@ -20,4 +20,5 @@ jobs:
         uses: dante-ev/latex-action@2021-A
         with:
           root_file: thesis.tex
+          working_directory: .
 
