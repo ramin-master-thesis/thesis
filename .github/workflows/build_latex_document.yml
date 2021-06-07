@@ -23,7 +23,7 @@ jobs:
       #     working_directory: .
       - name: Run LaTeX Docker CMD
         run: |
-          chmod +x "${GITHUB_WORKSPACE}/.github/latexdockercmd.sh"
-          "${GITHUB_WORKSPACE}/.github/latexdockercmd.sh pdflatex thesis.tex"
+          chmod +x "${GITHUB_WORKSPACE}/.github/workflows/latexdockercmd.sh"
+          "${GITHUB_WORKSPACE}/.github/workflows/latexdockercmd.sh pdflatex thesis.tex"
 
 
