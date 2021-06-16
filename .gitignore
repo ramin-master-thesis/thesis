@@ -27,3 +27,5 @@ preview-*.png
 *.ist
 *.lol
 *.tdo
+*.aux
+!images/*

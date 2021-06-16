@@ -4,12 +4,12 @@
 % ABOUT
 \newcommand{\hpitype}{Masterarbeit}
 \newcommand{\hpiauthor}{Ramin Gharib}
-\newcommand{\hpititle}{Die Geräusche eines zerknitterten Bonboneinwickelpapiers als Untersuchung eines~ungeordneten~Systems}
-\newcommand{\hpititleother}{The Noise from a Crumpled Candy Wrapper as a Probe of a Disordered~System} % <= das Studienreferat verlangt einen deutschen UND englischen Titel
-\newcommand{\hpisupervisor}{Prof.\,Dr.\,Andreas Polze, Max Mustermann}
+\newcommand{\hpititle}{An Adaptive Workload Partitioner for Scalable Document Stream Processing}
+\newcommand{\hpititleother}{Ein adaptiver Workload Partitioner für skalierbare Dokumentenstromverarbeitung} % <= das Studienreferat verlangt einen deutschen UND englischen Titel
+\newcommand{\hpisupervisor}{Prof.\,Dr.\,Andreas Polze, Robert Schmid}
 \newcommand{\hpichair}{Professur für Betriebssysteme und Middleware}
 \newcommand{\hpiexternalsupervisor}{Wile\,E. Coyote, Road Runner}
-\newcommand{\hpiexternal}{ACME Cooperation}
+\newcommand{\hpiexternal}{bakdata GmbH}
 \newcommand{\hpidate}{\today}
 
 % DOCUMENT
@@ -26,15 +26,34 @@
 	\pagenumbering{roman}
 	\include{content/titlepage}
 	\ifisbook\cleardoubleemptypage\fi\include{content/abstract}
-	%\ifisbook\cleardoubleemptypage\fi\include{content/dedication}
+	\ifisbook\cleardoubleemptypage\fi\include{content/dedication}
 	\tableofcontents
 	\cleardoublepage
 
-	% Textteil
+	% Text Part
 	\pagenumbering{arabic}
-	\include{content/chapter1} % example
-	\include{content/chapter2} % example
-	\include{content/chapter3} % example
+	\include{content/introduction}
+
+	% Fundamentals
+	\include{content/fundamentals/fundamentals}
+	\include{content/fundamentals/document-stream-processing}
+	\include{content/fundamentals/information-retrieval}
+	\include{content/fundamentals/recommender-systems}
+	\include{content/fundamentals/graph-jet}
+	\include{content/fundamentals/embeddings}
+	\include{content/fundamentals/graph-partitioning}
+	\include{content/fundamentals/hash-functions}
+
+	% Main Section
+	\include{content/main-section/main-section}
+	\include{content/main-section/system-architecture}
+	\include{content/main-section/partitioning}
+	\include{content/main-section/model-training}
+	\include{content/main-section/evaluation}
+
+	% Conclusion
+	\include{content/conclusion}
+
 
 	% Bibliographie
 	\ifisbook\cleardoubleemptypage\fi
