@@ -1,22 +1,33 @@
 \section{GraphJet}
 \label{GraphJet}
-GraphJet, a new graph-based system for generating content recommendations at Twitter. Graph-
-Jet, an in-memory graph processing engine that maintains
-a real-time bipartite interaction graph between users and
-tweets. \cite{sharma2016graphjet}
+GraphJet, a new graph-based system for generating content recommendations in real-time. GraphJet, an in-memory graph processing engine that maintains a real-time bipartite interaction graph between users and tweets \cite{sharma2016graphjet}. GraphJet assumes that the entire graph can be held in memory on a single server. In this thesis, the goal is to partition the graph and distribute the GraphJet recommendation system over several machines. Figure \ref{fig:graphJet-architecture} shows the overall architecture of GraphJet, which is divided into three main modules: a storage engine, a recommendation engine, and an API endpoint. To create recommendations for a specific user, a third-party calls the API endpoint. First, the API endpoint forwards the query to the recommendation engine. Afterwards, the recommendation engine runs an algorithm called SALSA on the bipartite graph, which is created, and stored in the storage engine. Finally, the resulting recommendations are sent back to the requesting user. In the following, we describe each module in more depth.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=0.75\textwidth]{images/graphjet/graphJet-architecture}
+	\includegraphics[width=0.50\textwidth]{images/graphjet/graphJet-architecture}
 	\caption{GraphJet overall architecture}
 	\label{fig:graphJet-architecture}
 \end{figure}
 
+
+\subsection{Storage Engine}
+The storage engine processes the incoming edges (user-tweet interactions) and maintains the user-tweet interaction bipartite graph in memory. The engine stores the bipartite graph in multiple index segments. At any time there is only a single mutable (hot) segment and multiple immutable (cold) segments storing the bipartite graph. The mutable index segment is write optimised for fast inserts. 
+
+GraphJet optimises mutable segments once they reach their capacity limit. Full segments are copied into a new, immutable segment. Vertices are sorted in read optimized immutable segments, while all write operations are directed to a new, empty mutable segment.
+
+Since GraphJet is running on a single instance, the size of the graph is limited by the size of the machine's main memory. When that memory limit is reached, the old index segments are deleted and replaced by new ones. To be more precise, GraphJet maintains a bipartite graph that keeps track of user–tweet interactions over a window of the last \textit{n} hours.
+
+\subsection{Recommendation Engine}
+GraphJet uses the idea behind an algorithm called \emph{SALSA} and optimizes it for its recommendation engine layer. SALSA or Stochastic Approach for Link-Structure Analysis is a web page ranking algorithm created by R. Lempel and S. Moran ~\cite{lempel2001salsa}. This work is not going into the details of SALSA but briefly explain how the main algorithm works. For more information about SALSA, please refer to the main paper ~\cite{lempel2001salsa} and ~\cite{sharma2016graphjet}.
+
+For a given user \textit{u} we are going to compute the \textit{k} recommendations using SALSA. The random walk starts on the user \textit{u}. From user \textit{u} a random edge (interaction) to a tweet is chosen. Each time SALSA visits a tweet, it increments and keeps the count of the visited tweet. After visiting the tweet and incrementing the visit counter of that tweet, SALSA randomly chooses a user who interacted with that tweet and walks back to the chosen user. This process continues until a specific threshold (number of walks) is reached. SALSA then filters the \textit{k} most visited tweets and sends them as the recommendation to the user \textit{u}. In other words, SALSA outputs a rankend list of verticies of the right-hand side of the bipartite interaction graph.
+
+\subsection{GraphJet Deployment}
+
+The deployment of GraphJet is shown in figure \ref{fig:graphJet-deployment}. Each node runs a GraphJet instance, and fault tolerance is guarantied by replication. A Kafka queue ingests the incoming edges inside each replica. According to the main paper, each GraphJet instance can hold up to 10$^9$ edges in less than 30 GB of RAM. Zookeeper is also used for service registry and discovery of each GraphJet instance.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=0.75\textwidth]{images/graphjet/graphJet-deployment}
+	\includegraphics[width=0.50\textwidth]{images/graphjet/graphJet-deployment}
 	\caption{GraphJet deployment}
 	\label{fig:graphJet-deployment}
 \end{figure}
-
-\subsection{Examples}
