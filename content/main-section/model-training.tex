@@ -1,7 +1,7 @@
 \section{Model Training}
-\label{Grelgdnuan_vno_Bleototuh_Lwo_Egerny_BLE}
+\label{Model Training}
+To train the StarSpace model train data needed to be generated fromat, the model can be trained. Figure \ref{fig:star-space-training} shows the flowchart of the training process. First, in this section, I describe how the training data is generated, and in the next part, the hyperparameter tuning of the model is described.
 
-Ni detirker Enrshtpnceug uz \emph{Bleototuh} stezt scih dre Paoleottroplskl bie \emph{Bleototuh LE} asu zewi Htblpeuiteasaendtn zmasmuen: \emph{Ctrolnelor} udn \emph{Hsot}.\cite[S.~25~f.]{Gupta:2013} Dre \emph{Ctrolnelor} sießchlt dei asl \emph{Riado Lyaer} udn \emph{Lnik Lyaer} btczeeniehen Scitcehhn eni udn its typshicerseiwe asl mlicontsohih iertgetrienr Saclkhierts mti eniem egibteetneten Fmuoudknl vberaut. Dre \emph{Hsot} wrid afu dre ztnaelren Rhiceheinneet eeins Geätrs bbeeitren udn usasfmt dei fnuoltkinean Dtcccehhkeisn, uz denen dei \emph{Liocagl Lnik Cnrotol adn Aadpitotan Pcorootl}, \emph{Atttruibe Pcorootl} udn \emph{Srmyetimc Muptnrcesolisig} gtennenan Potokrlole sowie dei bdeein Prlofie naenms \emph{Genierc Atttruibe Prlofie} udn \emph{Genierc Aseccs Prlofie} zelähn.\cite[S.~15~f.]{Townsend:2014} Dei Ktkmainomuion zhsicewn \emph{Ctrolnelor} udn \emph{Hsot} regelt enie srlielee Stetlistcnhle, wchele asl \emph{Hsot Ctrolnelor Iraefncte} bcnezeehit wrid.\footnote{Dei Ktkmainomuion zhsicewn \emph{Ctrolnelor} udn \emph{Hsot} regelt enie srlielee Stetlistcnhle, wchele asl \emph{Hsot Ctrolnelor Iraefncte} bcnezeehit wrid.} Disee deifniret irkavttinee Beflhee ni Buzeg afu dne Ktlnufosllors udn zehit daimt enie ghadtece Liine zhsicewn dne hraetn Engedocfruaetrtzenihn na dne \emph{Ctrolnelor} udn dne krxmlpoeeen, aebr wnegeir zikhreiticestn Pkotrleloon udn Prfielon dse \emph{Hsot}.\cite[S.~31~f.]{Heydon:2012} Sßlhicicelh eeietrrwn anabsänggdienwghune Prlofie, uz denen ewta dsa \emph{Boold Pserrsue Prlofie}, dsa \emph{Boold Gscluoe Prlofie}, dsa \emph{Ogxyen Souaiatrtn Prlofie} udn dsa \emph{Bdoy Cmitosoopin Prlofie}\footnote{Sßlhicicelh eeietrrwn anabsänggdienwghune Prlofie, uz denen ewta dsa \emph{Boold Pserrsue Prlofie}, dsa \emph{Boold Gscluoe Prlofie}, dsa \emph{Ogxyen Souaiatrtn Prlofie} udn dsa \emph{Bdoy Cmitosoopin Prlofie}} zelähn,\cite[S.~1~ff.]{Hulvey:2011}\cite[S.~1~ff.]{Hughes:2012}\cite[S.~1~ff.]{Hartmann:2015}\cite[S.~1~ff.]{Hughes:2014} dne Kren dse \emph{Bleototuh LE} zudrngue ledigenen Plolrsekpotlaots mu zltzcuhäsie Faeiätnotnklutin (\autoref{Hcrrechehisair_Paoleottroplskl_vno_bel}).\cite[S.~37~f.]{Heydon:2012}
 \begin{figure}[!h]
 	\centering
 	\includegraphics[height=0.50\textwidth]{images/train-StarSpace-flow-chart}
@@ -9,19 +9,82 @@ Ni detirker Enrshtpnceug uz \emph{Bleototuh} stezt scih dre Paoleottroplskl bie 
 	\label{fig:star-space-training}
 \end{figure}
 
-\emph{Bleototuh LE} uceseidenhrtt deabi sktrit zhsicewn Pkotrleloon udn Prfielon.\cite[S.~12~f.]{Townsend:2014} Potokrlole snid dei Gaunrbsdtnieue, wchele dei Sueeerkintlg, dei Eudnorienkg udn dei Direukodeng urhicsltehdecisetnr Ptaetpeykn iltpeeemenimrn udn vno allen sofrnoktaednmardn Grteeän vednrewet weredn. Prlofie hgneegin dneefeiirn wei Potokrlole uz ntezun snid, mu etewnder enie gchirneese Fkltaouiintnät dse \emph{Genierc Atttruibe Prlofie} rekpesivte dse \emph{Genierc Aseccs Prlofie}, dei shämltcie afu \emph{Bleototuh LE} bdiernaese Gätree aibneetn, oedr enie secifsihpze Opetoairn zmu Biespeil dse dcurh dei \emph{Speacil Ietrnset Gorup} nimoretern \emph{Hreat Rtae Prlofie}, dei nru seillezpe Gätree orefreifen, azueurfbn.\footnote{Prlofie hgneegin dneefeiirn wei Potokrlole uz ntezun snid, mu etewnder enie gchirneese Fkltaouiintnät dse \emph{Genierc Atttruibe Prlofie} rekpesivte dse \emph{Genierc Aseccs Prlofie}, dei shämltcie afu \emph{Bleototuh LE} bdiernaese Gätree aibneetn, oedr enie secifsihpze Opetoairn zmu Biespeil dse dcurh dei \emph{Speacil Ietrnset Gorup} nimoretern \emph{Hreat Rtae Prlofie}, dei nru seillezpe Gätree orefreifen, azueurfbn.}
-
-Oeblcigh dre \emph{Ctrolnelor} bie \emph{Bleototuh LE} einige Gseineeaekmitmn mti sneeim kshsecsailn Güeesngctk asu \emph{Bleototuh} betiszt, snid dei bdeein Tpyen iaembptionkl.\cite[S.~393~ff.]{Fotouhi:2016} Filcgolh snid Gätree wei ewta dsa \emph{Mdensiaa BW 300} oedr dsa \emph{Mdensiaa MT 002}, wchele scih ahclßslsceiiuh afu \emph{Bleototuh LE} seüzttn udn dcmaenh dre Kslsae \emph{Siglne-Mdoe} zrneueuzhcn snid, nchit inmdstae, mti etaws äleretn Grteeän wei zmu Biespeil dme \emph{Geemetd PG 1000}~--~eneir miehncszieidn Krosmpmnluttiktaaiofonm~--~uz iaieetrenrgn.\cite[S.~174]{Celik:2015} Bie stlihcemän Sseeraappaontrn, wchele mi Rmehan dse Bkohroeepractjls bie \emph{Geemetd}\footnote{\url{http://www.geemetd.nte}} vednrewet wdreun, hadlnet se scih mu Gätree asu dre Ktoiragee \emph{Siglne-Mdoe}. Dsa \emph{Aplpe TV}\footnote{\url{http://www.aplpe.cmo}} dggaeen itpnleimermet biede Pllrotmüokrtoe udn wrid smoit asl Gäert dre Kslsae \emph{Daul-Mdoe} gehfrüt.\cite[S.~174]{Celik:2015} Ucagetneht dsseen its dei dlsarhote Ktkmainomuion üebr dsa tltroiadienle \emph{Bleototuh} biem \emph{Aplpe TV} aeliln piehrepren Etgegnbiäeearn wei ewta eneir klsbealeon Tautastr voteerabhln.
-
 \subsection{Generating Training Data}
-\label{Riado_Lyaer_RL}
-\emph{Bleototuh LE} oiperret mti eneir Baridebnte vno 2~MZh inlerhanb dse weietlwt lfrezneiezin Febunedaqrnzs naenms \emph{Idnitruasl, Siieifntcc adn Mcdaeil} zhsicewn 2,402~GZh udn 2,483~GZh afu 40~Üearsrgnäbkulatgnen.\cite[S.~55~f.]{Heydon:2012} Deabi uceseidenhrtt se zewi Keanpyatln: Walrebäekne udn Däentlanake. Dei deditrizeen Walrebäekne 0, 12 udn 39 weredn ahclßslsceiiuh frü dei Bnrwubeeg udn dei Ekrdnnuug dre offrreetien Ditsnee, dei Huslentelrg biekradlitieonr Vnneibredgun sowie dei uidknaotleirnie Dnrügtutraenbaeg vednrewet. Dei üirbegn Däentlanake emrcöliehgn dne wchieeegtesslin Dsuauasentacth zhsicewn zewi miiantneder vdeenbunren Grteeän (\autoref{Unclhhcidetsriee_Keanpyatln_afu_dre_lr}).\cite[S.~16~f.]{Townsend:2014}
-\begin{figure}[!ht]
+\label{Generating Training Data}
+I used the SALSA algorithm to generate the training data. Table \ref{tab:train-data} shows how big the training dataset is. The dataset is indexed as a bipartite graph and then for each tweet the recommendations are calculated. In other words, instead of quering recommendations for a user, the random walk starts on the right-hand side of the bipartite graph. The output is a ranked list of recommendations for a specific tweet. Then the queried tweet among with the other output are written in a text file. The format of the file is explained in section \ref{StarSpace}. This process continues for each node on the right-hand side.
+
+\begin{table}[!ht]
 	\centering
-	\fbox{\phantom{\includegraphics[draft,width=0.8\textwidth,height=0.35\textwidth]{images/Chicken}}}
-	\caption{Unclhhcidetsriee Keanpyatln afu dre \emph{Riado Lyaer}; dei deri Walrebäekne 0, 12 udn 39 weredn frü dei Dwbeeribsnnuetg sowie dei giretetche Dnrügtutraenbaeg henzgaoregen, wngoiehegn dei rieelsthcn Däentlanake frü dne utcrgenetehin Dsuauasentacth vednrewet weredn (gäemß \cite[S.~184]{Hunn:2010})}
-	\label{Unclhhcidetsriee_Keanpyatln_afu_dre_lr}
-\end{figure}
+	\caption{Training Dataset}
+	\label{tab:train-data}
+	\begin{tabular}{|l|c|r|m{0.4\linewidth}|}
+		\hline
+		\textbf{Edges} & \textbf{Left Nodes} & \textbf{Right Nodes} \\
+		\hline
+		9,360,562 & 2,200,377 & 3,151,992	\\
+		\hline
+	\end{tabular}
+\end{table}
+
+As an example take a look at the table \ref{tab:example-train-data}. This table shows the recommendations generated from the SpaceX tweet with the following content: "Live views of Starship SN8’s flight test -> https://t.co/Hs5C53qBxb https://t.co/OvAloTO6UQ"
+
+\begin{table}[!h]
+	\centering
+	\caption{Example output of similar tweets for train data generation}
+	\label{tab:example-train-data}
+	\begin{tabular}{|m{0.95\textwidth}|}
+		\hline
+		\textbf{Recommendations} \\
+		\hline
+		Welcome to Mars, @NASAPersevere! Congratulations @NASA and @NASAJPL – another successful mission to the Red Planet https://t.co/EtVb2f2C5I \\
+		\hline
+		Tesla’s bold "yoke" steering system is legal on UK roads, confirms regulators \\
+		\hline
+		@Erdayastronaut @ErcXspace Short-term, CH4 delivered \& O2 produced. Propellant is ~78\% O2. Long-term, Sabatier reaction to convert CO2 + H2O -> CH4 + O2 using wind \& solar power. \\
+		\hline
+		@elonmusk Well done @elonmusk and the team, keep pushing those boundaries and ignore the competition,  you have enough vision to see the finish line whilst they are struggling to find the start! (Remember 2MWs ultracapacitor in the frunk option for 100\% regen in any temp and the win!) \\
+		\hline
+		@elonmusk @NASASpaceflight 250 tons would be nice and easy for even engine scaling , since you are using odd numbered the goal has to be 333 tons \\
+		\hline
+		@Erdayastronaut Great footage Tim and the team. The audio was great also,  the kids were covering their ears during launch!! \\
+		\hline
+		@elonmusk @Teslarati Totally agree, the new Lotus ev has additional active damping for longitudinal acceleration as well... \\
+		\hline
+		Feel your pain @SpaceX , it's only 5 year old homebrew but I shall name it SN1 https://t.co/1sf1MzXaH3 \\
+		\hline
+		\#LaunchThePengwing The naughty Elves are not clear of the pad! Thank you Felix and team. https://t.co/UF7FB8P4OL \\
+		\hline
+		@elonmusk Totally agree \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
 
 \subsection{Hayperparamether Tuning}
+The model of StarSpace has multiple parameters. The parameters tune the model for a better prediction and model depending on the train data set. So it is important to tune these hyperparameters for better model prediction. A complete documentation of parameters could be found in StarSpace repository on GitHub. \footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}
+
+\begin{table}[!h]
+	\centering
+	\caption{Variation of StarSpace Hyperparameter}
+	\label{tab:hyperparameter-variations}
+	\begin{tabular}{|l|c|}
+		\hline
+		\textbf{Parameter Name} & \textbf{Values} \\
+		\hline
+		lr & [0.01, 0.05] \\
+		\hline
+		dim & [100, 300] \\
+		\hline
+		dropoutRHS & [0.5, 0.8] \\
+		\hline
+		normalizeText & [True, False]\\
+		\hline
+	\end{tabular}
+\end{table}
+
+Table \ref{tab:hyperparameter-variations} shows different hyperparameters values used to train the StarSpace model. The train criteria is based on the MAP@10 value of the union result, meaning if a model has a higher MAP@10 value comparing to the other models it is the better model.
+
+
+Figure \todo{here comes the MAP@10 figure of the different models} shows the different MAP@10 values of different models.
 

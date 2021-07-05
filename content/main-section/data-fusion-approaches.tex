@@ -2,6 +2,8 @@
 
 \subsection{Union Results}
 
+In this approach, the results of each partition get merged and based on their ranking (hit count), the results get sorted, and the top \emph{K} elements are taken. Figure \ref{fig:data-fusion-union-results} demonstrates this process.
+
 
 \begin{figure}[!h]
 	\centering
@@ -11,7 +13,7 @@
 \end{figure}
 
 \subsection{Highest Hit}
-
+Another approach to creating a single ranked list from multiple partitions is to take the results of the partition with the highest hit. Figure \ref{fig:data-fusion-highest-hit} highlights this clearly. The first partition has a higher hit number comparing to the second partition (134 versus 99). Therefore all the results of the first partition are chosen as the output.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.75\textwidth]{images/data-fusion-highest-hit}
@@ -20,10 +22,17 @@
 \end{figure}
 
 \subsection{Most Interactions}
-
+The last approach is based on user interactions and their interests. After partitioning the data using the StarSpace model, we can argue that if users have a bigger degree on a particular partition, their interests are on that partition. Figure \ref{fig:data-fusion-highest-ineterest} explains this approach more clearly. As we can see, the user has five interactions in total. Four interactions are in a similar category, colored in yellow, and one (colored in red) has a completely different topic. The four documents land on the first partition and the other document in the other partition. After calculating the recommendations for this user on each partition, the system takes the partition results with the biggest degree (partition 0).
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.75\textwidth]{images/data-fusion-highest-interest}
 	\caption{Data fusion using the highest degree of each user}
 	\label{fig:data-fusion-highest-ineterest}
 \end{figure}
+
+This approach comes with more advantages: the degree of the user on each partition can be saved during partitioning time. Suppose a recommendation request for a particular user is sent. In that case, the degree and partition number of the users can be retrieved, and the request can be forwarded to the partition with the highest degree. This will save \emph{1/N} of the work needed to calculate the recommendations. \emph{N} is the number of partitions. 
+
+This can not be done in other approaches since it is impossible to calculate the hit number of the partitions without running the SALSA algorithm.
+
+\todo{Related work to CMS and future work of the thesis}
+Couint Min Scetch: CMS \cite{cormode2005improved}
