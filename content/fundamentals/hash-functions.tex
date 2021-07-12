@@ -1,6 +1,48 @@
 \section{Hash Functions}
-\label{Grelgdnuan_vno_Bleototuh_Lwo_Egerny_BLE}
+\label{sec:hash-functions}
+\begin{itemize}
+    \item A hash function is any function that can be used to map data of arbitrary size to fixed-size values. The values returned by a hash function are called hash values, hash codes, digests, or simply hashes.
+    \item 
+\end{itemize}
 
 
-\subsection{Examples}
-\label{Riado_Lyaer_RL}
+\subsection{MurmurHash}
+\label{subsec:murmurhash}
+\begin{itemize}
+    \item MurmurHash is a non-cryptographic hash function suitable for general hash-based lookup. It was created by Austin Appleby in 2008[4] and is currently hosted on GitHub along with its test suite named 'SMHasher'. It also exists in a number of variants, all of which have been released into the public domain. The name comes from two basic operations, multiply (MU) and rotate (R), used in its inner loop.
+    \item MurmurHash2 is used in multiple open source projects. Kafka uses the MurmurHash2 function as its default partitioner.
+    \item This work uses the kafka-python implementation of the MurmurHash2\footnote{\url{https://github.com/dpkp/kafka-python/blob/master/kafka/partitioner/default.py}} .
+\end{itemize}
+
+\todo{do I really need to write all of it down?}
+\begin{algorithm}[H]
+	\caption{MurmurHash2 algorithm}
+	
+	\SetAlgoLined
+    \SetKwInOut{Input}{input}
+    \Input{data (bytes): opaque bytes}
+    \KwResult{MurmurHash2 of data}
+	
+	initialization\;
+    length $\leftarrow$ len(data)\;
+    seed $\leftarrow$ 0x9747b28c\;
+    m $\leftarrow$ 0x5bd1e995\;
+    r $\leftarrow$ 24\;
+    h $\leftarrow$ seed $\oplus$ length\;
+    length4 $\leftarrow$ $\left \lfloor \frac{length}{4} \right \rfloor$ \;
+	\While{not at end of this document}{
+		read current\;
+		\eIf{understand}{
+			go to next section\;
+			current section becomes this one\;
+			}{
+			go back to the beginning of current section\;
+			}
+		}
+\end{algorithm}
+
+\subsection{ModuloHash}
+\begin{itemize}
+    \item One of the simplest and most common methods in practice is the modulo division method.
+    \item There is an implementation of this hash function but in this work I prefered the MurmurHash2 function over this approach.
+\end{itemize}

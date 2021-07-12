@@ -3,6 +3,8 @@
 
 
 \usepackage{todonotes}
+\usepackage{dirtree}
+
 % ABOUT
 \newcommand{\hpitype}{Masterarbeit}
 \newcommand{\hpiauthor}{Ramin Gharib}
@@ -51,10 +53,22 @@
 	% Main Section
 	\include{content/main-section/main-section}
 	\include{content/main-section/system-architecture}
+	\include{content/main-section/user-manual}
 	\include{content/main-section/partitioning}
 	\include{content/main-section/model-training}
 	\include{content/main-section/data-fusion-approaches}
-	\include{content/main-section/evaluation}
+
+	% Evaluation
+	\include{content/evaluation/evaluation}
+	\include{content/evaluation/evaluation-suit}
+	\include{content/evaluation/latency}
+	\include{content/evaluation/recommendation-quality}
+
+	%Future work
+	\include{content/future-work/future-work}
+	\include{content/future-work/load-balancer}
+	\include{content/future-work/second-use-case}
+
 
 	% Conclusion
 	\include{content/conclusion}

@@ -1,22 +1,107 @@
 \section{System Architecture}
 \label{System Architecture}
 
+\begin{itemize}
+	\item Python is used to implement the and simulate GraphJet, concretley the SALSA algorithm
+	\item As explained in sections \ref{sec:GraphJet} GraphJet architecture consist of three main layers: Storage, Recommendation, API Endpoint
+	\item The main focus is not how we store the data or which storing techniques are performing better. Therefore, a simplified indexing and storing strategy is used (Simple).
+	\item The Indexing is based on Simple indexing
+	\item In this approach, the dataframes hold exactly one value for each tweet or user id. The value is a list of all adjacent nodes. Therefore, a read operation is a single look-up of the key. An example of such a state store is shown in the table \ref{tab:simple-indexing}.
+	\item It is important to say that unlike GraphJet, there is no real time data ingestion. To keep the focus on the partitioning and recommendation quality plus keeping the code simple this aspekt is not considered.
+	\item Python's Pandas is the tool used to read and manipulate the indexes and partitions
+	\item The recommendation engine uses the pandas dataframes to access the indexes
+	\item Flask webserver is used to access the data in the API layer
+\end{itemize}
+
+\begin{table}[!h]
+	\centering
+	\caption{Simple indexing example}
+	\label{tab:simple-indexing}
+	\begin{tabular}{|l|c|}
+		\hline
+		\textbf{Key} & \textbf{Adjacency List} \\
+		\hline
+		5 & [200, 50] \\
+		\hline
+		12 & [60, 120, 60] \\
+		\hline
+		... & ... \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
 \subsection{Single Machine}
 \label{Single Machine}
 
-\begin{figure}[!h]
+\begin{itemize}
+	\item Similar implementation to GraphJet
+	\item First the data needs to get be indexed
+	\item The (crawled) dataset needs to be read and indexed 
+	\item An indexer is used to create a Left index and right index
+	\item The dataset is a TSV (Tab Seperated Value) file each line consist of a UserID, TweetID, Content
+	\item The file is read and first the TweetIDs are grouped together as an adjancency list with the corensponding UserID. This proccess creates the left index. The same happens to the UserIDs respectivly for the right index.
+	\item After the Index is generated it gates saved on the system
+	\item The flaskserver uses a CLI to load the indexes
+	\item A docker container is used to pass the commands and reach the endpoints
+	\item These endpoints are \ref{tab:endpoints}
+	\item Figure \ref{fig:single-machine-architecture} shows the overall architecture of the system. The request (userID) is sent to the endpoint and then the recommendations get calculated and sent to the output
+\end{itemize}
+
+\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.75\textwidth]{images/simple-worker.png}
-	\caption{GraphJet deployment}
-	\label{fig:graphJet-deployment}
+	\caption{Single machine overall architecture}
+	\label{fig:single-machine-architecture}
 \end{figure}
+
+\begin{table}[!h]
+	\centering
+	\caption{Enpoints}
+	\label{tab:endpoints}
+	\begin{tabular}{|l|c|}
+		\hline
+		\textbf{URL prefix} & \textbf{Description} \\
+		\hline
+		/recommendation & generating recommendations with SALSA, for user or tweet \\
+		\hline
+		/content & getting the content of a TweetID \\
+		\hline
+		/status & Endpoint to get status of the partition or user \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \subsection{Multiple Machines}
 \label{Multiple Machines}
 
+\begin{itemize}
+	\item 
+	\item Each partition is a docker container. Before running the container the the user needs to pass some flags. You can see that in the table \ref{tab:cli-flags}
+\end{itemize}
+
+\begin{table}[!h]
+	\centering
+	\caption{CLI flags}
+	\label{tab:cli-flags}
+	\begin{tabular}{|l|c|}
+		\hline
+		\textbf{Flag} & \textbf{Description} \\
+		\hline
+		--partition method & hash function used for partitioning (defaults single\_partition) \\
+		\hline
+		--partition-number & number of partition \\
+		\hline
+		--port & port number of flask webserver \\
+		\hline
+		--content-index/--no-content-index & Flag whether to load content index or not \\
+		\hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.75\textwidth]{images/multi-partition-architecture.png}
-	\caption{GraphJet deployment}
-	\label{fig:graphJet-deployment}
+	\caption{Multiple partition architecture}
+	\label{fig:multiple-machine-architecture}
 \end{figure}
