@@ -1,0 +1,22 @@
+\section{Load balancing upcoming recommendation request to each partition}
+
+\begin{itemize}
+    \item The data fusion approach proposed in subsection \ref{subsec:data-fusion-most-interactions} comes with some advantages.
+    \item The degree of the user on each partition can be saved during partitioning time. Suppose a recommendation request for a particular user is sent. In that case, the degree and partition number of the users can be retrieved, and the request can be forwarded to the partition with the highest degree. This will save \emph{1/N} of the work needed to calculate the recommendations. \emph{N} is the number of partitions. 
+    
+    This can not be done in other approaches discussed in subsecitons \ref{subsec:data-fusion-union-results} and \ref{subsec:data-fusion-highest-hit} since it is impossible to calculate the hit number of the partitions without running the SALSA algorithm.
+
+    \item Each user along with its number of interest can be stored in a probalistic data structure like \emph{Count Min Scetch (CMS)} \cite{cormode2005improved} \todo{Should I explain CMS here or in chapter 2?}
+    \item In figure \ref{fig:loadbalancer} during parittion time the load balancer saves a touple of \emph{(partitionId, <Degree-number-of-user>)} as the value and as the key the userId gets saved. 
+    \item Whenever a query request is sent, the key (userID) is used to retrive the value (tuple containing the parititonID and degree of user). The number of values match the number of parititons
+    \item If we itarate through the values we can retrive the biggest degree along with the partitionID.
+\end{itemize}
+
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.85\textwidth]{images/future-system-architecture}
+	\caption{Proposed architecture with the load balancer to route the upcoming requests}
+	\label{fig:loadbalancer}
+\end{figure}

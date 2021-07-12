@@ -1,0 +1,27 @@
+\section{Evaluation Pipeline}
+\label{sec:evaluation-pipeline}
+
+\begin{enumerate}
+    \item Random users are sampled
+    500 random users 
+    
+    \item Calculate recommendation for each sampled user on single machine
+    Query a user N (=10) times and  take the most frequent recommendations
+    This creates the objective ranks (i.e., Golden Standard)
+    
+    \item Calculate recommendation for each sampled user on single machine
+    Check reproducibility of the results
+    
+    \item For every sampled user on each partition, calculate the recommendations
+    observed ranks
+    
+    \item Assess the objective ranks with the observed ranks
+    
+\end{enumerate}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.75\textwidth]{images/evaluation-flow-chart}
+	\caption{Partitioning upcoming document using StarSpace}
+	\label{fig:partitioner-uml}
+\end{figure}

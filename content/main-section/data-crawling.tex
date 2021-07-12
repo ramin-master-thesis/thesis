@@ -1,0 +1,13 @@
+\section{Data crawling approach}
+\label{sec:data-crawling-approach}
+\begin{itemize}
+    \item I used an open source data crawler to crawl the tweets\footnote{\url{https://github.com/philipphager/twitter-crawler}}.
+    \item Although there were some changes needed to crawl the content of the tweets as well.
+    \item The user that the crawler starts from is Elon Musks Twitter page\footnote{\url{https://twitter.com/elonmusk}}
+    \item For each user:
+    \begin{enumerate}
+        \item Crawl up to 25 tweets from their timeline
+        \item For each tweet, add the tweet author and retweeters (up to 500) to the crawling queue.
+        \item Start over
+    \end{enumerate}
+\end{itemize}
