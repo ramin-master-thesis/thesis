@@ -1,6 +1,13 @@
 \section{Partitioning}
 \label{sec:partitioning}
 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.75\textwidth]{images/partitioner-UML.png}
+	\caption{Partitioning upcoming document using StarSpace}
+	\label{fig:partitioner-uml}
+\end{figure}
+
 \subsection{Single Machine}
 \label{subsec:partitioning-single-machine}
 
@@ -11,3 +18,23 @@
 
 \subsection{Partitioning data using StarSpace}
 \label{subsec:partitioning-star-space}
+
+\begin{itemize}
+    \item Embedded vector has a big dimension
+
+    \item Use calculated projection matrix to reduce dimension
+    4 partitions -> 2 dimension
+    
+    \item Choose partition based on the dot production of the projection matrix and embedded vector
+    
+\end{itemize}
+
+
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.85\textwidth]{images/partition-StarSpace}
+	\caption{Partitioning upcoming document using StarSpace}
+	\label{fig:star-space-partitioning}
+\end{figure}
