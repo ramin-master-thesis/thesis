@@ -1,85 +1,98 @@
 \section{Recommender Systems}
-\label{Grelgdnuan_vno_Bleototuh_Lwo_Egerny_BLE}
+\label{sec:recommender-systems}
 
-\begin{itemize}
-	\item Recommender systems use the opinions of a community of users to help individuals in that community more effectively identify content of interest from a potentially overwhelming set of choices. \cite{resnick1997recommender}
-	\item Recommender systems can be broadly categorized into two types: Content based and Collaborative filtering.
-	\item Recommendations can be generated based on shared interests, correlated activities, topological configurations, and a multitude of other signals.
-	\item In collaborative filtering approaches, the system only has access to the user and item identifiers, and no additional information over items or users is used.
-	\item Examples of recommender systems \cite{das2007google}, \cite{linden2003amazon}
-	\item A survey of collaborative filtering \cite{su2009survey}
-	\item The SALSA algorithm used in GraphJet provides a collaborative filtering. Therefore, the main focus is on collaborative filtering.
-	
-\end{itemize}
+Recommender systems use the opinions of a community of users to help individuals in that community more effectively identify the content of interest from a potentially overwhelming set of choices \cite{resnick1997recommender}.
 
+A recommendation engine recommends a set of documents from a superset which the engine finds to be most relevant to the user. In that sense, a recommendation engine is simply performing a task of document retrieval. Recommender systems can be broadly categorized into two types:
+\begin{enumerate}
+    \item \emph{Content based}
+    \item \emph{Collaborative filtering (CF)}
+\end{enumerate}
+The recommendation engine in GraphJet \cite{sharma2016graphjet} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) uses a collaborative filtering approach. Therefore, the main focus is on collaborative filtering. The following subsection explains collaborative filtering recommender systems and related work. Afterward, the different metrics to evaluate recommender systems are discussed.
 
 \subsection{Collaborative Filtering}
+\label{subsec:collaborative-filtering}
 
-\begin{itemize}
-	\item Recommendations can be generated based on shared interests, correlated activities, topological configurations, and a multitude of other signals.
-	\item In collaborative filtering approaches, the system only has access to the user and item identifiers, and no additional information over items or users is used.
-	\item Examples of recommender systems Google news recommender \cite{das2007google}, Amazon recommendation system \cite{linden2003amazon}, Pixie \cite{eksombatchai2018pixie}, GraphJet \cite{sharma2016graphjet}
-	\item A survey of collaborative filtering \cite{su2009survey} \todo{Add Collaborative Filtering Figure}
-	
-\end{itemize}
+Recommendations can be generated based on shared interests, correlated activities, topological configurations, and many other signals.
+
+\emph{Collaborative filtering (CF)} term, which was first announced in \cite{goldberg1992using} means that the users in a system collaborate to perform filtering by interacting with documents and record their reactions.
+In CF scenarios, the system only has access to the user and item identifiers, and no additional information over items or users is used.
+Examples of recommender systems that use collaborative filtering are: Google news recommender \cite{das2007google}, Amazon recommendation system \cite{linden2003amazon}, Pixie \cite{eksombatchai2018pixie}, GraphJet \cite{sharma2016graphjet}.
+
+Image a document recommender system, recommending similar documents to the users. In a typical CF scenario there is list of \emph{m} users \{\emph{$u_{1}$,$u_{2}$,...,$u_{m}$}\} and list of \emph{n} documents \{\emph{$d_{1}$,$d_{2}$,...,$d_{n}$}\}, and each user, \emph{$u_{i}$}, has a list of documents, \emph{D$u_{i}$}, which the user has interacted with. Similar to the first user there is a list of documents for user \emph{$u_{j}$}. If the intersection between the document list of these both users is not empty, these users can be considered "similar" to each other. Therefore, if user \emph{$u_{i}$} interacts with a document, \emph{D$d_{i}$}, which the user \emph{D$u_{j}$} has not interacted with yet, this can be recommended to the \emph{D$u_{j}$}. This can be seen in figure \ref{fig:collaborative-filtering}.
+In \cite{su2009survey} the different techniques used to implement CF systems are explained in detail. Moreover, they discuss multiple evaluation metrics to assess the recommendation quality.
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.50\textwidth]{images/collaborative-filtering}
+	\caption{Collaborative filtering}
+	\label{fig:collaborative-filtering}
+\end{figure}
 
 
 
-\subsection{Metrics}
-\label{subsec:IR-Metrics}
-One of the key challenges when developing or enhancing a recommendation engine is evaluating its impact. Though we are sure about the positive impact, there is a need to quantify the same. This quantification not only facilitates stakeholder communication but also serves as a benchmark for future enhancements.
+\subsection{Evaluation metrics}
+\label{subsec:evaluation-metrics}
+One of the key challenges when developing or enhancing a recommendation engine is evaluating its impact on the quality of the recommendations. Though we are sure about the positive impact, there is a need to quantify the same.
 
-A recommendation engine recommends a set of documents from a superset which the engine finds to be most relevant to the user. In that sense, a recommendation engine is simply performing a task of document retrieval.
+After applying a new algorithm or an improvement to a recommendation engine, there is the need to compare two ranked lists of the main recommendation engine and the improved recommendation engine to find out the impact of the recommendation quality. The ranked list of the main recommendation engine is called \emph{objective ranking} (also called \emph{golden standard}), and after the changes are applied to the recommendation engine, the new ranked list is called \emph{observed ranking}. These two lists are assessed against each other.
 
-The highly relevant documents are more valuable than moderately relevant documents, which are in turn more useful than irrelevant documents.
+% In recommender systems, the highly relevant documents are more valuable than moderately relevant documents, which are more useful than irrelevant documents.
 
-In IR, as in many other domains, it can be important to compare the similarity, or consistency, of groups of things. These groups may be:
+According to \cite{webber2010similarity} when comparing the golden standard with the newly generated observed ranking, the rank similarity measures can be broken down into four main groups. These measures are grouped as not-weighted (set-based) or weighted (ordered) and may need conjointness or disjoint rankings. Each of these terms is defined as follow: 
 
 \begin{description}
-	\item \emph{conjoint (consisting of the same items)} or \emph{disjoint (one group may include items that do not occur in the other group)}
-	\item \emph{set-based (not-weighted) (where there is no known or inferred ordering of the items)} or \emph{ordered (weighted) (where the sequence in which the items occur matters)}
+    \item \emph{conjoint} Both of the ranked lists consisting of the same items.
+    \item \emph{disjoint} One ranked list may include items that do not occur in the other list.
+    \item \emph{weighted (ordered)} The sequence in which the items occur matters.
+    \item \emph{not-weighted (set-based)} There is no known or inferred ordering of the items.
 \end{description}
 
-In our use case (SALSA), the lists are disjoint and ordered.
-\begin{enumerate}
-	\item AP@K and MAP@K: Not-Weighted conjoint
-	\item NDCG: Weighted non-conjoint measures
-	\item Kendall: Not-Weighted conjoint
-	\item RBO: Weighted non-conjoint measures
-\end{enumerate}
+In this section I explain the evaluation metrics listed in the table \ref{tab:evaluation-metrics}. For more metrics for evaluating collaborative filtering recommender system please refere to \cite{herlocker2004evaluating}.
+
+\begin{table}[!ht]
+	\centering
+	\caption{Evaluation metrics}
+	\label{tab:evaluation-metrics}
+	\begin{tabular}{r|l|l}
+		& \textbf{Not-weighted} & \textbf{Weighted} \\
+		\hline
+		\textbf{Conjoint} & \vtop{\hbox{\strut AP$\atsign$K}\hbox{\strut MAP$\atsign$K}\hbox{\strut Kendall's $\tau$}} & Normalized Discounted Cumulative Gain (NDCG) \\
+		\hline
+		\textbf{Disjoint} & - & Ranked-Biased Overlap (RBO) \\
+	\end{tabular}
+\end{table}
 
 \subsubsection{Precision and Recall}
 \label{Precision and Recall}
 The \emph{retrieval effectiveness}: the ability of the system to retrieve relevant documents while at the same time suppressing the retrieval of non-relevant documents. 
-The most well-known pair of variables jointly measuring retrieval effectiveness are \emph{precision and recall}.
+The most well-known pair of variables jointly measuring retrieval effectiveness is \emph{precision and recall}.
 
-\emph{Precision} is the proportion of the retrieved relevant documents.
+\paragraph*{Precision} is the proportion of the retrieved relevant documents. The formal definition of percision:
 \begin{equation}
 	percision = \frac{|\emph{\{relevant document\}} \cap \emph{\{retrieved documents\}}|}{|\emph{\{retrieved documents\}}|}
 	\label{eq:percision}
 \end{equation}
-Precision at k documents (P@k) is still a useful metric (e.g., P@10 or "Precision at 10" corresponds to the number of relevant results among the top 10 retrieved documents), 
-but fails to take into account the positions of the relevant documents among the top k. [3]
+% Precision at k documents (P@k) is still a useful metric, but fails to take the ranking of the relevant documents into account. \cite{jarvelin2017ir}
 
-\emph{Recall} being the proportion of the relevant documents that have been retrieved.
+\paragraph*{Recall} being the proportion of the relevant documents that have been retrieved. Mathematically defined as:
 \begin{equation}
 	recall = \frac{|\emph{\{relevant document\}} \cap \emph{\{retrieved documents\}}|}{|\emph{\{relevant documents\}}|}
 	\label{eq:recall}
 \end{equation}
 
-For modern (web-scale) information retrieval, recall is no longer a meaningful metric, as many queries have thousands of relevant documents, and few users will be interested in reading all of them.
+Moder information retrieval systems now a days retirvie thousands of relevant documents that few users will be interested in reading all of them; evaluating these systems with recall is obsolet 
 
-Singly, each variable (or parameter as it is sometimes called) measures some aspect of retrieval effectiveness; jointly they measure retrieval effectiveness completely. [2]
+Singly, each metric measures some aspect of retrieval effectiveness; together, they measure retrieval effectiveness completely. To bring these two metrics close to each other metrics like average percision are introduced.
 
 \subsubsection{AP@K and MAP@K}
 \label{AP@K and MAP@K}
-Retrieval effectiveness evaluation metrics; score a document ranking according to the relevance of the documents it contains. 
-\paragraph*{Average percision (AP)} is the metric used to calculate retrieval effectiveness, which is defined as follows. 
+\paragraph*{Average precision (AP)} is the metric used to calculate retrieval effectiveness, which is defined as follows. 
 Let the precision of a ranking to depth \emph{k} be
-the proportion of documents to depth \emph{k} that are relevant. The sum of precisions for that
-ranking is the sum of the precision at each ranking that a relevant document is returned.
-Average precision for the ranking is then the sum of precisions divided by the total number of (known) relevant documents for that query. [1] 
-The mathematical equation of AP@K is defined as follow.
+the proportion of documents to depth \emph{k} that are relevant. The sum of precisions for that ranking is the sum of the precision at each ranking that a relevant document is returned.
+Average precision for the ranking is then the sum of precisions divided by the total number of (known) relevant documents for that query.
+The mathematical equation of average percision at k:
 
 \begin{equation}
 	AP@K = \frac{1}{m}\sum_{i=1}^{k}P(i).rel(i)
@@ -97,16 +110,16 @@ is an indicator function equaling 1 if the item at rank \emph{k} is a relevant d
 \end{equation}
 Where \emph{U} is the number of queries.
 
-\paragraph*{Drawbacks}
-If all the items retrivied form an IR sytem are cosidered as relevant the order of the items does not effect the average percision.
- The firs example demonstrates this problem.
+\todo{Put a figure here and make an example how to calculate AP@K and MAP@K}
+
+As explained before AP@K and MAP@K are considered as conjoint and not-weighted metrics. This means the gold standard and the observed rankings should contain the same items but the order of these items does not matter if all of them already exists in the observed ranking. Table \ref{tab:apk-drawback} shows this drawback.
+
+\todo{Create a figure to explain the drawback of AP@K}
+The first example demonstrates this problem.
 actual = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 predicted = [10, 6, 9, 7, 8, 3, 2, 5, 4, 1]
 AP = 1
-------------------------------------------
-actual = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-predicted = [1, 20,30,40,50,60,70,80,90,100]
-AP = 1/10
+
 
 \subsubsection{CG, DCG, and NDCG}
 \label{CG, DCG, and NDCG}
@@ -125,7 +138,7 @@ Every recommendation has a relevance score associated with it. Cumulative Gain i
 \paragraph*{Normalized Discounted Cumulative Gain (NDCG)}
 
 \subsubsection{Kendall rank correlation coefficient}
-The Kendall Tau metric also known as Kendall’s Correlation is a common method used to check if two ranked lists are in agreement.
+The Kendall Tau metric also known as Kendall's Correlation is a common method used to check if two ranked lists are in agreement.
 
 \begin{figure}[!h]
 	\centering
@@ -135,7 +148,7 @@ The Kendall Tau metric also known as Kendall’s Correlation is a common method 
 \end{figure}
 
 \subsubsection{Rank-Biased Overlap (RBO)}
-Rank-biased overlap falls in the range [0, 1], where 0 means disjoint, and 1 means identical. The parameter p determines how steep the decline in weights is: the smaller p, the
+Rank-biased overlap \cite{webber2010similarity} falls in the range [0, 1], where 0 means disjoint, and 1 means identical. The parameter p determines how steep the decline in weights is: the smaller p, the
 more top-weighted the metric is. In the limit, when p = 0, only the top-ranked item is considered, and the RBO score is either zero or one. 
 On the other hand, as p approaches arbitrarily close to 1, the weights become arbitrarily flat, and the evaluation becomes arbitrarily deep.
 
