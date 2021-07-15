@@ -58,9 +58,9 @@ In this section I explain the evaluation metrics listed in the table \ref{tab:ev
 	\begin{tabular}{r|l|l}
 		& \textbf{Not-weighted} & \textbf{Weighted} \\
 		\hline
-		\textbf{Conjoint} & \vtop{\hbox{\strut AP$\atsign$K}\hbox{\strut MAP$\atsign$K}\hbox{\strut Kendall's $\tau$}} & Normalized Discounted Cumulative Gain (NDCG) \\
+		\textbf{Conjoint} & Kendall's $\tau$ & Normalized Discounted Cumulative Gain (NDCG) \\
 		\hline
-		\textbf{Disjoint} & - & Ranked-Biased Overlap (RBO) \\
+		\textbf{Disjoint} & \vtop{\hbox{\strut AP$\atsign$K}\hbox{\strut MAP$\atsign$K}}& Ranked-Biased Overlap (RBO) \\
 	\end{tabular}
 \end{table}
 
@@ -82,25 +82,29 @@ The most well-known pair of variables jointly measuring retrieval effectiveness 
 	\label{eq:recall}
 \end{equation}
 
-Moder information retrieval systems now a days retirvie thousands of relevant documents that few users will be interested in reading all of them; evaluating these systems with recall is obsolet 
+Moder information retrieval systems nowadays retrieve thousands of relevant documents that few users will be interested in reading all of them; evaluating these systems with recall is obsolete.
 
-Singly, each metric measures some aspect of retrieval effectiveness; together, they measure retrieval effectiveness completely. To bring these two metrics close to each other metrics like average percision are introduced.
+Singly, each metric measures some aspect of retrieval effectiveness; together, they measure retrieval effectiveness entirely. To bring these two metrics close to each other, metrics like average precision are introduced.
 
 \subsubsection{AP@K and MAP@K}
 \label{AP@K and MAP@K}
 \paragraph*{Average precision (AP)} is the metric used to calculate retrieval effectiveness, which is defined as follows. 
 Let the precision of a ranking to depth \emph{k} be
-the proportion of documents to depth \emph{k} that are relevant. The sum of precisions for that ranking is the sum of the precision at each ranking that a relevant document is returned.
+the proportion of documents to depth \emph{k} that are relevant.
 Average precision for the ranking is then the sum of precisions divided by the total number of (known) relevant documents for that query.
 The mathematical equation of average percision at k:
 
 \begin{equation}
-	AP@K = \frac{1}{m}\sum_{i=1}^{k}P(i).rel(i)
+	AP@K = \frac{1}{min(m,k)}\sum_{i=1}^{k}P(i).rel(i)
 	\label{eq:ap@k}
 \end{equation}
 
-where \emph{k} is the rank in the sequence of retrieved documents, \emph{n} is the number of retrieved documents, \emph{P(k)} is the precision at cut-off \emph{k} in the list. \emph{rel(k)}
+where \emph{k} is the rank in the sequence of retrieved documents, \emph{m} is the number of relevant documents, \emph{P(k)} is the precision at cut-off \emph{k} in the list. \emph{rel(k)}
 is an indicator function equaling 1 if the item at rank \emph{k} is a relevant document, zero otherwise.
+
+As an example take a look at the tables \ref{tab:apk-example}. If we consider all the results fo the objective rankings as relevant then the AP@5 for the observed ranking is calculate as follow:
+
+AP@5=$\frac{1}{5}$$\times$(1$\times$1 + 1$\times$$\frac{2}{2}$ + 1$\times$$\frac{3}{3}$ + 1$\times$$\frac{4}{4}$ + 0$\times$$\frac{0}{5}$) = $\frac{4}{5}$ = 0.80
 
 \paragraph*{Mean average precision (MAP)} for a set of queries is the mean of the average precision (AP) scores for each query.
 
@@ -110,49 +114,90 @@ is an indicator function equaling 1 if the item at rank \emph{k} is a relevant d
 \end{equation}
 Where \emph{U} is the number of queries.
 
-\todo{Put a figure here and make an example how to calculate AP@K and MAP@K}
+\begin{table}[!ht]
+	\caption{Comparing results of objective and observed ranking}
+	\label{tab:apk-example}
+	\begin{subtable}{.5\linewidth}
+		\caption{Objective ranking}
+		\centering
+		\begin{tabular}{c|c}
+			\textbf{Rank (k)}&\textbf{Recommendation} \\
+			\hline
+			1 & Pulp Fiction \\
+			2 & Fight Club \\
+			3 & Memento \\
+			4 & Requiem for a Dream \\
+			5 & The Shining \\
+		\end{tabular}
+	\end{subtable}%
+	\begin{subtable}{.5\linewidth}
+		\caption{Observed ranking}
+		\centering
+		\begin{tabular}{c|c}
+			\textbf{Rank (k)}&\textbf{Recommendation} \\
+			\hline
+			1 & Requiem for a Dream \\
+			2 & Memento \\
+			3 & Fight Club \\
+			4 & Pulp Fiction \\
+			5 & A Separation  \\
+		\end{tabular}
+	\end{subtable}%
+\end{table}
 
-As explained before AP@K and MAP@K are considered as conjoint and not-weighted metrics. This means the gold standard and the observed rankings should contain the same items but the order of these items does not matter if all of them already exists in the observed ranking. Table \ref{tab:apk-drawback} shows this drawback.
+As explained before, AP@K and MAP@K are considered as disjoint and not-weighted metrics. This means the gold standard and the observed rankings contain the different items. Moreover, the order of these items does not matter if all of them already exists in the observed ranking.
 
-\todo{Create a figure to explain the drawback of AP@K}
-The first example demonstrates this problem.
-actual = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-predicted = [10, 6, 9, 7, 8, 3, 2, 5, 4, 1]
-AP = 1
+As an example of this drawback take a look at table \ref{tab:apk-example} the AP@4 in this example is 1, although the order and ranking of the results in the observed ranking list is not the same as the objective ranking list.
 
+% \subsubsection{CG, DCG, and NDCG}
+% \label{CG, DCG, and NDCG}
+% When examining the ranked result list of a query, it is obvious that:
+% \begin{enumerate}
+% 	\item highly relevant documents are more valuable than marginally relevant documents
+% 	\item the greater the ranked position of a relevant document (of any relevance level) the less valuable it is for the user because the less likely it is that the user will examine the document.
+% \end{enumerate}
 
-\subsubsection{CG, DCG, and NDCG}
-\label{CG, DCG, and NDCG}
-When examining the ranked result list of a query, it is obvious that:
-\begin{enumerate}
-	\item highly relevant documents are more valuable than marginally relevant documents
-	\item the greater the ranked position of a relevant document (of any relevance level) the less valuable it is for the user because the less likely it is that the user will examine the document.
-\end{enumerate}
+% \paragraph*{Cumulative Gain (CG)}
+% Every recommendation has a relevance score associated with it. Cumulative Gain is the sum of all the relevance scores in a recommendation set.
 
-\paragraph*{Cumulative Gain (CG)}
-Every recommendation has a relevance score associated with it. Cumulative Gain is the sum of all the relevance scores in a recommendation set.
-
-\paragraph*{Discounted Cumulative Gain(DCG)}
+% \paragraph*{Discounted Cumulative Gain(DCG)}
 
 
-\paragraph*{Normalized Discounted Cumulative Gain (NDCG)}
+% \paragraph*{Normalized Discounted Cumulative Gain (NDCG)}
 
 \subsubsection{Kendall rank correlation coefficient}
-The Kendall Tau metric also known as Kendall's Correlation is a common method used to check if two ranked lists are in agreement.
+The \emph{Kendall Tau} \cite{kendall1938new} metric, also known as Kendall's Correlation, is a common method used to check if two ranked lists are in agreement. Kendall's correlation can be computed by first counting the number of concordant pairs (C) and the number of discordant pairs (D). A pair is said to be concordant if they appear in the same order in their ranking lists. Them M = C - D is our basic statistic. The $\tau$ is calculated: 
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.50\textwidth]{images/metrics/kendall-example}
-	\caption{The Kendall Tau metric also known as Kendall’s Correlation is a common method used to check if two ranked lists are in agreement.}
-	\label{fig:kendall-rank-example}
-\end{figure}
+\begin{equation}
+	\tau = \frac{M}{(C+D)}
+	\label{eq:kendall-tau}
+\end{equation}
+
+To calculate Kendall Tau both ranking lists needs to be conjoint. This metric is also not-weighted, this means that the top results matter the same as the bottom of the list.
+
+To demonstrait these drawbacks take a look at table \ref{tab:apk-example}. Kendall's correlation can not be calculated since the items at rank 5 are different. Even by replacing the fifth elemnt with special character (e.g. \#) on both lists, the value of $\tau$ would be 1. This denotes perfect agreement between the two lists, which is not true.
 
 \subsubsection{Rank-Biased Overlap (RBO)}
-Rank-biased overlap \cite{webber2010similarity} falls in the range [0, 1], where 0 means disjoint, and 1 means identical. The parameter p determines how steep the decline in weights is: the smaller p, the
-more top-weighted the metric is. In the limit, when p = 0, only the top-ranked item is considered, and the RBO score is either zero or one. 
-On the other hand, as p approaches arbitrarily close to 1, the weights become arbitrarily flat, and the evaluation becomes arbitrarily deep.
+The Rank-biased overlap \cite{webber2010similarity} compares two lists by looking at the Set Overlap at each rank. The resulting overlaps are weighted by their position in the list so that differences in the top ranks are more penalized than differences at the bottom. Let \emph{S} and \emph{T} be two infinite rankings. We can define $A_{d}$ define as the agreement between \emph{S} and \emph{T} given by the proportion of the overlap up to depth \emph{d}:
+
+\begin{equation}
+	A_{d} = \frac{|S_{:d} \cap T_{:d}|}{d}
+	\label{eq:a-d}
+\end{equation}
+
+
+RBO between the two lists \emph{S} and \emph{T} can be calculated using:
 
 \begin{equation}
 	RBO(S,T,p) = (1-p)\sum_{d=1}^{\infty}p^{d-1}.A_{d}
 	\label{eq:rbo}
 \end{equation}
+
+
+The result is in the range of [0, 1], where 0 means disjoint, and 1 means identical. \emph{d} is the depth of the rankings being examined, falls in the range of [1, $\infty$]. The tuneable parameter \emph{p} determines how steep the decline in weights is. If \emph{p} converges to zero, the more top-weighted the metric gets. In the limit, when p = 0, only the top-ranked item is considered, and the RBO score is either zero or one. The weights get flatterned when \emph{p} approaches 1.
+
+
+\subsection{Data Fusion}
+Data fusion is the process of integrating information gathered by multiple data sources into a single representation \cite{hsu2005comparing}. For recommendation systems, this can be combining multiple ranked recommendation lists into a single ranked list. Data fusion approaches vary depending on the system architecture, data sources, and ranking system. A good example is MetaLens \cite{schafer2002meta}, a meta-recommendation system gathering information from different sources like Rotten Tomatoes and MovieLens and using them to generate more personalized recommenders.
+ \cite{wu2006performance}
+
