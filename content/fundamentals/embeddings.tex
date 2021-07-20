@@ -16,49 +16,31 @@ StarSpace \cite{StarSpace} is a general-purpose neural model for efficient learn
 	\item Image classification, ranking, or retrieval (e.g., by using existing ResNet features).
 \end{enumerate}
 
-In my specific use case I use the so-called \emph{ArticleSpace} train mode of StarSpace. 
-This particular model learns the mapping between sentences and documents.
+In this work, I use the \emph{ArticleSpace} train mode of StarSpace. This particular model learns the mapping between sentences and documents. Given the embedding of one sentence, one can find the most relevant documents. The output of the StarSpace model is a multi-dimensional vector in a so-called "Embedding-Space." Depending on the parameters that the model has used for training, the dimensionality of the output vector varies. 
 
-Given the embedding of one sentence, one can find the most relevant documents. 
-The model is trained as follows: Each example is an article that contains multiple sentences. At training time, one sentence is picked at random as the input, the remaining sentences in the article becomes the label, other articles are picked as random negatives.
-Learning a mapping from an object to a set of objects of which it is a part, e.g. sentence (from within document) to document.
-In this work, I look at StarSpace as a black box. The purpose is to use StarSpace to partition the data and not evaluate the model or different embedding tools.
+For more information about the implementation of StarSpace, please refer to the code repository\footnote{\url{https://github.com/facebookresearch/StarSpace}}.
+
+
+This work observes StarSpace as a black box. The purpose is to use StarSpace to partition the data and find similar content \emph{near} each other in the embedding-space, and not to improve the StarSpace model.
+
+\subsubsection{StarSpace Text Normalization}
+\label{subsubsec:star-space-text-normalization}
 
 \subsection{Dimension Reduction}
 \label{subsec:dimension-reduction}
-PCA Prenciple Componenent Analysis \cite{wold1987principal}
-\begin{itemize}
-	\item PCA Prenciple Componenent Analysis \cite{wold1987principal} Large datasets are increasingly common and are often
-	difficult to interpret. Principal component analysis
-	(PCA) is a technique for reducing the dimensionality
-	of such datasets, increasing interpretability but at
-	the same time minimizing information loss. It
-	does so by creating new uncorrelated variables
-	that successively maximize variance. Finding such
-	new variables, the principal components, reduces to
-	solving an eigenvalue/eigenvector problem, and the
-	new variables are defined by the dataset at hand, not
-	a priori, hence making PCA an adaptive data analysis
-	technique. It is adaptive in another sense too, since
-	variants of the technique have been developed that are
-	tailored to various different data types and structures.
-	This article will begin by introducing the basic ideas of
-	PCA, discussing what it can and cannot do. It will then
-	describe some variants of PCA and their application. \cite{jolliffe2016principal}
-	\item Projection matrix: Principal component analysis or PCA, in essence, is a linear projection operator that maps a variable of interest to a new coordinate frame where the axes represent maximal variability. Expressed mathematically, PCA transforms an input data matrix X (N $\times$ D, N being the number of points, D being the dimension of data) to an output Y (N x D$\prime$ , often D$\prime$ $\leq$ D) via the following:
+The out dimensionaly of the embedding model is big. The dimensions can go up to 300. They are different approaches to reduce the demension and at the same time minimize the information loss. The dimension reduction in this thesis relise on a demensionality reduction method called \emph{Prenciple Componenent Analysis (PCA)} \cite{wold1987principal}.
+
+\subsubsection{Prenciple Componenent Analysis (PCA)}
+\label{subsubsec:pca}
+Principal component analysis or PCA, in essence, is a linear projection operator that maps a variable of interest to a new coordinate frame where the axes represent maximal variability. Expressed mathematically, an input data matrix X$_{N \times D}$ where is N the number of points, D being the dimension of data. PCA transforms the matrix X to an output Y$_{N \times D\prime}$. D$\prime$ being the reduced demensions (D$\prime$ $\leq$ D). This reduction from D to D$\prime$ can be achived by the dot product of X and a so-called \emph{projection matrix} P$_{D \times D\prime}$.
 	\begin{equation}
 		\label{PCA}
 		Y = XP
 	\end{equation}
-	% Y = XP (1)
-	where P (D $\times$ D$\prime$) is the projection matrix of which each column is a principal component (PC)—these are unit vectors that bear orthogonal directions. PCA is a handy tool for dimension reduction, latent concept discovery, data visualization and compression, or data preprocessing in general. \cite{projectionMatrix}
-	\item t-SNE: We present a new technique called “t-SNE” that visualizes high-dimensional data by giving each
-	datapoint a location in a two or three-dimensional map. \cite{van2008visualizing}
-	\item LDA: There are many possible techniques for classification of data. Principal Component Analysis (PCA)
-	and Linear Discriminant Analysis (LDA) are two commonly used techniques for data classification
-	and dimensionality reduction. Linear Discriminant Analysis easily handles the case where the
-	within-class frequencies are unequal and their performances has been examined on randomly
-	generated test data. This method maximizes the ratio of between-class variance to the within-class
-	variance in any particular data set thereby guaranteeing maximal separability \cite{balakrishnama1998linear}
-	\item In this work PCA is the main tool for reducing the dimensiions. All other related works and methods can be used as well.
-\end{itemize}
+
+Each column of the projection matrix P is called a principal component (PC) \cite{projectionMatrix}. 
+
+
+\subsubsection{Related work}
+\label{subsubsec:dimension-reduction-related-work}
+Other methods to reduce the dimension of big datasets and visualise them. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{van2008visualizing}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnama1998linear} are able to reduce the demension of datasets with multi classess.

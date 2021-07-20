@@ -3,12 +3,12 @@
 
 Recommender systems use the opinions of a community of users to help individuals in that community more effectively identify the content of interest from a potentially overwhelming set of choices \cite{resnick1997recommender}.
 
-A recommendation engine recommends a set of documents from a superset which the engine finds to be most relevant to the user. In that sense, a recommendation engine is simply performing a task of document retrieval. Recommender systems can be broadly categorized into two types:
+A recommendation engine recommends a set of documents from a superset that the engine finds most relevant to the user. In that sense, a recommendation engine is simply performing the task of document retrieval. Recommender systems can be broadly categorized into two types:
 \begin{enumerate}
     \item \emph{Content based}
     \item \emph{Collaborative filtering (CF)}
 \end{enumerate}
-The recommendation engine in GraphJet \cite{sharma2016graphjet} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) uses a collaborative filtering approach. Therefore, the main focus is on collaborative filtering. The following subsection explains collaborative filtering recommender systems and related work. Afterward, the different metrics to evaluate recommender systems are discussed.
+The recommendation engine in GraphJet \cite{sharma2016graphjet} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) uses a collaborative filtering approach. Therefore, the main focus of this work is on collaborative filtering. The following subsection explains collaborative filtering recommender systems and related work. Lastly, the different metrics to evaluate recommender systems are discussed.
 
 \subsection{Collaborative Filtering}
 \label{subsec:collaborative-filtering}
@@ -16,10 +16,10 @@ The recommendation engine in GraphJet \cite{sharma2016graphjet} (explained in se
 Recommendations can be generated based on shared interests, correlated activities, topological configurations, and many other signals.
 
 \emph{Collaborative filtering (CF)} term, which was first announced in \cite{goldberg1992using} means that the users in a system collaborate to perform filtering by interacting with documents and record their reactions.
-In CF scenarios, the system only has access to the user and item identifiers, and no additional information over items or users is used.
-Examples of recommender systems that use collaborative filtering are: Google news recommender \cite{das2007google}, Amazon recommendation system \cite{linden2003amazon}, Pixie \cite{eksombatchai2018pixie}, GraphJet \cite{sharma2016graphjet}.
+In CF scenarios, the system has only access to the user and item identifiers, and no additional information over items or users is used.
+Examples of recommender systems that use collaborative filtering are: Google news recommender \cite{das2007google}, Amazon recommendation system \cite{linden2003amazon}, Pixie \cite{eksombatchai2018pixie}, and GraphJet \cite{sharma2016graphjet}.
 
-Image a document recommender system, recommending similar documents to the users. In a typical CF scenario there is list of \emph{m} users \{\emph{$u_{1}$,$u_{2}$,...,$u_{m}$}\} and list of \emph{n} documents \{\emph{$d_{1}$,$d_{2}$,...,$d_{n}$}\}, and each user, \emph{$u_{i}$}, has a list of documents, \emph{D$u_{i}$}, which the user has interacted with. Similar to the first user there is a list of documents for user \emph{$u_{j}$}. If the intersection between the document list of these both users is not empty, these users can be considered "similar" to each other. Therefore, if user \emph{$u_{i}$} interacts with a document, \emph{D$d_{i}$}, which the user \emph{D$u_{j}$} has not interacted with yet, this can be recommended to the \emph{D$u_{j}$}. This can be seen in figure \ref{fig:collaborative-filtering}.
+Image a document recommender system, recommending similar documents to the users. In a typical CF scenario there is set of \emph{m} users \{\emph{$u_{1}$,$u_{2}$,...,$u_{m}$}\} and set of \emph{n} documents \{\emph{$d_{1}$,$d_{2}$,...,$d_{n}$}\}, and each user, \emph{$u_{i}$}, has a list of documents, \emph{D$u_{i}$}, which the user has interacted with. Similar to the first user there is a list of documents for user \emph{$u_{j}$}. If the intersection between the document list of these both users is not empty, these users can be considered "similar" to each other. Therefore, if user \emph{$u_{i}$} interacts with a document, \emph{$d_{i}$}, which the user \emph{D$u_{j}$} has not interacted with yet. Document \emph{$d_{i}$} can be recommended to the user \emph{$u_{j}$}. This can be seen in figure \ref{fig:collaborative-filtering}.
 In \cite{su2009survey} the different techniques used to implement CF systems are explained in detail. Moreover, they discuss multiple evaluation metrics to assess the recommendation quality.
 
 
@@ -49,7 +49,7 @@ According to \cite{webber2010similarity} when comparing the golden standard with
     \item \emph{not-weighted (set-based)} There is no known or inferred ordering of the items.
 \end{description}
 
-In this section I explain the evaluation metrics listed in the table \ref{tab:evaluation-metrics}. For more metrics for evaluating collaborative filtering recommender system please refere to \cite{herlocker2004evaluating}.
+In this section, I explain the evaluation metrics listed in the table \ref{tab:evaluation-metrics}. For more metrics for evaluating collaborative filtering recommender system, please refer to \cite{herlocker2004evaluating}.
 
 \begin{table}[!ht]
 	\centering
@@ -58,7 +58,7 @@ In this section I explain the evaluation metrics listed in the table \ref{tab:ev
 	\begin{tabular}{r|l|l}
 		& \textbf{Not-weighted} & \textbf{Weighted} \\
 		\hline
-		\textbf{Conjoint} & Kendall's $\tau$ & Normalized Discounted Cumulative Gain (NDCG) \\
+		\textbf{Conjoint} & Kendall's $\tau$ & - \\ %Normalized Discounted Cumulative Gain (NDCG) \\
 		\hline
 		\textbf{Disjoint} & \vtop{\hbox{\strut AP$\atsign$K}\hbox{\strut MAP$\atsign$K}}& Ranked-Biased Overlap (RBO) \\
 	\end{tabular}
@@ -82,9 +82,9 @@ The most well-known pair of variables jointly measuring retrieval effectiveness 
 	\label{eq:recall}
 \end{equation}
 
-Moder information retrieval systems nowadays retrieve thousands of relevant documents that few users will be interested in reading all of them; evaluating these systems with recall is obsolete.
+Modern information retrieval systems nowadays retrieve thousands of relevant documents that few users will be interested in reading. Evaluating these systems with recall is obsolete.
 
-Singly, each metric measures some aspect of retrieval effectiveness; together, they measure retrieval effectiveness entirely. To bring these two metrics close to each other, metrics like average precision are introduced.
+Singly, each metric measures some aspect of retrieval effectiveness; together, they measure retrieval effectiveness entirely. Metrics like average precision bring these two metrics close to each other.
 
 \subsubsection{AP@K and MAP@K}
 \label{AP@K and MAP@K}
@@ -92,7 +92,7 @@ Singly, each metric measures some aspect of retrieval effectiveness; together, t
 Let the precision of a ranking to depth \emph{k} be
 the proportion of documents to depth \emph{k} that are relevant.
 Average precision for the ranking is then the sum of precisions divided by the total number of (known) relevant documents for that query.
-The mathematical equation of average percision at k:
+The mathematical equation of average precision at cut-off \emph{k}:
 
 \begin{equation}
 	AP@K = \frac{1}{min(m,k)}\sum_{i=1}^{k}P(i).rel(i)
@@ -102,7 +102,7 @@ The mathematical equation of average percision at k:
 where \emph{k} is the rank in the sequence of retrieved documents, \emph{m} is the number of relevant documents, \emph{P(k)} is the precision at cut-off \emph{k} in the list. \emph{rel(k)}
 is an indicator function equaling 1 if the item at rank \emph{k} is a relevant document, zero otherwise.
 
-As an example take a look at the tables \ref{tab:apk-example}. If we consider all the results fo the objective rankings as relevant then the AP@5 for the observed ranking is calculate as follow:
+As an example, take a look at the tables \ref{tab:apk-example}. If we consider all the results of the objective rankings as relevant, then the AP@5 for the observed ranking is calculated as follow:
 
 AP@5=$\frac{1}{5}$$\times$(1$\times$1 + 1$\times$$\frac{2}{2}$ + 1$\times$$\frac{3}{3}$ + 1$\times$$\frac{4}{4}$ + 0$\times$$\frac{0}{5}$) = $\frac{4}{5}$ = 0.80
 
@@ -145,9 +145,9 @@ Where \emph{U} is the number of queries.
 	\end{subtable}%
 \end{table}
 
-As explained before, AP@K and MAP@K are considered as disjoint and not-weighted metrics. This means the gold standard and the observed rankings contain the different items. Moreover, the order of these items does not matter if all of them already exists in the observed ranking.
+AP@K and MAP@K can evaluate disjoint and not-weighted ranking lists. This means the gold standard and the observed rankings contain different items and the order of these items does not matter.
 
-As an example of this drawback take a look at table \ref{tab:apk-example} the AP@4 in this example is 1, although the order and ranking of the results in the observed ranking list is not the same as the objective ranking list.
+As an example of this drawback, take a look at table \ref{tab:apk-example} the AP@4 in this example is 1, although the order and ranking of the results in the observed ranking list are not the same as the objective ranking list.
 
 % \subsubsection{CG, DCG, and NDCG}
 % \label{CG, DCG, and NDCG}
@@ -166,19 +166,19 @@ As an example of this drawback take a look at table \ref{tab:apk-example} the AP
 % \paragraph*{Normalized Discounted Cumulative Gain (NDCG)}
 
 \subsubsection{Kendall rank correlation coefficient}
-The \emph{Kendall Tau} \cite{kendall1938new} metric, also known as Kendall's Correlation, is a common method used to check if two ranked lists are in agreement. Kendall's correlation can be computed by first counting the number of concordant pairs (C) and the number of discordant pairs (D). A pair is said to be concordant if they appear in the same order in their ranking lists. Them M = C - D is our basic statistic. The $\tau$ is calculated: 
+The \emph{Kendall Tau} \cite{kendall1938new} metric, also known as Kendall's Correlation, is a common method used to check if two ranked lists are in agreement. Kendall's Correlation can be computed by first counting the number of concordant pairs (C) and discordant pairs (D). A pair is said to be concordant if they appear in the same order in their ranking lists. We define M = C - D as our basic statistic. The $\tau$ is calculated with the equation below: 
 
 \begin{equation}
-	\tau = \frac{M}{(C+D)}
-	\label{eq:kendall-tau}
+    \tau = \frac{M}{(C+D)}
+    \label{eq:kendall-tau}
 \end{equation}
 
-To calculate Kendall Tau both ranking lists needs to be conjoint. This metric is also not-weighted, this means that the top results matter the same as the bottom of the list.
+Both ranking lists need to be conjoint to calculate Kendall Tau. This metric is also not-weighted, which means that the top results matter the same as the bottom of the list.
 
-To demonstrait these drawbacks take a look at table \ref{tab:apk-example}. Kendall's correlation can not be calculated since the items at rank 5 are different. Even by replacing the fifth elemnt with special character (e.g. \#) on both lists, the value of $\tau$ would be 1. This denotes perfect agreement between the two lists, which is not true.
+To demonstrate these drawbacks, take a look at table \ref{tab:apk-example}. Kendall's Correlation can not be calculated since the items at rank five are different. Even by replacing the fifth element with a special character (e.g., \#) on both lists, the value of $\tau$ would be 1. This denotes perfect agreement between the two lists, which is wrong.
 
 \subsubsection{Rank-Biased Overlap (RBO)}
-The Rank-biased overlap \cite{webber2010similarity} compares two lists by looking at the Set Overlap at each rank. The resulting overlaps are weighted by their position in the list so that differences in the top ranks are more penalized than differences at the bottom. Let \emph{S} and \emph{T} be two infinite rankings. We can define $A_{d}$ define as the agreement between \emph{S} and \emph{T} given by the proportion of the overlap up to depth \emph{d}:
+The Rank-biased overlap (RBO) \cite{webber2010similarity} compares two lists by looking at the \emph{Set Overlap} at each rank. The resulting overlaps are weighted by their position in the list so that differences in the top ranks are more penalized than differences at the bottom. Let \emph{S} and \emph{T} be two infinite rankings. We can define $A_{d}$ define as the agreement between \emph{S} and \emph{T} given by the proportion of the overlap up to depth \emph{d}:
 
 \begin{equation}
 	A_{d} = \frac{|S_{:d} \cap T_{:d}|}{d}
@@ -194,10 +194,20 @@ RBO between the two lists \emph{S} and \emph{T} can be calculated using:
 \end{equation}
 
 
-The result is in the range of [0, 1], where 0 means disjoint, and 1 means identical. \emph{d} is the depth of the rankings being examined, falls in the range of [1, $\infty$]. The tuneable parameter \emph{p} determines how steep the decline in weights is. If \emph{p} converges to zero, the more top-weighted the metric gets. In the limit, when p = 0, only the top-ranked item is considered, and the RBO score is either zero or one. The weights get flatterned when \emph{p} approaches 1.
+The result is in the range of [0, 1], where zero means disjoint, and one means identical. \emph{d} is the depth of the rankings being examined, falls in the range of [1, $\infty$]. The tunable parameter \emph{p} determines how steep the decline in weights is. If \emph{p} reaches zero, the more top-weighted the metric gets. In the limit, when p = 0, only the top-ranked item is considered, and the RBO score is either zero or one. The weights get flattened when \emph{p} approaches 1.
+
+
+\subsubsection{A/B testing}
+\label{subsubsec:ab-testing}
+\emph{A/B testing} also known as \emph{split testing} is a user experience methodology of comparing two versions of a single variable, A and B. Statical analysis is used to ascertain which variation is performing better for a conventional goal.
+
+In works like WTF (Who To Follow) \cite{gupta2013wtf} the authors use online A/B testing to evaluate the system in production condition exclusively. This method is also used to assess Pinterest recommendation system Pixie. The authors could determine a 50\% increase of pin engagement compared to the previous recommendations systems they used before \cite{eksombatchai2018pixie}.
 
 
 \subsection{Data Fusion}
 Data fusion is the process of integrating information gathered by multiple data sources into a single representation \cite{hsu2005comparing}. For recommendation systems, this can be combining multiple ranked recommendation lists into a single ranked list. Data fusion approaches vary depending on the system architecture, data sources, and ranking system. A good example is MetaLens \cite{schafer2002meta}, a meta-recommendation system gathering information from different sources like Rotten Tomatoes and MovieLens and using them to generate more personalized recommenders.
+
+
  \cite{wu2006performance}
+ \todo{Add meta search engine related work}
 
