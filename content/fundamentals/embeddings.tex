@@ -8,12 +8,12 @@ Latent text representations, or embeddings, are vectorial representations of wor
 StarSpace \cite{StarSpace} is a general-purpose neural model for efficient learning of entity embeddings for solving a wide variety of problems:
 
 \begin{enumerate}
-	\item Learning word, sentence, or document level embeddings.
-	\item Information retrieval: ranking of sets of entities/documents or objects, e.g., ranking web documents.
-	\item Metric/similarity learning, e.g., learning sentence or document similarity.
-	\item Content-based or Collaborative filtering-based Recommendation, e.g., recommending music or videos.
-	\item Embedding graphs, e.g., multi-relational graphs such as Freebase.
-	\item Image classification, ranking, or retrieval (e.g., by using existing ResNet features).
+    \item Learning word, sentence, or document level embeddings.
+    \item Information retrieval: ranking of sets of entities/documents or objects, e.g., ranking web documents.
+    \item Metric/similarity learning, e.g., learning sentence or document similarity.
+    \item Content-based or Collaborative filtering-based Recommendation, e.g., recommending music or videos.
+    \item Embedding graphs, e.g., multi-relational graphs such as Freebase.
+    \item Image classification, ranking, or retrieval (e.g., by using existing ResNet features).
 \end{enumerate}
 
 In this work, I use the \emph{ArticleSpace} train mode of StarSpace. This particular model learns the mapping between sentences and documents. Given the embedding of one sentence, one can find the most relevant documents. The output of the StarSpace model is a multi-dimensional vector in a so-called "Embedding-Space." Depending on the parameters that the model has used for training, the dimensionality of the output vector varies. 
@@ -25,97 +25,97 @@ This work observes StarSpace as a black box. The purpose is to use StarSpace to 
 
 \subsubsection{StarSpace Text Normalization}
 \label{subsubsec:star-space-text-normalization}
-The StarSpace model uses different arguments and parameters for its training. The full documentation of these train parameter can be found in the repository\footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}. One of the parameters that effects the input is the \emph{normalizeText} argument. This argument runs a basic text process on the input and can be set either as true or false. It is also one of the arguements that I tune for a better model prediction in subsection \ref{subsec:hyperparameter-tuning}. The text normalization happens during partitionig time. For more details refer to \ref{subsec:partitioning-star-space}. The following algorithm describes how the text normalization is implemented and how it effects the input.
+The StarSpace model uses different arguments and parameters for its training. The full documentation of these train parameter can be found in the repository\footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}. One of the parameters that effects the input is the \emph{normalizeText} argument. This argument runs a basic text process on the input and can be either true or false. It is also one of the arguments that I tune for a better model prediction in subsection \ref{subsec:hyperparameter-tuning}. The text normalization happens during partitioning time. For more details refer to \ref{subsec:partitioning-star-space}. The following algorithm describes how the text normalization is implemented and how it affects the input.
 
 \begin{algorithm}[H]
-	\caption{StarSpace text normalization algorithm}
-	\label{alg:star-space-text-normalization}
-	\SetKwData{allNumeric}{allNumeric}
-	\SetKwData{containsDigits}{containsDigits}
-	\SetKwData{flattenCase}{flattenCase}
-	\SetKwData{flattenNum}{flattenNum}
-	\SetKwData{normalizedText}{normalizedText}
+    \caption{StarSpace text normalization algorithm}
+    \label{alg:star-space-text-normalization}
+    \SetKwData{allNumeric}{allNumeric}
+    \SetKwData{containsDigits}{containsDigits}
+    \SetKwData{flattenCase}{flattenCase}
+    \SetKwData{flattenNum}{flattenNum}
+    \SetKwData{normalizedText}{normalizedText}
 
-	\SetKwFunction{isdigit}{isdigit}
-	\SetKwFunction{isascii}{isascii}
-	\SetKwFunction{isalpha}{isalpha}
-	\SetKwFunction{tolower}{tolower}
+    \SetKwFunction{isdigit}{isdigit}
+    \SetKwFunction{isascii}{isascii}
+    \SetKwFunction{isalpha}{isalpha}
+    \SetKwFunction{tolower}{tolower}
 
-	\SetKwInOut{Input}{input}
-	\SetKwInOut{Output}{output}
+    \SetKwInOut{Input}{input}
+    \SetKwInOut{Output}{output}
 
-	\Input{Input string $S$}
-	\Output{Normalized string $S\prime$}
-	\SetAlgoLined
+    \Input{Input string $S$}
+    \Output{Normalized string $S\prime$}
+    \SetAlgoLined
 
-	\BlankLine\emph{initialization}\;
-	\allNumeric $\leftarrow$ true\;
-	\containsDigits $\leftarrow$ false\;
+    \BlankLine\emph{initialization}\;
+    \allNumeric $\leftarrow$ true\;
+    \containsDigits $\leftarrow$ false\;
 
-	\BlankLine
+    \BlankLine
 
-	\ForEach{character $C$ of the input string $S$}
-	{
-		\containsDigits $\leftarrow$ \containsDigits | \isdigit{C}\;
-		\If{not \isascii{C}}{
-			\allNumeric $\leftarrow$ false\;
-			\emph{continue}\;
-		}
-		\lIf{not \isalpha{C}}{\emph{continue}}
-		\allNumeric $\leftarrow$ false\;
-	}
+    \ForEach{character $C$ of the input string $S$}
+    {
+        \containsDigits $\leftarrow$ \containsDigits | \isdigit{C}\;
+        \If{not \isascii{C}}{
+            \allNumeric $\leftarrow$ false\;
+            \emph{continue}\;
+        }
+        \lIf{not \isalpha{C}}{\emph{continue}}
+        \allNumeric $\leftarrow$ false\;
+    }
 
-	\BlankLine
+    \BlankLine
 
-	\flattenCase $\leftarrow$ true\;
-	\flattenNum $\leftarrow$ \allNumeric \&\& \containsDigits\;
-	\lIf{not \flattenNum \&\& not \flattenCase}{\emph{return}}
-	\lIf{\flattenNum \&\& not \flattenCase}{\emph{return}}
+    \flattenCase $\leftarrow$ true\;
+    \flattenNum $\leftarrow$ \allNumeric \&\& \containsDigits\;
+    \lIf{not \flattenNum \&\& not \flattenCase}{\emph{return}}
+    \lIf{\flattenNum \&\& not \flattenCase}{\emph{return}}
 
-	\BlankLine
+    \BlankLine
 
-	i $\leftarrow$ -1 \;
+    i $\leftarrow$ -1 \;
 
-	\For{character $C$ of the input string $S$}{
-		i++\;
-		\lIf{\flattenNum \&\& \isdigit{C}}{\normalizedText[i] $\leftarrow$ 0 continue}
-		\lIf{\isalpha{C}}{\normalizedText[i] $\leftarrow$ \tolower{C} continue}
-		\normalizedText[i] $\leftarrow$ $C$
-	}
+    \For{character $C$ of the input string $S$}{
+        i++\;
+        \lIf{\flattenNum \&\& \isdigit{C}}{\normalizedText[i] $\leftarrow$ 0 continue}
+        \lIf{\isalpha{C}}{\normalizedText[i] $\leftarrow$ \tolower{C} continue}
+        \normalizedText[i] $\leftarrow$ $C$
+    }
 
-	$S\prime$ $\leftarrow$ \normalizedText\;
-	return $S\prime$ \;
-	\BlankLine
-	\BlankLine
+    $S\prime$ $\leftarrow$ \normalizedText\;
+    return $S\prime$ \;
+    \BlankLine
+    \BlankLine
 \end{algorithm}
 
 
 Let's break down the algorithm \ref{alg:star-space-text-normalization}. This algorithm categorizes long strings into the following buckets:
 
 \begin{enumerate}
-	\item The whole input string consist only of punctuation-and-numeric characters: Things in this bucket get their numbers flattened, to prevent combinatorial explosions.
-	\item All letters get case-flattened.
-	\item Mixed letters and numbers (e.g., product ID): All the letters get case-flattened and numbers are not changed.
+    \item The whole input string consists only of punctuation-and-numeric characters: Things in this bucket get their numbers flattened to prevent combinatorial explosions.
+    \item All letters get case-flattened.
+    \item Mixed letters and numbers (e.g., product ID): All the letters get case-flattened, and numbers are not changed.
 \end{enumerate}
 
 \subsection{Dimension Reduction}
 \label{subsec:dimension-reduction}
-The output vector of the embedding model has enormous dimension. The dimensions can go up to 300. They are different approaches to reduce the dimension and at the same time minimize the information loss. The dimension reduction in this thesis relies on a dimensionality reduction method called \emph{Prenciple Component Analysis (PCA)} \cite{wold1987principal}.
+The output vector of the embedding model has enormous dimensions. The dimensions can go up to 300. They are different approaches to reduce the dimension and at the same time minimize the information loss. The dimension reduction in this thesis relies on a dimensionality reduction method called \emph{Prenciple Component Analysis (PCA)} \cite{wold1987principal}.
 
 \subsubsection{Prenciple Componenent Analysis (PCA)}
 \label{subsubsec:pca}
-Principal component analysis (PCA) in essence, is a linear projection operator that maps a variable of interest to a new coordinate frame where the axes represent maximal variability. Expressed mathematically, an input data matrix X$_{N \times D}$ where is N the number of points, D being the dimension of data. PCA transforms the matrix X to an output Y$_{N \times D\prime}$. D$\prime$ being the reduced dimensions (D$\prime$ $\leq$ D). This reduction from D to D$\prime$ can be achieved by the dot product of X and a so-called \emph{projection matrix} P$_{D \times D\prime}$.
-	\begin{equation}
-		\label{PCA}
-		Y = XP
-	\end{equation}
+Principal component analysis (PCA), in essence, is a linear projection operator that maps a variable of interest to a new coordinate frame where the axes represent maximal variability. Expressed mathematically, an input data matrix X$_{N \times D}$ where is N the number of points, D being the dimension of data. PCA transforms the matrix X to an output Y$_{N \times D\prime}$. D$\prime$ being the reduced dimensions (D$\prime$ $\leq$ D). This reduction from D to D$\prime$ can be achieved by the dot product of X and a so-called \emph{projection matrix} P$_{D \times D\prime}$.
+    \begin{equation}
+        \label{PCA}
+        Y = XP
+    \end{equation}
 
 Each column of the projection matrix P is called a principal component (PC) \cite{projectionMatrix}. 
 
 
 \subsubsection{Related work}
 \label{subsubsec:dimension-reduction-related-work}
-Other methods to reduce the dimension of big datasets and visualize them. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{van2008visualizing}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnama1998linear} are able to reduce the dimension of datasets with multi classes.
+Other methods are to reduce the dimension of big datasets and visualize them. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{van2008visualizing}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnama1998linear} are able to reduce the dimension of datasets with multi classes.
 
 
 In \cite{yan2006graph} observe dimension reduction like PCA, LDE, and other methods, namely Locality Preserving Projections (LPP) on graphs.

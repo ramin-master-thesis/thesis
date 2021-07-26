@@ -145,7 +145,7 @@ Where \emph{U} is the number of queries.
 	\end{subtable}%
 \end{table}
 
-AP@K and MAP@K can evaluate disjoint and not-weighted ranking lists. This means the gold standard and the observed rankings contain different items and the order of these items does not matter.
+AP@K and MAP@K can evaluate disjoint and not-weighted ranking lists. This means the gold standard and the observed rankings contain different items, and the order of these items does not matter.
 
 As an example of this drawback, take a look at table \ref{tab:apk-example} the AP@4 in this example is 1, although the order and ranking of the results in the observed ranking list are not the same as the objective ranking list.
 
@@ -154,7 +154,7 @@ As an example of this drawback, take a look at table \ref{tab:apk-example} the A
 % When examining the ranked result list of a query, it is obvious that:
 % \begin{enumerate}
 % 	\item highly relevant documents are more valuable than marginally relevant documents
-% 	\item the greater the ranked position of a relevant document (of any relevance level) the less valuable it is for the user because the less likely it is that the user will examine the document.
+% 	\item the greater the ranked position of a relevant document (of any relevance level), the less valuable it is for the user because the less likely it is that the user will examine the document.
 % \end{enumerate}
 
 % \paragraph*{Cumulative Gain (CG)}
@@ -205,9 +205,17 @@ In works like WTF (Who To Follow) \cite{gupta2013wtf} the authors use online A/B
 
 
 \subsection{Data Fusion}
-Data fusion is the process of integrating information gathered by multiple data sources into a single representation \cite{hsu2005comparing}. For recommendation systems, this can be combining multiple ranked recommendation lists into a single ranked list. Data fusion approaches vary depending on the system architecture, data sources, and ranking system. A good example is MetaLens \cite{schafer2002meta}, a meta-recommendation system gathering information from different sources like Rotten Tomatoes and MovieLens and using them to generate more personalized recommenders.
+Data fusion is the process of integrating and merging information gathered by multiple data sources into a single representation (i.e., ranked list) for higher effectiveness. For recommendation systems, this can be combining multiple ranked recommendation lists into a single ranked list. Data fusion approaches vary depending on the system architecture, data sources, and ranking system. A good example is MetaLens \cite{schafer2002meta}, a meta-recommendation system gathering information from different sources like Rotten Tomatoes and MovieLens and using them to generate more personalized recommenders.
 
 
- \cite{wu2006performance}
- \todo{Add meta search engine related work}
+Studies show that data fusion methods in IR systems are complex and depend highly on the system architecture and algorithm used in the system \cite{hsu2005comparing}. IR systems or, more specifically, recommender systems can produce a single ranked list shown in figure \ref{fig:single-machine-architecture}. The query is sent, and the system runs the algorithm and outputs the ranked list to the user. The query is sent and can get processed and normalized using a query \emph{formulation}. Afterward, a \emph{schema} processes the query formulation and generates a single ranked list. In \ref{fig:single-machine-architecture} the query is a simple user-ID and does not need to go through the formulation. 
+
+
+With the recent developments in computer science and distributed systems, it is possible to distribute recommender systems into multiple instances. \cite{hsu2005comparing} proposes three main architectures for multi-machine IR systems:
+\begin{enumerate}
+    \item Multiple formulations single scheme (MFSS)
+    \item Single formulation multiple schemes (SFMS)
+    \item Multiple formulations multiple schemes (MFMS)
+\end{enumerate}
+This work uses an SFMS architecture for the distribution. In this architecture, the query is sent to a single formulation point and from there to multiple schemes (i.e., workers). Each scheme runs the recommendation algorithm and produces a ranked list. In the last step, these ranked lists are then integrated into a single ranked list (data fusion approaches explained in section \ref{sec:data-fusion-approaches}). Figure \ref{fig:multiple-machine-architecture} indicates such design.
 

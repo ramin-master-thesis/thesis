@@ -1,6 +1,16 @@
 \section{Graph Embeddign and Partitioning Techniques}
 \label{sec:graph-partitioning-techniques}
-Detecting communities, namely partitioning the graph, is a problem that has inspired multiple research efforts \cite{fortunato2010community}. They are various methods used to obtain graph partitioning. These methods can be categorized into three main groups \cite{goyal2018graph}:
+Graph embedding is an approach that transforms nodes, edges into vector spaces. Graph embedding frameworks use approaches to turn the graph into a computationally digestible format by reducing the dimensionality of the graph. The embedding of a graph can be used in different fields \cite{goyal2018graph}, namely : 
+
+\begin{enumerate}
+    \item Node classification
+    \item Link prediction
+    \item Clustering and partitioning
+    \item Visualization
+\end{enumerate}
+
+
+\emph{Graph partitioning} is used to put nodes based on their similarities in the same group (i.e., community). Partitioning a graph (also called community detection, or graph clustering) is a problem that has inspired multiple research efforts \cite{fortunato2010community}. They are various methods used to obtain graph partitioning. These methods can be categorized into three main groups \cite{goyal2018graph}:
 
 \begin{enumerate}
     \item Factorization
