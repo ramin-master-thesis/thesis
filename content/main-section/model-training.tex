@@ -13,18 +13,7 @@ To train the StarSpace model train data needed to be generated fromat, the model
 \label{Generating Training Data}
 I used the SALSA algorithm to generate the training data. Table \ref{tab:train-data} shows how big the training dataset is. The dataset is indexed as a bipartite graph and then for each tweet the recommendations are calculated. In other words, instead of quering recommendations for a user, the random walk starts on the right-hand side of the bipartite graph. The output is a ranked list of recommendations for a specific tweet. Then the queried tweet among with the other output are written in a text file. The format of the file is explained in section \ref{StarSpace}. This process continues for each node on the right-hand side.
 
-\begin{table}[!ht]
-	\centering
-	\caption{Training Dataset}
-	\label{tab:train-data}
-	\begin{tabular}{|l|c|r|m{0.4\linewidth}|}
-		\hline
-		\textbf{Edges} & \textbf{Left Nodes} & \textbf{Right Nodes} \\
-		\hline
-		9,360,562 & 2,200,377 & 3,151,992	\\
-		\hline
-	\end{tabular}
-\end{table}
+
 
 As an example take a look at the table \ref{tab:example-train-data}. This table shows the recommendations generated from the SpaceX tweet with the following content: "Live views of Starship SN8’s flight test -> https://t.co/Hs5C53qBxb https://t.co/OvAloTO6UQ"
 
