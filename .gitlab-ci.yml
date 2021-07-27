@@ -3,7 +3,7 @@
 # possible alternative: https://github.com/natlownes/docker-latex
 image: x0re/latex-docker:full
 
-build_pdf:
+build:
   script:
     - latexmk -pdf
 
