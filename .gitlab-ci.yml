@@ -5,7 +5,7 @@ image: x0re/latex-docker:full
 
 build_pdf:
   script:
-    -latexmk -pdf
+    - latexmk -pdf
 
   artifacts:
     paths:
