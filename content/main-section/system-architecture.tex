@@ -1,17 +1,31 @@
 \section{System Architecture}
 \label{System Architecture}
 
-\begin{itemize}
-	\item Python is used to implement the and simulate GraphJet, concretley the SALSA algorithm
-	\item As explained in sections \ref{sec:GraphJet} GraphJet architecture consist of three main layers: Storage, Recommendation, API Endpoint
-	\item The main focus is not how we store the data or which storing techniques are performing better. Therefore, a simplified indexing and storing strategy is used (Simple).
-	\item The Indexing is based on Simple indexing
-	\item In this approach, the dataframes hold exactly one value for each tweet or user id. The value is a list of all adjacent nodes. Therefore, a read operation is a single look-up of the key. An example of such a state store is shown in the table \ref{tab:simple-indexing}.
-	\item It is important to say that unlike GraphJet, there is no real time data ingestion. To keep the focus on the partitioning and recommendation quality plus keeping the code simple this aspekt is not considered.
-	\item Python's Pandas is the tool used to read and manipulate the indexes and partitions
-	\item The recommendation engine uses the pandas dataframes to access the indexes
-	\item Flask webserver is used to access the data in the API layer
-\end{itemize}
+I implemented and simulated the GraphJet architecture to evaluate and test the proposed approach of data partitioning. As explained in section \ref{sec:GraphJet}, GraphJet architecture consists of three main layers: Storage, Recommendation, API Endpoint. The same layer system inspires my prototype architecture. In this section, I go through the system architecture and the design decisions taken while creating this work. In the first subsection, I explain the single instance architecture. After that, the subsection describes the distributed architecture of the system. 
+
+
+\subsection{Single Machine}
+\label{subsec:single-machine}
+The overall high level architecture of a single instance can be seen in figure \ref{fig:single-machine-architecture}. The worker (i.e., instance) receives a user-ID as its input and then yields a ranked list of recommendations (i.e., tweets). The detailed architecture of the single worker is shown in figure \ref{fig:single-machine-architecture-detailed}. Let's break down each component of the system and explain how each layer works.
+
+\todo{Pack two figures into one figure with A and B}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{images/simple-worker.png}
+	\caption{Single machine overall architecture}
+	\label{fig:single-machine-architecture}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.75\textwidth]{images/simple-worker-detailed.png}
+	\caption{Single machine detailed architecture}
+	\label{fig:single-machine-architecture-detailed}
+\end{figure}
+
+\subsubsection{Storage and index layer}
+\label{subsub:storage-index-layer}
+The single instance needs to maintain the dataset in for of a bipartite graph in memory. A bipartite graph is a graph whose vertices can be divided into two disjoint and independent sets U and V such that every edge connects a vertex in U to one in V. The bipartite graph consists of two indices. One index stores all tweets for a specific user. The other index stores all users for a specific tweet.
 
 \begin{table}[!h]
 	\centering
@@ -31,77 +45,25 @@
 \end{table}
 
 
-\subsection{Single Machine}
-\label{Single Machine}
+GraphJet uses mutable (hot) and immutable (cold) index segments to store the bipartite graph \cite{sharmaGraphJetRealtimeContent2016}. With this approach, GraphJet optimizes newly incoming edge insertion. In this work, I assume that the system is not ingesting any edges during its runtime. Therefore, there is no need to optimize the prototype for insertion. To keep the indexing as simple as possible, I decided to use a \emph{simple index} system. This approach uses a single node-ID (user-ID or tweet-ID) as its index key. The index key points to an adjacency list containing the node-IDs that the index key interacts with. Table \ref{tab:simple-indexing} shows a small example of this approach. The node-ID 5 has interactions with node-IDs 200 and 50. The prototype generates two of these indices. First, using the user-IDs as its key and the tweet-IDs as the adjacency list values and vice versa.
 
-\begin{itemize}
-	\item Similar implementation to GraphJet
-	\item First the data needs to get be indexed
-	\item The (crawled) dataset needs to be read and indexed 
-	\item An indexer is used to create a Left index and right index
-	\item The dataset is a TSV (Tab Seperated Value) file each line consist of a UserID, TweetID, Content
-	\item The file is read and first the TweetIDs are grouped together as an adjancency list with the corensponding UserID. This proccess creates the left index. The same happens to the UserIDs respectivly for the right index.
-	\item After the Index is generated it gates saved on the system
-	\item The flaskserver uses a CLI to load the indexes
-	\item A docker container is used to pass the commands and reach the endpoints
-	\item These endpoints are \ref{tab:endpoints}
-	\item Figure \ref{fig:single-machine-architecture} shows the overall architecture of the system. The request (userID) is sent to the endpoint and then the recommendations get calculated and sent to the output
-\end{itemize}
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.75\textwidth]{images/simple-worker.png}
-	\caption{Single machine overall architecture}
-	\label{fig:single-machine-architecture}
-\end{figure}
+\subsubsection{Recommendation layer}
+\label{subsubsec:recommendation-layer}
 
-\begin{table}[!h]
-	\centering
-	\caption{Enpoints}
-	\label{tab:endpoints}
-	\begin{tabular}{|l|c|}
-		\hline
-		\textbf{URL prefix} & \textbf{Description} \\
-		\hline
-		/recommendation & generating recommendations with SALSA, for user or tweet \\
-		\hline
-		/content & getting the content of a TweetID \\
-		\hline
-		/status & Endpoint to get status of the partition or user \\
-		\hline
-	\end{tabular}
-\end{table}
+
+\subsubsection{API Endpoint layer}
+\label{subsubsec:api-endpoint-layer}
+
 
 \subsection{Multiple Machines}
 \label{Multiple Machines}
 
-\begin{itemize}
-	\item 
-	\item Each partition is a docker container. Before running the container the the user needs to pass some flags. You can see that in the table \ref{tab:cli-flags}
-\end{itemize}
-
-\begin{table}[!h]
-	\centering
-	\caption{CLI flags}
-	\label{tab:cli-flags}
-	\begin{tabular}{|l|c|}
-		\hline
-		\textbf{Flag} & \textbf{Description} \\
-		\hline
-		--partition method & hash function used for partitioning (defaults single\_partition) \\
-		\hline
-		--partition-number & number of partition \\
-		\hline
-		--port & port number of flask webserver \\
-		\hline
-		--content-index/--no-content-index & Flag whether to load content index or not \\
-		\hline
-	\end{tabular}
-\end{table}
-
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=0.75\textwidth]{images/multi-partition-architecture.png}
+	\includegraphics[width=1\textwidth]{images/multi-partition-architecture.png}
 	\caption{Multiple partition architecture}
 	\label{fig:multiple-machine-architecture}
 \end{figure}
+
+\todo{Improve this figure}

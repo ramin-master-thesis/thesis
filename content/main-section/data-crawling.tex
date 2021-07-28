@@ -1,27 +1,24 @@
 \section{Data crawling approach}
 \label{sec:data-crawling-approach}
 
-GraphJet maintains a user-tweet bipartite graph. Creating this graph requires a real-world data set. In works like \cite{kwakWhatTwitterSocial2010} the authors study a massive dataset of tweets that they crawled. Twitter provides different APIs to request data from their data sources. For example, requesting user-ID, getting the tweets of a user's timeline, or gathering the retweets. These API endpoints come with their limitations. If an endpoint has a rate limit of 900 requests/15-minutes, then up to 900 requests over any 15-minute interval is allowed. To speed up the crawling process, I used an open-source tweet crawler\footnote{\url{https://github.com/philipphager/twitter-crawler}}. This crawler uses \emph{Tweet4J}\footnote{\url{https://twitter4j.org/en/index.html}}, a Java library for the Twitter API, to request the data. The crawler uses multiple Tweet4J configs with different API keys for each config and runs each config in parallel. I used ten configs, and this speeds up the crawling by a factor of 10. 
+GraphJet maintains a user-tweet bipartite graph. Creating this graph requires a real-world data set. In works like \cite{kwakWhatTwitterSocial2010} the authors study a massive dataset of tweets that they crawled. Twitter provides different APIs to request data from their data sources. For example, requesting user-ID, getting the tweets of a user's timeline, or gathering the retweets. These API endpoints come with their limitations. If an endpoint has a rate limit of 900 requests/15-minutes, then up to 900 requests over any 15-minute interval is allowed. To speed up the crawling process, I used an open-source tweet crawler\footnote{\url{https://github.com/philipphager/twitter-crawler}}. This crawler uses \emph{Tweet4J}\footnote{\url{https://twitter4j.org/en/index.html}}, a Java library for the Twitter API, to request the data. The crawler uses multiple Tweet4J configs with different API keys for each config and runs each config in parallel. I used ten configs to speed up the crawling by a factor of 10. 
 
 
 The open-source crawler came with its limitations at first. It could not crawl the content of the tweets and could save the crawled data (user-ID, tweet-ID, content) only as CSV (Comma Separated Values) files. After I implemented the tweet-content functionality, I noticed that saving the data as CSV creates problems. Since the content of the tweets contained commas (,), I had to save the user-ID, Tweet-ID, Content in a TSV (Tab Separated Values) file. During crawl time, tabs existing in a tweet were replaced by white space. Any other normalization was avoided during crawl time.
 
 
-Elon Musk's profile, which has over 58 million followers, is the initial seed to start the crawl. The crawler crawls up to 25 tweets from the user's timeline. The crawler then adds the tweet author and up to 500 retweeters to its crawling queue for each tweet. This process continues until the crawler is stopped. Whenever a Tweeter4J config reaches the API endpoint limit, the program writes its data in a TSV file.
+Elon Musk's profile, which has over 58 million followers, is the initial seed to start the crawl. The crawler crawls up to 25 tweets from the user's timeline. The crawler then adds the tweet author and up to 500 retweeters to its crawling queue for each tweet. This process continues until the crawler is stopped. Whenever a crawl process reaches the Twitter API endpoint limit, the program persists its data in a TSV file.
 
 
-The StarSpace model needs a training dataset to train the model and a test dataset to test and evaluate the data. For a better evaluation quality, these two datasets should be different from each other. Therefore the crawling process was started two times in different time spans. The training dataset was crawled between March 1st to March 5st. This period for the training dataset was March 10th to March 15st. Details of each dataset is shown in the tables \ref{tab:data-set}.
-
-
-\begin{table}[!ht]
+\begin{table}[!h]
 	\caption{Dataset specification}
-	\label{tab:data-set}
+	\label{tab:dataset}
 	\begin{subtable}{.5\linewidth}
 		\caption{Training Dataset}
 		\centering
         \begin{tabular}{|l|c|r|m{0.4\linewidth}|}
             \hline
-            \textbf{Edges} & \textbf{Left Nodes} & \textbf{Right Nodes} \\
+            \textbf{Interactions} & \textbf{Users} & \textbf{Tweets} \\
             \hline
             9,360,562 & 2,200,377 & 3,151,992	\\
             \hline
@@ -32,10 +29,18 @@ The StarSpace model needs a training dataset to train the model and a test datas
 		\centering
         \begin{tabular}{|l|c|r|m{0.4\linewidth}|}
             \hline
-            \textbf{Edges} & \textbf{Left Nodes} & \textbf{Right Nodes} \\
+            \textbf{Interactions} & \textbf{Users} & \textbf{Tweets} \\
             \hline
             11,884,898 & 3,545,044 & 3,439,934	\\
             \hline
         \end{tabular}
 	\end{subtable}%
 \end{table}
+
+The StarSpace model needs a training dataset to train the model and a test dataset to test and evaluate the system. For a better evaluation quality, these two datasets should be different from each other. Therefore the crawling process was started two times in different time spans. The training dataset was crawled between March 1st to March 5st. This period for the training dataset was March 10th to March 15st. Details of each dataset are shown in the tables \ref{tab:dataset}. Interactions between the users and tweets are divided into three main groups:
+\begin{enumerate}
+    \item Write a tweet
+    \item Like a tweet
+    \item Retweet a tweet
+\end{enumerate}
+These interactions create the edges between the users and tweets when generating the bipartite graph.
