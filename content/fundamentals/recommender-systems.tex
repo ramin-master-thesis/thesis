@@ -1,26 +1,26 @@
 \section{Recommender Systems}
 \label{sec:recommender-systems}
 
-Recommender systems use the opinions of a community of users to help individuals in that community more effectively identify the content of interest from a potentially overwhelming set of choices \cite{resnick1997recommender}.
+Recommender systems use the opinions of a community of users to help individuals in that community more effectively identify the content of interest from a potentially overwhelming set of choices \cite{gunawardanaSurveyAccuracyEvaluation}.
 
-A recommendation engine recommends a set of documents from a superset that the engine finds most relevant to the user. In that sense, a recommendation engine is simply performing the task of document retrieval. Recommender systems can be broadly categorized into two types:
+A recommendation engine recommends a set of documents from a superset that the engine finds most relevant to the user. In that sense, a recommendation engine is simply performing the task of document retrieval. Recommender systems are mainly categorized into two types:
 \begin{enumerate}
     \item \emph{Content based}
     \item \emph{Collaborative filtering (CF)}
 \end{enumerate}
-The recommendation engine in GraphJet \cite{sharma2016graphjet} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) uses a collaborative filtering approach. Therefore, the main focus of this work is on collaborative filtering. The following subsection explains collaborative filtering recommender systems and related work. Lastly, the different metrics to evaluate recommender systems are discussed.
+The recommendation engine in GraphJet \cite{sharmaGraphJetRealtimeContent2016} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) uses a collaborative filtering approach. Therefore, the main focus of this work is on collaborative filtering. The following subsection explains collaborative filtering recommender systems and related work. Lastly, the different metrics to evaluate recommender systems are discussed.
 
 \subsection{Collaborative Filtering}
 \label{subsec:collaborative-filtering}
 
 Recommendations can be generated based on shared interests, correlated activities, topological configurations, and many other signals.
 
-\emph{Collaborative filtering (CF)} term, which was first announced in \cite{goldberg1992using} means that the users in a system collaborate to perform filtering by interacting with documents and record their reactions.
+\emph{Collaborative filtering (CF)} term, which was first intorduced in \cite{goldbergUsingCollaborativeFiltering1992} means that the users in a system collaborate to perform filtering by interacting with documents and record their reactions.
 In CF scenarios, the system has only access to the user and item identifiers, and no additional information over items or users is used.
-Examples of recommender systems that use collaborative filtering are: Google news recommender \cite{das2007google}, Amazon recommendation system \cite{linden2003amazon}, Pixie \cite{eksombatchai2018pixie}, and GraphJet \cite{sharma2016graphjet}.
+Examples of recommender systems that use collaborative filtering are: Google news recommender \cite{dasGoogleNewsPersonalization2007}, Amazon recommendation system \cite{lindenAmazonComRecommendations2003}, Pixie \cite{eksombatchaiPixieSystemRecommending2018}, and GraphJet \cite{sharmaGraphJetRealtimeContent2016}.
 
 Image a document recommender system, recommending similar documents to the users. In a typical CF scenario there is set of \emph{m} users \{\emph{$u_{1}$,$u_{2}$,...,$u_{m}$}\} and set of \emph{n} documents \{\emph{$d_{1}$,$d_{2}$,...,$d_{n}$}\}, and each user, \emph{$u_{i}$}, has a list of documents, \emph{D$u_{i}$}, which the user has interacted with. Similar to the first user there is a list of documents for user \emph{$u_{j}$}. If the intersection between the document list of these both users is not empty, these users can be considered "similar" to each other. Therefore, if user \emph{$u_{i}$} interacts with a document, \emph{$d_{i}$}, which the user \emph{D$u_{j}$} has not interacted with yet. Document \emph{$d_{i}$} can be recommended to the user \emph{$u_{j}$}. This can be seen in figure \ref{fig:collaborative-filtering}.
-In \cite{su2009survey} the different techniques used to implement CF systems are explained in detail. Moreover, they discuss multiple evaluation metrics to assess the recommendation quality.
+In \cite{suSurveyCollaborativeFiltering} the different techniques used to implement CF systems are explained in detail. Moreover, they discuss multiple evaluation metrics to assess the recommendation quality.
 
 
 \begin{figure}[!h]
@@ -40,7 +40,7 @@ After applying a new algorithm or an improvement to a recommendation engine, the
 
 % In recommender systems, the highly relevant documents are more valuable than moderately relevant documents, which are more useful than irrelevant documents.
 
-According to \cite{webber2010similarity} when comparing the golden standard with the newly generated observed ranking, the rank similarity measures can be broken down into four main groups. These measures are grouped as not-weighted (set-based) or weighted (ordered) and may need conjointness or disjoint rankings. Each of these terms is defined as follow: 
+According to \cite{webberSimilarityMeasureIndefinite2010} when comparing the golden standard with the newly generated observed ranking, the rank similarity measures can be broken down into four main groups. These measures are grouped as not-weighted (set-based) or weighted (ordered) and may need conjointness or disjoint rankings. Each of these terms is defined as follow: 
 
 \begin{description}
     \item \emph{conjoint} Both of the ranked lists consisting of the same items.
@@ -49,7 +49,7 @@ According to \cite{webber2010similarity} when comparing the golden standard with
     \item \emph{not-weighted (set-based)} There is no known or inferred ordering of the items.
 \end{description}
 
-In this section, I explain the evaluation metrics listed in the table \ref{tab:evaluation-metrics}. For more metrics for evaluating collaborative filtering recommender system, please refer to \cite{herlocker2004evaluating}.
+In this section, I explain the evaluation metrics listed in the table \ref{tab:evaluation-metrics}. For more metrics for evaluating collaborative filtering recommender system, please refer to \cite{herlockerEvaluatingCollaborativeFiltering2004}.
 
 \begin{table}[!ht]
 	\centering
@@ -166,7 +166,7 @@ As an example of this drawback, take a look at table \ref{tab:apk-example} the A
 % \paragraph*{Normalized Discounted Cumulative Gain (NDCG)}
 
 \subsubsection{Kendall rank correlation coefficient}
-The \emph{Kendall Tau} \cite{kendall1938new} metric, also known as Kendall's Correlation, is a common method used to check if two ranked lists are in agreement. Kendall's Correlation can be computed by first counting the number of concordant pairs (C) and discordant pairs (D). A pair is said to be concordant if they appear in the same order in their ranking lists. We define M = C - D as our basic statistic. The $\tau$ is calculated with the equation below: 
+The \emph{Kendall Tau} \cite{kendallNewMeasureRank1938} metric, also known as Kendall's Correlation, is a common method used to check if two ranked lists are in agreement. Kendall's Correlation can be computed by first counting the number of concordant pairs (C) and discordant pairs (D). A pair is said to be concordant if they appear in the same order in their ranking lists. We define M = C - D as our basic statistic. The $\tau$ is calculated with the equation below: 
 
 \begin{equation}
     \tau = \frac{M}{(C+D)}
@@ -178,7 +178,7 @@ Both ranking lists need to be conjoint to calculate Kendall Tau. This metric is 
 To demonstrate these drawbacks, take a look at table \ref{tab:apk-example}. Kendall's Correlation can not be calculated since the items at rank five are different. Even by replacing the fifth element with a special character (e.g., \#) on both lists, the value of $\tau$ would be 1. This denotes perfect agreement between the two lists, which is wrong.
 
 \subsubsection{Rank-Biased Overlap (RBO)}
-The Rank-biased overlap (RBO) \cite{webber2010similarity} compares two lists by looking at the \emph{Set Overlap} at each rank. The resulting overlaps are weighted by their position in the list so that differences in the top ranks are more penalized than differences at the bottom. Let \emph{S} and \emph{T} be two infinite rankings. We can define $A_{d}$ define as the agreement between \emph{S} and \emph{T} given by the proportion of the overlap up to depth \emph{d}:
+The Rank-biased overlap (RBO) \cite{webberSimilarityMeasureIndefinite2010} compares two lists by looking at the \emph{Set Overlap} at each rank. The resulting overlaps are weighted by their position in the list so that differences in the top ranks are more penalized than differences at the bottom. Let \emph{S} and \emph{T} be two infinite rankings. We can define $A_{d}$ define as the agreement between \emph{S} and \emph{T} given by the proportion of the overlap up to depth \emph{d}:
 
 \begin{equation}
 	A_{d} = \frac{|S_{:d} \cap T_{:d}|}{d}
@@ -201,17 +201,17 @@ The result is in the range of [0, 1], where zero means disjoint, and one means i
 \label{subsubsec:ab-testing}
 \emph{A/B testing} also known as \emph{split testing} is a user experience methodology of comparing two versions of a single variable, A and B. Statical analysis is used to ascertain which variation is performing better for a conventional goal.
 
-In works like WTF (Who To Follow) \cite{gupta2013wtf} the authors use online A/B testing to evaluate the system in production condition exclusively. This method is also used to assess Pinterest recommendation system Pixie. The authors could determine a 50\% increase of pin engagement compared to the previous recommendations systems they used before \cite{eksombatchai2018pixie}.
+In works like WTF (Who To Follow) \cite{guptaWTFWhoFollow} the authors use online A/B testing to evaluate the system in production condition exclusively. This method is also used to assess Pinterest recommendation system Pixie. The authors could determine a 50\% increase of pin engagement compared to the previous recommendations systems they used before \cite{eksombatchaiPixieSystemRecommending2018}.
 
 
 \subsection{Data Fusion}
-Data fusion is the process of integrating and merging information gathered by multiple data sources into a single representation (i.e., ranked list) for higher effectiveness. For recommendation systems, this can be combining multiple ranked recommendation lists into a single ranked list. Data fusion approaches vary depending on the system architecture, data sources, and ranking system. A good example is MetaLens \cite{schafer2002meta}, a meta-recommendation system gathering information from different sources like Rotten Tomatoes and MovieLens and using them to generate more personalized recommenders.
+Data fusion is the process of integrating and merging information gathered by multiple data sources into a single representation (i.e., ranked list) for higher effectiveness. For recommendation systems, this can be combining multiple ranked recommendation lists into a single ranked list. Data fusion approaches vary depending on the system architecture, data sources, and ranking system. A good example is MetaLens \cite{schaferMetarecommendationSystemsUsercontrolled}, a meta-recommendation system gathering information from different sources like Rotten Tomatoes and MovieLens and using them to generate more personalized recommenders.
 
 
-Studies show that data fusion methods in IR systems are complex and depend highly on the system architecture and algorithm used in the system \cite{hsu2005comparing}. IR systems or, more specifically, recommender systems can produce a single ranked list shown in figure \ref{fig:single-machine-architecture}. The query is sent, and the system runs the algorithm and outputs the ranked list to the user. The query is sent and can get processed and normalized using a query \emph{formulation}. Afterward, a \emph{schema} processes the query formulation and generates a single ranked list. In \ref{fig:single-machine-architecture} the query is a simple user-ID and does not need to go through the formulation. 
+Studies show that data fusion methods in IR systems are complex and depend highly on the system architecture and algorithm used in the system \cite{frankhsuComparingRankScore2005}. IR systems or, more specifically, recommender systems can produce a single ranked list shown in figure \ref{fig:single-machine-architecture}. The query is sent, and the system runs the algorithm and outputs the ranked list to the user. The query is sent and can get processed and normalized using a query \emph{formulation}. Afterward, a \emph{schema} processes the query formulation and generates a single ranked list. In \ref{fig:single-machine-architecture} the query is a simple user-ID and does not need to go through the formulation. 
 
 
-With the recent developments in computer science and distributed systems, it is possible to distribute recommender systems into multiple instances. \cite{hsu2005comparing} proposes three main architectures for multi-machine IR systems:
+With the recent developments in computer science and distributed systems, it is possible to distribute recommender systems into multiple instances. \cite{frankhsuComparingRankScore2005} proposes three main architectures for multi-machine IR systems:
 \begin{enumerate}
     \item Multiple formulations single scheme (MFSS)
     \item Single formulation multiple schemes (SFMS)

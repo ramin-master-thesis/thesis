@@ -1,6 +1,6 @@
 \section{Graph Embeddign and Partitioning Techniques}
 \label{sec:graph-partitioning-techniques}
-Graph embedding is an approach that transforms nodes, edges into vector spaces. Graph embedding frameworks use approaches to turn the graph into a computationally digestible format by reducing the dimensionality of the graph. The embedding of a graph can be used in different fields \cite{goyal2018graph}, namely : 
+Graph embedding is an approach that transforms nodes, edges into vector spaces. Graph embedding frameworks use approaches to turn the graph into a computationally digestible format by reducing the dimensionality of the graph. The embedding of a graph can be used in different fields \cite{goyalGraphEmbeddingTechniques2018}, namely : 
 
 \begin{enumerate}
     \item Node classification
@@ -10,7 +10,7 @@ Graph embedding is an approach that transforms nodes, edges into vector spaces. 
 \end{enumerate}
 
 
-\emph{Graph partitioning} is used to put nodes based on their similarities in the same group (i.e., community). Partitioning a graph (also called community detection, or graph clustering) is a problem that has inspired multiple research efforts \cite{fortunato2010community}. They are various methods used to obtain graph partitioning. These methods can be categorized into three main groups \cite{goyal2018graph}:
+\emph{Graph partitioning} is used to put nodes based on their similarities in the same group (i.e., community). Partitioning a graph (also called community detection, or graph clustering) is a problem that has inspired multiple research efforts \cite{fortunatoCommunityDetectionGraphs2010}. They are various methods used to obtain graph partitioning. These methods can be categorized into three main groups \cite{goyalGraphEmbeddingTechniques2018}:
 
 \begin{enumerate}
     \item Factorization
@@ -19,19 +19,19 @@ Graph embedding is an approach that transforms nodes, edges into vector spaces. 
 \end{enumerate}
 
 
-Factorization-based methods determine the connections between the nodes in a matrix and decompose this matrix to achieve an embedding. This can be archived with methods like Boolean matrix factorization \cite{miettinen2011model}, which has been extended to streaming environments for biclustering bipartite graphs \cite{neumann2020biclustering}. Other approaches like \emph{HOPE} \cite{ou2016asymmetric} use rely on other factorization methods, i.e., \emph{SVD} \cite{van1976generalizing} to generate the embeddings.
+Factorization-based methods determine the connections between the nodes in a matrix and decompose this matrix to achieve an embedding. This can be archived with methods like Boolean matrix factorization \cite{miettinenModelOrderSelection2011}, which has been extended to streaming environments for biclustering bipartite graphs \cite{neumannBiclusteringBooleanMatrix2020}. Other approaches like \emph{HOPE} \cite{ouAsymmetricTransitivityPreserving2016b} use rely on other factorization methods, i.e., \emph{SVD} \cite{vanloanGeneralizingSingularValue1976} to generate the embeddings.
 
 
-Random walk-based approaches generate embedding based on the similarity between the nodes. Embeddign techniques like \emph{Deep Walk} \cite{perozzi2014deepwalk} and \emph{node2vec} \cite{grover2016node2vec} are used for graph representation.
+Random walk-based approaches generate embedding based on the similarity between the nodes. Embeddign techniques like \emph{Deep Walk} \cite{perozziDeepWalkOnlineLearning2014} and \emph{node2vec} \cite{groverNode2vecScalableFeature2016} are used for graph representation.
 
 
-More recent approaches like \cite{satuluri2020simclusters} present a technique called \emph{Simclusters}. Instead of matrix factorization methods, the authors rely on a combination of similarity search
+More recent approaches like \cite{satuluriSimClustersCommunityBasedRepresentations2020a} present a technique called \emph{Simclusters}. Instead of matrix factorization methods, the authors rely on a combination of similarity search
 and community discovery. The authors discuss that the calculation of the matrix factorization is not optimized for a massive scale. To solve many personalization and recommendation problems at scale, the authors propose a novel method to detect similar communities between users from the user-user bipartite graph.
 
 
-Recently deep learning has achieved great success in many classification applications. This can also be extended to graph classification and clustering. In \cite{tian2014learning} they apply deep learning to learn the embeddings and run a \emph{k}-mean algorithm on the embedding to create the clusters. The semi-supervised node classification method proposed in \cite{kipf2016semi} uses Graph convolutional networks (GCN) model to tackle this problem. 
+Recently deep learning has achieved great success in many classification applications. This can also be extended to graph classification and clustering. In \cite{tianLearningDeepRepresentations2014} they apply deep learning to learn the embeddings and run a \emph{k}-mean algorithm on the embedding to create the clusters. The semi-supervised node classification method proposed in \cite{kipfSemiSupervisedClassificationGraph2017} uses Graph convolutional networks (GCN) model to tackle this problem. 
 
-Hybrid approaches introduced in \cite{ying2018graph}, called \emph{PinSage}. PinSage is an efficient random walk approach combined with graph convolutional neural networks (GCN) to generate embeddings of nodes.
+Hybrid approaches introduced in \cite{yingGraphConvolutionalNeural2018}, called \emph{PinSage}. PinSage is an efficient random walk approach combined with graph convolutional neural networks (GCN) to generate embeddings of nodes.
 
 
 The learnings from PinSage and Simclusters lead me to adopt an embedding model like StarSpace (explained in subsection \ref{subsec:StarSpace}) to classify the nodes. The training data will be generated with the random walk algorithm SALSA (described in subsection \ref{subsec:GraphJet-Recommendation-Engine}). I believe this approach can develop more personalized recommendations for the users.

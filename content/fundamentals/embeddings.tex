@@ -1,11 +1,11 @@
 \section{Embeddings}
 \label{Embeddigns}
-Latent text representations, or embeddings, are vectorial representations of words or documents, traditionally learned in an unsupervised way over large corpora. Work on neural embeddings in this domain includes \cite{Bengio2003}, 
-\cite{Collobert2011}, word2vec \cite{goldberg2014word2vec} and more recently fastText \cite{joulin2016fasttext}.
+Latent text representations, or embeddings, are vectorial representations of words or documents, traditionally learned in an unsupervised way over large corpora. Work on neural embeddings in this domain includes \cite{bengioNeuralProbabilisticLanguage2003}, 
+\cite{collobertNaturalLanguageProcessing2011}, word2vec \cite{goldbergWord2vecExplainedDeriving2014} and more recently fastText \cite{joulinFastTextZipCompressing2016}.
 
 \subsection{StarSpace}
 \label{subsec:StarSpace}
-StarSpace \cite{StarSpace} is a general-purpose neural model for efficient learning of entity embeddings for solving a wide variety of problems:
+StarSpace \cite{wuStarSpaceEmbedAll2017} is a general-purpose neural model for efficient learning of entity embeddings for solving a wide variety of problems:
 
 \begin{enumerate}
     \item Learning word, sentence, or document level embeddings.
@@ -100,7 +100,7 @@ Let's break down the algorithm \ref{alg:star-space-text-normalization}. This alg
 
 \subsection{Dimension Reduction}
 \label{subsec:dimension-reduction}
-The output vector of the embedding model has enormous dimensions. The dimensions can go up to 300. They are different approaches to reduce the dimension and at the same time minimize the information loss. The dimension reduction in this thesis relies on a dimensionality reduction method called \emph{Prenciple Component Analysis (PCA)} \cite{wold1987principal}.
+The output vector of the embedding model has enormous dimensions. The dimensions can go up to 300. They are different approaches to reduce the dimension and at the same time minimize the information loss. The dimension reduction in this thesis relies on a dimensionality reduction method called \emph{Prenciple Component Analysis (PCA)} \cite{woldPrincipalComponentAnalysis}.
 
 \subsubsection{Prenciple Componenent Analysis (PCA)}
 \label{subsubsec:pca}
@@ -110,14 +110,14 @@ Principal component analysis (PCA), in essence, is a linear projection operator 
         Y = XP
     \end{equation}
 
-Each column of the projection matrix P is called a principal component (PC) \cite{projectionMatrix}. 
+Each column of the projection matrix P is called a principal component (PC) \cite{xu10701MachineLearning}. 
 
 
 \subsubsection{Related work}
 \label{subsubsec:dimension-reduction-related-work}
-Other methods are to reduce the dimension of big datasets and visualize them. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{van2008visualizing}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnama1998linear} are able to reduce the dimension of datasets with multi classes.
+Other methods are to reduce the dimension of big datasets and visualize them. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{vandermaaten08a}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnamaLINEARDISCRIMINANTANALYSIS} can reduce the dimension of datasets with multi classes.
 
 
-In \cite{yan2006graph} observe dimension reduction like PCA, LDE, and other methods, namely Locality Preserving Projections (LPP) on graphs.
+In \cite{yanGraphEmbeddingExtensions2007} study and compare dimension reduction methods like PCA, LDE, and other methods, namely Locality Preserving Projections (LPP) on graphs.
 
 
