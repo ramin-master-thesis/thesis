@@ -5,17 +5,22 @@ Recommender systems use the opinions of a community of users to help individuals
 
 A recommendation engine recommends a set of documents from a superset that the engine finds most relevant to the user. In that sense, a recommendation engine is simply performing the task of document retrieval. Recommender systems are mainly categorized into two types:
 \begin{enumerate}
-    \item \emph{Content based}
+    \item \emph{Content-based filtering}
     \item \emph{Collaborative filtering (CF)}
 \end{enumerate}
-The recommendation engine in GraphJet \cite{sharmaGraphJetRealtimeContent2016} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) uses a collaborative filtering approach. Therefore, the main focus of this work is on collaborative filtering. The following subsection explains collaborative filtering recommender systems and related work. Lastly, the different metrics to evaluate recommender systems are discussed.
+
+Content-based filtering methods classify items based on the user's input on the content (e.g., like or dislike an item) to generate recommendations. On the other hand, collaborative filtering algorithms create recommendations based on the user-user relationship and their interactions with the same items.
+
+
+This work focuses on collaborative filtering recommender systems, of which GraphJet \cite{sharmaGraphJetRealtimeContent2016} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) is an example. The approach uses a content-based partitioning method to distribute this system on multiple instances and increase the recommendation quality.
+The following subsection explains collaborative filtering recommender systems and related work. Lastly, the different metrics to evaluate recommender systems are discussed.
 
 \subsection{Collaborative Filtering}
 \label{subsec:collaborative-filtering}
 
 Recommendations can be generated based on shared interests, correlated activities, topological configurations, and many other signals.
 
-\emph{Collaborative filtering (CF)} term, which was first intorduced in \cite{goldbergUsingCollaborativeFiltering1992} means that the users in a system collaborate to perform filtering by interacting with documents and record their reactions.
+\emph{Collaborative filtering (CF)} term, which was first introduced in \cite{goldbergUsingCollaborativeFiltering1992} means that the users in a system collaborate to perform filtering by interacting with documents and record their reactions.
 In CF scenarios, the system has only access to the user and item identifiers, and no additional information over items or users is used.
 Examples of recommender systems that use collaborative filtering are: Google news recommender \cite{dasGoogleNewsPersonalization2007}, Amazon recommendation system \cite{lindenAmazonComRecommendations2003}, Pixie \cite{eksombatchaiPixieSystemRecommending2018}, and GraphJet \cite{sharmaGraphJetRealtimeContent2016}.
 
@@ -24,10 +29,10 @@ In \cite{suSurveyCollaborativeFiltering} the different techniques used to implem
 
 
 \begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.50\textwidth]{images/collaborative-filtering}
-	\caption{Collaborative filtering}
-	\label{fig:collaborative-filtering}
+    \centering
+    \includegraphics[width=0.50\textwidth]{images/collaborative-filtering}
+    \caption{Collaborative filtering}
+    \label{fig:collaborative-filtering}
 \end{figure}
 
 
@@ -49,19 +54,19 @@ According to \cite{webberSimilarityMeasureIndefinite2010} when comparing the gol
     \item \emph{not-weighted (set-based)} There is no known or inferred ordering of the items.
 \end{description}
 
-In this section, I explain the evaluation metrics listed in the table \ref{tab:evaluation-metrics}. For more metrics for evaluating collaborative filtering recommender system, please refer to \cite{herlockerEvaluatingCollaborativeFiltering2004}.
+This section introduces the evaluation metrics listed in the table \ref{tab:evaluation-metrics}. For more metrics for evaluating collaborative filtering recommender system, please refer to \cite{herlockerEvaluatingCollaborativeFiltering2004}.
 
 \begin{table}[!ht]
-	\centering
-	\caption{Evaluation metrics}
-	\label{tab:evaluation-metrics}
-	\begin{tabular}{r|l|l}
-		& \textbf{Not-weighted} & \textbf{Weighted} \\
-		\hline
-		\textbf{Conjoint} & Kendall's $\tau$ & - \\ %Normalized Discounted Cumulative Gain (NDCG) \\
-		\hline
-		\textbf{Disjoint} & \vtop{\hbox{\strut AP$\atsign$K}\hbox{\strut MAP$\atsign$K}}& Ranked-Biased Overlap (RBO) \\
-	\end{tabular}
+    \centering
+    \caption{Evaluation metrics}
+    \label{tab:evaluation-metrics}
+    \begin{tabular}{r|l|l}
+        & \textbf{Not-weighted} & \textbf{Weighted} \\
+        \hline
+        \textbf{Conjoint} & Kendall's $\tau$ & Normalized Discounted Cumulative Gain (NDCG) \\
+        \hline
+        \textbf{Disjoint} & \vtop{\hbox{\strut AP$\atsign$K}\hbox{\strut MAP$\atsign$K}}& Ranked-Biased Overlap (RBO) \\
+    \end{tabular}
 \end{table}
 
 \subsubsection{Precision and Recall}
@@ -71,18 +76,18 @@ The most well-known pair of variables jointly measuring retrieval effectiveness 
 
 \paragraph*{Precision} is the proportion of the retrieved relevant documents. The formal definition of percision:
 \begin{equation}
-	percision = \frac{|\emph{\{relevant document\}} \cap \emph{\{retrieved documents\}}|}{|\emph{\{retrieved documents\}}|}
-	\label{eq:percision}
+    percision = \frac{|\emph{\{relevant document\}} \cap \emph{\{retrieved documents\}}|}{|\emph{\{retrieved documents\}}|}
+    \label{eq:percision}
 \end{equation}
-% Precision at k documents (P@k) is still a useful metric, but fails to take the ranking of the relevant documents into account. \cite{jarvelin2017ir}
+
 
 \paragraph*{Recall} being the proportion of the relevant documents that have been retrieved. Mathematically defined as:
 \begin{equation}
-	recall = \frac{|\emph{\{relevant document\}} \cap \emph{\{retrieved documents\}}|}{|\emph{\{relevant documents\}}|}
-	\label{eq:recall}
+    recall = \frac{|\emph{\{relevant document\}} \cap \emph{\{retrieved documents\}}|}{|\emph{\{relevant documents\}}|}
+    \label{eq:recall}
 \end{equation}
 
-Modern information retrieval systems nowadays retrieve thousands of relevant documents that few users will be interested in reading. Evaluating these systems with recall is obsolete.
+Evaluating modern information retrieval systems with recall is obsolete. These systems retrieve thousands of relevant documents that few users will be interested in reading.
 
 Singly, each metric measures some aspect of retrieval effectiveness; together, they measure retrieval effectiveness entirely. Metrics like average precision bring these two metrics close to each other.
 
@@ -95,102 +100,140 @@ Average precision for the ranking is then the sum of precisions divided by the t
 The mathematical equation of average precision at cut-off \emph{k}:
 
 \begin{equation}
-	AP@K = \frac{1}{min(m,k)}\sum_{i=1}^{k}P(i).rel(i)
-	\label{eq:ap@k}
+    AP@K = \frac{1}{min(m,k)}\sum_{i=1}^{k}P(i).rel(i)
+    \label{eq:ap@k}
 \end{equation}
 
 where \emph{k} is the rank in the sequence of retrieved documents, \emph{m} is the number of relevant documents, \emph{P(k)} is the precision at cut-off \emph{k} in the list. \emph{rel(k)}
 is an indicator function equaling 1 if the item at rank \emph{k} is a relevant document, zero otherwise.
 
-As an example, take a look at the tables \ref{tab:apk-example}. If we consider all the results of the objective rankings as relevant, then the AP@5 for the observed ranking is calculated as follow:
+Tables \ref{tab:apk-example} shows two ranked lists (objective, observed) of movie recommendations. If we consider all the results of the objective rankings as relevant, then the AP@5 for the observed ranking is calculated as follow:
 
 AP@5=$\frac{1}{5}$$\times$(1$\times$1 + 1$\times$$\frac{2}{2}$ + 1$\times$$\frac{3}{3}$ + 1$\times$$\frac{4}{4}$ + 0$\times$$\frac{0}{5}$) = $\frac{4}{5}$ = 0.80
+
+Average precision calculates the retrieval effectiveness for the results of one query. But in real-life scenarios, these systems receive multiple requests, each of them with different output. \emph{Mean Average Precision (MAP)} makes it possible to evaluate the system over various queries.
 
 \paragraph*{Mean average precision (MAP)} for a set of queries is the mean of the average precision (AP) scores for each query.
 
 \begin{equation}
-	MAP@K = \frac{1}{|U|}\sum_{u=1}^{U}(AP@K)_{u}
-	\label{eq:map@k}
+    MAP@K = \frac{1}{|U|}\sum_{u=1}^{U}(AP@K)_{u}
+    \label{eq:map@k}
 \end{equation}
 Where \emph{U} is the number of queries.
 
 \begin{table}[!ht]
-	\caption{Comparing results of objective and observed ranking}
-	\label{tab:apk-example}
-	\begin{subtable}{.5\linewidth}
-		\caption{Objective ranking}
-		\centering
-		\begin{tabular}{c|c}
-			\textbf{Rank (k)}&\textbf{Recommendation} \\
-			\hline
-			1 & Pulp Fiction \\
-			2 & Fight Club \\
-			3 & Memento \\
-			4 & Requiem for a Dream \\
-			5 & The Shining \\
-		\end{tabular}
-	\end{subtable}%
-	\begin{subtable}{.5\linewidth}
-		\caption{Observed ranking}
-		\centering
-		\begin{tabular}{c|c}
-			\textbf{Rank (k)}&\textbf{Recommendation} \\
-			\hline
-			1 & Requiem for a Dream \\
-			2 & Memento \\
-			3 & Fight Club \\
-			4 & Pulp Fiction \\
-			5 & A Separation  \\
-		\end{tabular}
-	\end{subtable}%
+    \caption{Comparing results of objective and observed ranking}
+    \label{tab:apk-example}
+    \begin{subtable}{.5\linewidth}
+        \caption{Objective ranking}
+        \centering
+        \begin{tabular}{c|c}
+            \textbf{Rank (k)}&\textbf{Recommendation} \\
+            \hline
+            1 & Pulp Fiction \\
+            2 & Fight Club \\
+            3 & Memento \\
+            4 & Requiem for a Dream \\
+            5 & The Shining \\
+        \end{tabular}
+    \end{subtable}%
+    \begin{subtable}{.5\linewidth}
+        \caption{Observed ranking}
+        \centering
+        \begin{tabular}{c|c}
+            \textbf{Rank (k)}&\textbf{Recommendation} \\
+            \hline
+            1 & Requiem for a Dream \\
+            2 & Memento \\
+            3 & Fight Club \\
+            4 & Pulp Fiction \\
+            5 & A Separation  \\
+        \end{tabular}
+    \end{subtable}%
 \end{table}
 
 AP@K and MAP@K can evaluate disjoint and not-weighted ranking lists. This means the gold standard and the observed rankings contain different items, and the order of these items does not matter.
 
 As an example of this drawback, take a look at table \ref{tab:apk-example} the AP@4 in this example is 1, although the order and ranking of the results in the observed ranking list are not the same as the objective ranking list.
 
-% \subsubsection{CG, DCG, and NDCG}
-% \label{CG, DCG, and NDCG}
-% When examining the ranked result list of a query, it is obvious that:
-% \begin{enumerate}
-% 	\item highly relevant documents are more valuable than marginally relevant documents
-% 	\item the greater the ranked position of a relevant document (of any relevance level), the less valuable it is for the user because the less likely it is that the user will examine the document.
-% \end{enumerate}
-
-% \paragraph*{Cumulative Gain (CG)}
-% Every recommendation has a relevance score associated with it. Cumulative Gain is the sum of all the relevance scores in a recommendation set.
-
-% \paragraph*{Discounted Cumulative Gain(DCG)}
+\subsubsection{Normalized Discounted Cumulative Gain (NDCG)}
+\label{CG, DCG, and NDCG}
+When examining the ranked result list, highly relevant items (i.e., documents) are valuable to the user than less relevant ones. In other words, the higher the rank position of a relevant item, the less valuable it gets for the user. The authors of \cite{jarvelinCumulatedGainbasedEvaluation2002} define \emph{Cumulative Gain (CG)} and \emph{Discounted Cumulative Gain(DCG)} as follow: This metric measures the cumulative gain the user obtains by examining the retrieval result up to a given ranked position. 
 
 
-% \paragraph*{Normalized Discounted Cumulative Gain (NDCG)}
+CG also uses a so-called \emph{relevance score} for its computation. A relevance score is a number determining how relevant an item is. This score depends on the ranking and scoring algorithm of the system. For example, the relevance score can be defined as a boolean score, hit number, or self-defined rankings. In the boolean score, the relevance score is either zero or one. The hit number used in an algorithm like SALSA \cite{lempelSALSAStochasticApproach2001} is the count visit of each item. The resulting ranked list is ordered descending base on the hit number of each item. Self-defined scores are numbers determining the relevancy of each item. For example, a recommender system could only score items based on three numbers: items with a score of zero are not relevant at all, items with a score of one or two are somewhat relevant, and items with a score of three are highly relevant for the user. This work uses the idea behind the relevancy score to generate self-defined scores for the baseline results. For more details pleaser refer to section \ref{sec:evaluation-pipeline}.
+
+
+\paragraph*{Cumulative Gain (CG)}
+is the sum of the relevance scores (i.e. hit count) of a all items in a ranked list. Mathematically defined as follow:
+
+\begin{equation}
+    CG_p = \sum_{i=1}^{p}rel_i
+    \label{eq:cg}
+\end{equation}
+The cumulative gain can be calculated at the rank position \emph{p}, \emph{$rel_i$} is the relevance score of the result item at position \emph{i}.
+
+CG does not consider the ranking of the result list. For example the two relave score list: rel\_score\_a = [0, 1, 4, 0, 3] and rel\_score\_b = [4, 3, 1, 0, 0]. The CG of both of these lists is 8, but it is obvious that the \emph{rel\_score\_b} has a better order of the relevant items. \emph{Discounted Cumulative Gain(DCG)} overcomes this problem.
+
+\paragraph*{Discounted Cumulative Gain(DCG)}
+uses a logarithmic proportional reduction as a penalty for items that appear later in the result list. This can be Mathematically written as:
+
+\begin{equation}
+    DCG_p = \sum_{i=1}^{p}\frac{2^{rel_i}-1}{log_2(i+1)}
+    \label{eq:dcg}
+\end{equation}
+
+Considering the example before, the DCG of \emph{rel\_score\_a} would be 10.838 and for \emph{rel\_score\_b} is 19.916. By comparing these values, we can say that the results of the list \emph{rel\_score\_b} have a better ranking quality than the other list.
+
+One issue that arises with DCG is when comparing the results of different queries vary in length. \emph{Normalized Discounted Cumulative Gain (NDCG)} solves this issue by normalizing the cumulative gain at each position for a chosen value of \emph{p}.
+
+\paragraph*{Normalized Discounted Cumulative Gain (NDCG)} 
+produces the maximum possible DCG through position \emph{p} by soritig all items in the list according through their relative score. NDCG is computet as follow:
+
+\begin{equation}
+    NDCG_p = \frac{DCG_p}{IDCG_p}
+    \label{eq:ndcg}
+\end{equation}
+
+IDCG is the \emph{Ideal Discounted Cumulative Gain} and is mathematically defined as:
+
+\begin{equation}
+    IDCG_p = \sum_{i=1}^{|REL_p|}\frac{2^{rel_i}-1}{log_2(i+1)}
+    \label{eq:idcg}
+\end{equation}
+
+Where \emph{$REL_p$} indicates the ordered relevant documents by their relevance up to position \emph{p}. NDCG result varies between the value zero to one. If NDCG is equal to one, then IDCG is the same as DCG and representing a perfect score. The NDCG values can be averaged over all the requested queries to obtain the averaged performance of the recommender system.
+
+
+Although NDCG is a good metric for comparing weighted ranked list, but it fails to determine the ranking quality of disjoint lists. For example consider two result list with the score of 3,2,1 and 3,2,1,0 respecitvley, both of these these lists will have the same score. Another issue with disjoint ranked list arises when documents do not accure in both lists. Consider the two lists with the score of 3,2,1 and 3,2,1,1 respecitvley, both of these lists are denoted as perfectly equal.
+
 
 \subsubsection{Kendall rank correlation coefficient}
-The \emph{Kendall Tau} \cite{kendallNewMeasureRank1938} metric, also known as Kendall's Correlation, is a common method used to check if two ranked lists are in agreement. Kendall's Correlation can be computed by first counting the number of concordant pairs (C) and discordant pairs (D). A pair is said to be concordant if they appear in the same order in their ranking lists. We define M = C - D as our basic statistic. The $\tau$ is calculated with the equation below: 
+The \emph{Kendall Tau} \cite{kendallNewMeasureRank1938} metric, also known as Kendall's Correlation, measures the similarities in the ordering of quantitative ranked data. Kendall's Correlation can be computed by first counting the number of concordant pairs (C) and discordant pairs (D). A pair is said to be concordant if they appear in the same order in their ranking lists. We define M = C - D as our basic statistic. The $\tau$ is calculated with the equation below: 
 
 \begin{equation}
     \tau = \frac{M}{(C+D)}
     \label{eq:kendall-tau}
 \end{equation}
 
-Both ranking lists need to be conjoint to calculate Kendall Tau. This metric is also not-weighted, which means that the top results matter the same as the bottom of the list.
+The Kendall Tau falls in the range of [-1, +1]. Two lists are considered dissimilar if Kendall Tau is -1 and similar if the tau value is +1. Kendall Tau's calculation requires both ranked lists to be conjoint. This metric is also not weighted, which means that the top results matter the same as the bottom of the list.
 
-To demonstrate these drawbacks, take a look at table \ref{tab:apk-example}. Kendall's Correlation can not be calculated since the items at rank five are different. Even by replacing the fifth element with a special character (e.g., \#) on both lists, the value of $\tau$ would be 1. This denotes perfect agreement between the two lists, which is wrong.
+To demonstrate these drawbacks, take a look at table \ref{tab:apk-example}. Kendall's Correlation can not be calculated since the items at rank five are different. Even by replacing the fifth element with a special character (e.g., \#) on both lists, the value of $\tau$ would be 1, representing a perfect agreement between the two lists, which is wrong.
 
 \subsubsection{Rank-Biased Overlap (RBO)}
 The Rank-biased overlap (RBO) \cite{webberSimilarityMeasureIndefinite2010} compares two lists by looking at the \emph{Set Overlap} at each rank. The resulting overlaps are weighted by their position in the list so that differences in the top ranks are more penalized than differences at the bottom. Let \emph{S} and \emph{T} be two infinite rankings. We can define $A_{d}$ define as the agreement between \emph{S} and \emph{T} given by the proportion of the overlap up to depth \emph{d}:
 
 \begin{equation}
-	A_{d} = \frac{|S_{:d} \cap T_{:d}|}{d}
-	\label{eq:a-d}
+    A_{d} = \frac{|S_{:d} \cap T_{:d}|}{d}
+    \label{eq:a-d}
 \end{equation}
 
 
 RBO between the two lists \emph{S} and \emph{T} can be calculated using:
 
 \begin{equation}
-	RBO(S,T,p) = (1-p)\sum_{d=1}^{\infty}p^{d-1}.A_{d}
-	\label{eq:rbo}
+    RBO(S,T,p) = (1-p)\sum_{d=1}^{\infty}p^{d-1}.A_{d}
+    \label{eq:rbo}
 \end{equation}
 
 
@@ -201,6 +244,8 @@ The result is in the range of [0, 1], where zero means disjoint, and one means i
 \label{subsubsec:ab-testing}
 \emph{A/B testing} also known as \emph{split testing} is a user experience methodology of comparing two versions of a single variable, A and B. Statical analysis is used to ascertain which variation is performing better for a conventional goal.
 
+When doing A/B testing of recommendation systems, the experiments fall into three main categories: First, the recommendation algorithm (i.e., new rankings, data fusion, recommendation parameters). The second would be the distribution of a system (i.e., how many instances one system is running)—lastly, showing recommendations only to a specific group of users under test. We can create different test scenarios based on these three categories where system A is assessed against system B. By running each scenario, the feedback data is gathered and statically analyzed to determine if the newly added changes improved the recommendation quality or not.
+
 In works like WTF (Who To Follow) \cite{guptaWTFWhoFollow} the authors use online A/B testing to evaluate the system in production condition exclusively. This method is also used to assess Pinterest recommendation system Pixie. The authors could determine a 50\% increase of pin engagement compared to the previous recommendations systems they used before \cite{eksombatchaiPixieSystemRecommending2018}.
 
 
@@ -208,14 +253,31 @@ In works like WTF (Who To Follow) \cite{guptaWTFWhoFollow} the authors use onlin
 Data fusion is the process of integrating and merging information gathered by multiple data sources into a single representation (i.e., ranked list) for higher effectiveness. For recommendation systems, this can be combining multiple ranked recommendation lists into a single ranked list. Data fusion approaches vary depending on the system architecture, data sources, and ranking system. A good example is MetaLens \cite{schaferMetarecommendationSystemsUsercontrolled}, a meta-recommendation system gathering information from different sources like Rotten Tomatoes and MovieLens and using them to generate more personalized recommenders.
 
 
-Studies show that data fusion methods in IR systems are complex and depend highly on the system architecture and algorithm used in the system \cite{frankhsuComparingRankScore2005}. IR systems or, more specifically, recommender systems can produce a single ranked list shown in figure \ref{fig:single-machine-architecture}. The query is sent, and the system runs the algorithm and outputs the ranked list to the user. The query is sent and can get processed and normalized using a query \emph{formulation}. Afterward, a \emph{schema} processes the query formulation and generates a single ranked list. In \ref{fig:single-machine-architecture} the query is a simple user-ID and does not need to go through the formulation. 
+Studies show that data fusion methods in IR systems are complex and depend highly on the system architecture and algorithm used in the system \cite{frankhsuComparingRankScore2005}. In IR systems, specialy search engines, the incoming query get processed in a so-called query \emph{formulation} step. In this step the incomming query get tokenized, normalized,  and the stop words are removed. This step transforms the query into a digestable representation for the search engine. Afterward, a \emph{schema} processes the processed query and generates the results. 
+
+
+Single instance recommender systems take a query as their imput and produce a single ranked list of recommendations for a user. In recommendation systems the incomming query can only be a simple user-ID and does not need to go through the formulation step. Figure \ref{fig:data-fusion-simple} represents this behaviour.
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.75\textwidth]{images/simple-formulation-schema}
+	\caption{A simple recommendation system with a formulation and schema step. The query is sent directy to the schema \emph{S}.The formulation step \emph{F} (represented in gray) is skiped since user-ID the does not need to get normalized.}
+	\label{fig:data-fusion-simple}
+\end{figure}
 
 
 With the recent developments in computer science and distributed systems, it is possible to distribute recommender systems into multiple instances. \cite{frankhsuComparingRankScore2005} proposes three main architectures for multi-machine IR systems:
+
 \begin{enumerate}
     \item Multiple formulations single scheme (MFSS)
     \item Single formulation multiple schemes (SFMS)
     \item Multiple formulations multiple schemes (MFMS)
 \end{enumerate}
-This work uses an SFMS architecture for the distribution. In this architecture, the query is sent to a single formulation point and from there to multiple schemes (i.e., workers). Each scheme runs the recommendation algorithm and produces a ranked list. In the last step, these ranked lists are then integrated into a single ranked list (data fusion approaches explained in section \ref{sec:data-fusion-approaches}). Figure \ref{fig:multiple-machine-architecture} indicates such design.
+
+
+Multiple formulations can use different normalization or tokanization algorithm to process the incomming queries. The end results of each formulation varies even with the same schema.
+
+
+This work uses an SFMS architecture for the distribution. In this architecture, the query is sent to a single formulation point and from there to multiple schemes (i.e., workers). Each scheme runs the recommendation algorithm and produces a ranked list. In the last step, these ranked lists are then integrated into a single ranked list. The section \ref{sec:data-fusion-approaches} explains the data fusion approaches used in this work. For more detail about the distributed architecture pleaser refer to section \ref{sec:system-architecture}.
 

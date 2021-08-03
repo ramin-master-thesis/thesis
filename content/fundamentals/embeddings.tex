@@ -1,99 +1,91 @@
 \section{Embeddings}
-\label{Embeddigns}
-Latent text representations, or embeddings, are vectorial representations of words or documents, traditionally learned in an unsupervised way over large corpora. Work on neural embeddings in this domain includes \cite{bengioNeuralProbabilisticLanguage2003}, 
-\cite{collobertNaturalLanguageProcessing2011}, word2vec \cite{goldbergWord2vecExplainedDeriving2014} and more recently fastText \cite{joulinFastTextZipCompressing2016}.
+\label{sec:embeddigns}
+Latent text representations, or embeddings, are representations of words or documents as vectors, traditionally learned in an unsupervised way over large corpora. Work on neural embeddings in this domain includes \cite{bengioNeuralProbabilisticLanguage2003}, 
+\cite{collobertNaturalLanguageProcessing2011}, \emph{word2vec} \cite{goldbergWord2vecExplainedDeriving2014}, \emph{fastText} \cite{joulinFastTextZipCompressing2016}, and \emph{BERT} \cite{devlinBERTPretrainingDeep2019}.
 
 \subsection{StarSpace}
 \label{subsec:StarSpace}
-StarSpace \cite{wuStarSpaceEmbedAll2017} is a general-purpose neural model for efficient learning of entity embeddings for solving a wide variety of problems:
+StarSpace \cite{wuStarSpaceEmbedAll2017a} is a general-purpose neural model for efficient learning of learning word, sentence, or document level embeddings.
 
-\begin{enumerate}
-    \item Learning word, sentence, or document level embeddings.
-    \item Information retrieval: ranking of sets of entities/documents or objects, e.g., ranking web documents.
-    \item Metric/similarity learning, e.g., learning sentence or document similarity.
-    \item Content-based or Collaborative filtering-based Recommendation, e.g., recommending music or videos.
-    \item Embedding graphs, e.g., multi-relational graphs such as Freebase.
-    \item Image classification, ranking, or retrieval (e.g., by using existing ResNet features).
-\end{enumerate}
 
-In this work, I use the \emph{ArticleSpace} train mode of StarSpace. This particular model learns the mapping between sentences and documents. Given the embedding of one sentence, one can find the most relevant documents. The output of the StarSpace model is a multi-dimensional vector in a so-called "Embedding-Space." Depending on the parameters that the model has used for training, the dimensionality of the output vector varies. 
+To generate the embeddings StarSpace trains on a training dataset. This particular model learns the mapping between sentences and documents. Given the embedding of one sentence, one can find the most relevant documents. The output of the StarSpace model is a multi-dimensional vector in a so-called "Embedding-Space." Depending on the parameters that the model has used for training, the dimensionality of the output vector varies. 
 
-For more information about the implementation of StarSpace, please refer to the code repository\footnote{\url{https://github.com/facebookresearch/StarSpace}}.
+For more information about the implementation and other use-cases of StarSpace, please refer to the main repository\footnote{\url{https://github.com/facebookresearch/StarSpace}}.
 
 
 This work observes StarSpace as a black box. The purpose is to use StarSpace to partition the data and find similar content \emph{near} each other in the embedding-space, and not to improve the StarSpace model.
 
 \subsubsection{StarSpace Text Normalization}
 \label{subsubsec:star-space-text-normalization}
-The StarSpace model uses different arguments and parameters for its training. The full documentation of these train parameter can be found in the repository\footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}. One of the parameters that effects the input is the \emph{normalizeText} argument. This argument runs a basic text process on the input and can be either true or false. It is also one of the arguments that I tune for a better model prediction in subsection \ref{subsec:hyperparameter-tuning}. The text normalization happens during partitioning time. For more details refer to \ref{subsec:partitioning-star-space}. The following algorithm describes how the text normalization is implemented and how it affects the input.
+The StarSpace model uses different arguments and parameters for its training. The full documentation of these train parameter can be found in the repository\footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}. One of the parameters that effects the input is the \emph{normalizeText} argument. This argument runs a basic text process on the input and can be either true or false. It is also one of the arguments that I tune for a better model prediction in subsection \ref{subsec:hyperparameter-tuning}. The text normalization happens during partitioning time. For more details refer to \ref{subsec:partitioning-star-space}.
 
-\begin{algorithm}[H]
-    \caption{StarSpace text normalization algorithm}
-    \label{alg:star-space-text-normalization}
-    \SetKwData{allNumeric}{allNumeric}
-    \SetKwData{containsDigits}{containsDigits}
-    \SetKwData{flattenCase}{flattenCase}
-    \SetKwData{flattenNum}{flattenNum}
-    \SetKwData{normalizedText}{normalizedText}
+% \begin{algorithm}[H]
+%     \caption{StarSpace text normalization algorithm}
+%     \label{alg:star-space-text-normalization}
+%     \SetKwData{allNumeric}{allNumeric}
+%     \SetKwData{containsDigits}{containsDigits}
+%     \SetKwData{flattenCase}{flattenCase}
+%     \SetKwData{flattenNum}{flattenNum}
+%     \SetKwData{normalizedText}{normalizedText}
 
-    \SetKwFunction{isdigit}{isdigit}
-    \SetKwFunction{isascii}{isascii}
-    \SetKwFunction{isalpha}{isalpha}
-    \SetKwFunction{tolower}{tolower}
+%     \SetKwFunction{isdigit}{isdigit}
+%     \SetKwFunction{isascii}{isascii}
+%     \SetKwFunction{isalpha}{isalpha}
+%     \SetKwFunction{tolower}{tolower}
 
-    \SetKwInOut{Input}{input}
-    \SetKwInOut{Output}{output}
+%     \SetKwInOut{Input}{input}
+%     \SetKwInOut{Output}{output}
 
-    \Input{Input string $S$}
-    \Output{Normalized string $S\prime$}
-    \SetAlgoLined
+%     \Input{Input string $S$}
+%     \Output{Normalized string $S\prime$}
+%     \SetAlgoLined
 
-    \BlankLine\emph{initialization}\;
-    \allNumeric $\leftarrow$ true\;
-    \containsDigits $\leftarrow$ false\;
+%     \BlankLine\emph{initialization}\;
+%     \allNumeric $\leftarrow$ true\;
+%     \containsDigits $\leftarrow$ false\;
 
-    \BlankLine
+%     \BlankLine
 
-    \ForEach{character $C$ of the input string $S$}
-    {
-        \containsDigits $\leftarrow$ \containsDigits | \isdigit{C}\;
-        \If{not \isascii{C}}{
-            \allNumeric $\leftarrow$ false\;
-            \emph{continue}\;
-        }
-        \lIf{not \isalpha{C}}{\emph{continue}}
-        \allNumeric $\leftarrow$ false\;
-    }
+%     \ForEach{character $C$ of the input string $S$}
+%     {
+%         \containsDigits $\leftarrow$ \containsDigits | \isdigit{C}\;
+%         \If{not \isascii{C}}{
+%             \allNumeric $\leftarrow$ false\;
+%             \emph{continue}\;
+%         }
+%         \lIf{not \isalpha{C}}{\emph{continue}}
+%         \allNumeric $\leftarrow$ false\;
+%     }
 
-    \BlankLine
+%     \BlankLine
 
-    \flattenCase $\leftarrow$ true\;
-    \flattenNum $\leftarrow$ \allNumeric \&\& \containsDigits\;
-    \lIf{not \flattenNum \&\& not \flattenCase}{\emph{return}}
-    \lIf{\flattenNum \&\& not \flattenCase}{\emph{return}}
+%     \flattenCase $\leftarrow$ true\;
+%     \flattenNum $\leftarrow$ \allNumeric \&\& \containsDigits\;
+%     \lIf{not \flattenNum \&\& not \flattenCase}{\emph{return}}
+%     \lIf{\flattenNum \&\& not \flattenCase}{\emph{return}}
 
-    \BlankLine
+%     \BlankLine
 
-    i $\leftarrow$ -1 \;
+%     i $\leftarrow$ -1 \;
 
-    \For{character $C$ of the input string $S$}{
-        i++\;
-        \lIf{\flattenNum \&\& \isdigit{C}}{\normalizedText[i] $\leftarrow$ 0 continue}
-        \lIf{\isalpha{C}}{\normalizedText[i] $\leftarrow$ \tolower{C} continue}
-        \normalizedText[i] $\leftarrow$ $C$
-    }
+%     \For{character $C$ of the input string $S$}{
+%         i++\;
+%         \lIf{\flattenNum \&\& \isdigit{C}}{\normalizedText[i] $\leftarrow$ 0 continue}
+%         \lIf{\isalpha{C}}{\normalizedText[i] $\leftarrow$ \tolower{C} continue}
+%         \normalizedText[i] $\leftarrow$ $C$
+%     }
 
-    $S\prime$ $\leftarrow$ \normalizedText\;
-    return $S\prime$ \;
-    \BlankLine
-    \BlankLine
-\end{algorithm}
+%     $S\prime$ $\leftarrow$ \normalizedText\;
+%     return $S\prime$ \;
+%     \BlankLine
+%     \BlankLine
+% \end{algorithm}
 
 
-Let's break down the algorithm \ref{alg:star-space-text-normalization}. This algorithm categorizes long strings into the following buckets:
+The text normalization process categorizes long strings into the following buckets:
 
 \begin{enumerate}
-    \item The whole input string consists only of punctuation-and-numeric characters: Things in this bucket get their numbers flattened to prevent combinatorial explosions.
+    \item The whole input string consists only of punctuation-and-numeric characters, get their numbers flattened to prevent combinatorial explosions.
     \item All letters get case-flattened.
     \item Mixed letters and numbers (e.g., product ID): All the letters get case-flattened, and numbers are not changed.
 \end{enumerate}
