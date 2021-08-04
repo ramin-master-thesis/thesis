@@ -10,13 +10,13 @@ The overall high-level architecture of a single instance can be seen in figure \
 
 \begin{figure}[!h]
     \centering
-    \begin{subfigure}[b]{0.7\textwidth}
+    \begin{subfigure}[b]{0.75\textwidth}
        \includegraphics[width=1\linewidth]{images/simple-worker.png}
        \caption{Single machine high level overview}
        \label{fig:single-machine-architecture} 
     \end{subfigure}
     
-    \begin{subfigure}[b]{0.7\textwidth}
+    \begin{subfigure}[b]{0.8\textwidth}
        \includegraphics[width=1\linewidth]{images/simple-worker-detailed.png}
        \caption{Single machine including each layer}
        \label{fig:single-machine-architecture-detailed}
@@ -89,16 +89,21 @@ According to the main paper of GraphJet, the random walk always starts from a ve
 
 \subsubsection{API Endpoint layer}
 \label{subsubsec:api-endpoint-layer}
-The API endpoint layer receives the incoming requests sent to the system and allows to interact with the system. The API endpoint layer interacts with the recommendation layer and receives the list of recommendation and jsonifies them and sends them back to the user. 
+The API endpoint layer provides an interface to interact with the system. The API endpoint layer interacts with the recommendation layer and receives the list of recommendations. This module jsonifies the ranked list and sends them back to the user. 
 
 \subsection{Multiple Machines}
 \label{Multiple Machines}
+This section explains the multi-instance architecture. Figure \ref{fig:multiple-machine-architecture} shows the high-level architecture of the multi-instance design. Each instance (i.e., worker) is a single machine, explained in the previous subsection. Each worker receives an identifier at the time they are deployed in the cluster. When the instance is running, they load and index the sharded data they receive from the \emph{partitioner} module. The section \ref{sec:partitioning} explains this module in detail. 
+
+
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=1\textwidth]{images/multi-partition-architecture.png}
-	\caption{Multiple partition architecture}
+	\includegraphics[width=1\textwidth]{images/multi-partition-workers.png}
+	\caption{Multiple instance architecture}
 	\label{fig:multiple-machine-architecture}
 \end{figure}
 
-\todo{Improve this figure}
+
+Each worker's API endpoint module receives an incoming query. Next, the workers check if the requested user-ID exists in the left index. If so, they compute the recommendations by starting the random SALSA walk. In the end step, the recommendations of each worker are sent to the \emph{data fusion} module, and depending on the method (explained in section \ref{sec:data-fusion-approaches}) used in that module, a single ranked list gets produced.
+
