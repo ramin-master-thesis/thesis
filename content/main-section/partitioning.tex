@@ -1,22 +1,30 @@
 \section{Partitioning}
 \label{sec:partitioning}
+The partitioning module (i.e., partitioner) is one of the key modules of this work. This module helps to distribute the data based on the hash function that it is injected. The partitioning module provides an abstract class. The user inherits from this abstract class and then implements its partitioning logic. 
+
+
+Figure \ref{fig:partitioner-uml} indicates the UML diagram of the partitioning module. The base class provides two fields, namely: \emph{name}, and \emph{paritition\_count}. The \emph{name} field denotes the name of the method (i.e., hash function name). The \emph{paritition\_count} tells the partitioner how many partitions exist in the cluster. This number is used during partition time to equidistant range partitioning on the range of hashes. The \emph{calculate\_partition} function takes a value (i.e., data entity), either the document id or the content of a document, and returns the partition ID of the value. The partition ID indicates on which partition this entity should land. This work implements the partitioners abstract class for two partitioners:
+
+\begin{enumerate}
+    \item Murmur2 Partitioner
+    \item StarSpace Partitioner
+\end{enumerate}
+
+In the following sections, each partitioning method is explained in detail.
 
 \begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.75\textwidth]{images/partitioner-UML}
-	\caption{Partitioning upcoming document using StarSpace}
-	\label{fig:partitioner-uml}
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/partitioner-UML}
+    \caption{Partitioning upcoming document using StarSpace}
+    \label{fig:partitioner-uml}
 \end{figure}
 
-\subsection{Single Machine}
-\label{subsec:partitioning-single-machine}
 
-
-\subsection{Partitioning data using murmur2}
+\subsection{Murmur2 Partitioner}
 \label{subsec:partitioning-murmur2}
+This component implements the Murmur2 hash function. This hash function is explained in the \ref{sec:hash-functions} sections. This work uses the Kafka python implementation of Murmur2 \footnote{\url{https://github.com/dpkp/kafka-python/blob/master/kafka/partitioner/default.py}} to implement the \emph{calculate\_partition} function of the partitioner base class.
 
-
-\subsection{Partitioning data using StarSpace}
+\subsection{StarSpace Partitioner}
 \label{subsec:partitioning-star-space}
 
 \begin{itemize}
