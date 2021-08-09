@@ -1,5 +1,5 @@
 \section{Model Training}
-\label{Model Training}
+\label{sec:model-training}
 To train the StarSpace model train data needed to be generated fromat, the model can be trained. Figure \ref{fig:star-space-training} shows the flowchart of the training process. First, in this section, I describe how the training data is generated, and in the next part, the hyperparameter tuning of the model is described.
 
 \begin{figure}[!h]
@@ -10,7 +10,7 @@ To train the StarSpace model train data needed to be generated fromat, the model
 \end{figure}
 
 \subsection{Generating Training Data}
-\label{Generating Training Data}
+\label{subsec:generating-training-data}
 I used the SALSA algorithm to generate the training data. Table \ref{tab:train-data} shows how big the training dataset is. The dataset is indexed as a bipartite graph and then for each tweet the recommendations are calculated. In other words, instead of quering recommendations for a user, the random walk starts on the right-hand side of the bipartite graph. The output is a ranked list of recommendations for a specific tweet. Then the queried tweet among with the other output are written in a text file. The format of the file is explained in section \ref{StarSpace}. This process continues for each node on the right-hand side.
 
 
@@ -48,6 +48,9 @@ As an example take a look at the table \ref{tab:example-train-data}. This table 
 	\end{tabular}
 \end{table}
 
+
+\subsection{Projection Matrix Calculation}
+\label{subsec:projection-matrix-calculation}
 
 
 \subsection{Hayperparameter Tuning}

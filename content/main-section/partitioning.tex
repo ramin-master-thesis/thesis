@@ -22,27 +22,36 @@ In the following sections, each partitioning method is explained in detail.
 
 \subsection{Murmur2 Partitioner}
 \label{subsec:partitioning-murmur2}
-This component implements the Murmur2 hash function. This hash function is explained in the \ref{sec:hash-functions} sections. This work uses the Kafka python implementation of Murmur2 \footnote{\url{https://github.com/dpkp/kafka-python/blob/master/kafka/partitioner/default.py}} to implement the \emph{calculate\_partition} function of the partitioner base class.
+This component implements the Murmur2 hash function. This hash function is explained in the \ref{sec:hash-functions} sections. This work uses the Kafka python implementation of Murmur2 \footnote{\url{https://github.com/dpkp/kafka-python/blob/master/kafka/partitioner/default.py}} to implement the \emph{calculate\_partition} function from the partitioner base class.
+
+The \emph{Murmur2Partition} class takes the document ID as an input and after coputes the Murmur2 hash. In the end it calculates the modulo between the \emph{partition\_count} value and the hash value to produce the partition ID. 
 
 \subsection{StarSpace Partitioner}
 \label{subsec:partitioning-star-space}
-
-\begin{itemize}
-    \item Embedded vector has a big dimension
-
-    \item Use calculated projection matrix to reduce dimension
-    4 partitions -> 2 dimension
-    
-    \item Choose partition based on the dot production of the projection matrix and embedded vector
-    
-\end{itemize}
+This work uses another partitioner to distribute the data based on their content, namely \emph{StarSpacePartition}. Compared to the \emph{Murmur2Partition} class, this partitioner takes the content of the document and generates the partition ID.
 
 
+During the initialization of this class the pre-trained StarSpace model is loaded in the memory along with the projection matrix. The StarSpace model in responsible to predict the vector of the in coming documents in the embedding space it was trained in. As explained in the sub-subsection \ref{subsubsec:pca}, the output of the dot production of a projection matrix with a high diminsional dat matrix is matrix with reduced dimensions. For more information how the model is trained and how the projection matrix is calculated please refere to the section \ref{sec:model-training}.
+
+
+Figure \ref{fig:star-space-partitioning-process} demonstraits the parittioning process of the incoming data on four partitions (i.e., instanses). Four partitions means that the dimension of the embedding vector produced by StarSpace needs to be reduced to at leas two dimensions. Since with two dimension (i.e., bit) we are able to produce four partition IDs. So for two partitions the embedding vector needs at least one dimension. After the highly dimensional embedding vector got reduced to two dimensions, the system converts the numbers depending if they are possitive or negative into bits. For example if the dimensionaly reduced vector is [-3.75, 2.14], this will be converted to [0, 1], which presence the number one and the following document will land on partition number one.
 
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.85\textwidth]{images/partition-StarSpace}
 	\caption{Partitioning upcoming document using StarSpace}
-	\label{fig:star-space-partitioning}
+	\label{fig:star-space-partitioning-process}
 \end{figure}
+
+
+To make this more clear please look at figure \ref{fig:embedding-space}. This figure represents the partitions in a two dimensional space. Each dot represents a document on a partition. These documents can be considered "similar" to each other. The intutition here is that StarSpace embedding vectors of "similar" documents would be "near" to each other. After the dimension reduction the vectors stay "near" to each other. Therefore, producing the documents on each partition (i.e., quardrant) would endup having "similar" documents on the same partition.
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.65\textwidth]{images/embedding-2d.png}
+	\caption{Demonstarting each document (as a dot) in a two dimensional space. Each quadrants represents a partition.}
+	\label{fig:embedding-space}
+\end{figure}
+

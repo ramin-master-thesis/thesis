@@ -1,12 +1,12 @@
 \section{System Architecture}
 \label{sec:system-architecture}
 
-This work implements and simulates the GraphJet architecture to evaluate and test the proposed approach of data partitioning. As explained in section \ref{sec:GraphJet}, GraphJet architecture consists of three main layers: Storage, Recommendation, API Endpoint. The same layer system inspires my prototype architecture. This section goes through the system architecture and the design decisions taken while creating this work. In the first subsection, I explain the single instance architecture. After that, the subsection describes the distributed architecture of the system. The implemented system can be found in the repository\footnote{\url{https://github.com/ramin-master-thesis/salsa}}.
+This work implements and simulates the GraphJet architecture to evaluate and test the proposed approach of data partitioning. As explained in section \ref{sec:GraphJet}, GraphJet architecture consists of three main layers: Storage, Recommendation, API Endpoint. The same layer system inspires this work's architecture. This section goes through the system architecture and the design decisions taken. In the first subsection, I explain the single instance architecture and the functionality of each layer. After that, the subsection describes the distributed architecture of the system. The implemented system can be found in the repository\footnote{\url{https://github.com/ramin-master-thesis/salsa}}.
 
 
 \subsection{Single Machine}
 \label{subsec:single-machine}
-The overall high-level architecture of a single instance can be seen in figure \ref{fig:single-machine-architecture}. The worker (i.e., instance) receives a user-ID as its input and then yields a ranked list of recommendations (i.e., tweets). The detailed architecture of the single worker is shown in figure \ref{fig:single-machine-architecture-detailed}. Let's break down each component of the system and explain how each layer works.
+The overall high-level architecture of a single instance can be seen in figure \ref{fig:single-machine-architecture}. The worker (i.e., instance) receives an input query (i.e., user-ID) and then yields a ranked list of recommendations (i.e., tweets). The detailed architecture demonstrating each layer of the single worker is shown in figure \ref{fig:single-machine-architecture-detailed}. In the following, each section describes each component of the system and explains how each layer works.
 
 \begin{figure}[!h]
     \centering
@@ -30,7 +30,10 @@ The overall high-level architecture of a single instance can be seen in figure \
 
 \subsubsection{Storage and index layer}
 \label{subsub:storage-index-layer}
-The single instance needs to maintain the dataset in for of a bipartite graph in memory. A bipartite graph is a graph whose vertices can be divided into two disjoint and independent sets U and V such that every edge connects a vertex in U to one in V. The bipartite graph consists of two indices. One index stores all tweets for a specific user. The other index stores all users for a particular tweet.
+The single instance needs to maintain the dataset in for of a bipartite graph in memory. A bipartite graph is a graph whose vertices can be divided into two disjoint and independent sets U and V such that every edge connects a vertex in U to one in V \cite{skienaImplementingDiscreteMathematics1991}. The two disjoint sets of U and V can be built using two indices. In other words, the bipartite graph consists of two indicies: left side index, right side index. For the specefic user-tweet bipartite graph, one index stores all tweets for a specific user. The other index stores all users for a particular tweet.
+
+
+GraphJet uses mutable (hot) and immutable (cold) index segments to store the bipartite graph \cite{sharmaGraphJetRealtimeContent2016}. With this approach, GraphJet optimizes newly incoming edge insertion. In this work, I assume that the system is not ingesting any new edges during its runtime. To keep the indexing as simple as possible, I decided to use a \emph{simple index} system. This approach uses a single vertex-ID (i.e., node-ID) as its index key. The index key points to an adjacency list containing the node-IDs that the index key interacts with. Table \ref{tab:simple-indexing} shows a small example of this approach. The node-ID 5 has interactions with node-IDs 200 and 50. The prototype generates two of these indices. First, using the user-IDs as its key and the tweet-IDs as the adjacency list values and vice versa.
 
 \begin{table}[!h]
     \centering
@@ -50,12 +53,9 @@ The single instance needs to maintain the dataset in for of a bipartite graph in
 \end{table}
 
 
-GraphJet uses mutable (hot) and immutable (cold) index segments to store the bipartite graph \cite{sharmaGraphJetRealtimeContent2016}. With this approach, GraphJet optimizes newly incoming edge insertion. In this work, I assume that the system is not ingesting any edges during its runtime. Therefore, there is no need to optimize the prototype for insertion. To keep the indexing as simple as possible, I decided to use a \emph{simple index} system. This approach uses a single node-ID (user-ID or tweet-ID) as its index key. The index key points to an adjacency list containing the node-IDs that the index key interacts with. Table \ref{tab:simple-indexing} shows a small example of this approach. The node-ID 5 has interactions with node-IDs 200 and 50. The prototype generates two of these indices. First, using the user-IDs as its key and the tweet-IDs as the adjacency list values and vice versa.
-
-
 \subsubsection{Recommendation layer}
 \label{subsubsec:recommendation-layer}
-An implementation of the SALSA \cite{lempelSALSAStochasticApproach2001} algorithm lives in the recommendation layer. The algorithm needs a couple of parameters to start the random walk. These parameters are described in table \ref{tab:salsa-parameters}.
+An implementation of the SALSA \cite{lempelSALSAStochasticApproach2001} algorithm lives in the recommendation layer. The algorithm needs some configuration parameters to initialize the random walk. These parameters are described in table \ref{tab:salsa-parameters}.
 
 
 \begin{table}[!h]
@@ -76,24 +76,25 @@ An implementation of the SALSA \cite{lempelSALSAStochasticApproach2001} algorith
         \hline
         Reset probability & Probability to start from the root node \\
         \hline
-        Indexer & An implementation of the indexer  \\
+        Indexer & An implementation of the indexer module \\
         \hline
     \end{tabular}
 \end{table}
 
 
-The recommendation layer interacts with both the indexer and the API endpoint. The API endpoint layer calls the recommender layer and injects the necessary parameters to start the random walk. As explained before, the indexer builds two indices: left-index and right-index. The algorithm needs to ask each index to walk on the bipartite graph. The recommender calls the left index from the indexer to receive the adjacency list and then chooses one ID randomly. After selecting the node ID, the recommender asks the right side index for the next adjacency list. This process continues until the number of walks reaches its limit. Finally, the recommender sorts the visited nodes by their visit count and cut-offs the returned list by the limit it was passed to.
+The recommendation layer interacts with both the indexer and the API endpoint. The API endpoint layer calls the recommender layer and injects the necessary parameters to start the random walk. As explained before, the indexer builds two indices: left side index and right side index. The algorithm needs to ask each index side to performe the walk on the bipartite graph. The recommender calls the left side index from the indexer to receive the adjacency list and then chooses one ID randomly. After selecting the node-ID, a visit count of that node-ID is incremented and stored. The walk continues by asking the right side index for the next adjacency list. This process continues until the number of walks reaches its limit. Finally, the recommender sorts the visited nodes by their visit count and cut-offs the returned list by the limit it was passed to.
 
 
-According to the main paper of GraphJet, the random walk always starts from a vertex located on the left index \cite{sharmaGraphJetRealtimeContent2016}. Concretely for the GraphJet use-case at Tweeter, the SALSA algorithm starts from the requested user-ID node on the left index and then walks to the tweet-ID on the right index. This work extends the SALSA algorithm. Instead of starting from the left side, the algorithm initiates from a node on the right side. The output is a list of right-side vertices (i.e., tweet-IDs). With this approach, the random walk produces related items to the initial node. The method is used to create train data for the StarSpace model (see section \ref{Generating Training Data}).
+According to the main paper of GraphJet, the random walk always starts from a vertex located on the left index \cite{sharmaGraphJetRealtimeContent2016}. Concretely for the GraphJet use-case at Tweeter, the SALSA algorithm starts from the requested user-ID node on the left index and then walks to the tweet-ID on the right index. This work extends the SALSA algorithm. Instead of starting from the left side, the algorithm initiates from a vertex on the right side. The output is a list of right-side vertices (i.e., tweet-IDs). With this approach, the random walk produces related items to the initial vertex. The method is used to create train data for the StarSpace model (see section \ref{subsec:generating-training-data}).
 
 \subsubsection{API Endpoint layer}
 \label{subsubsec:api-endpoint-layer}
-The API endpoint layer provides an interface to interact with the system. The API endpoint layer interacts with the recommendation layer and receives the list of recommendations. This module converts the ranked list to a JSON format and sends them back to the user. 
+The API endpoint layer provides an interface to interact with the system. The API endpoint layer interacts with the recommendation layer and receives the list of recommendations. This module converts the ranked list to a JSON format and sends them back to the user.
+The API endpont also interacts with the index layer to gather inforamtion. Informations like: Degree number of a particular node in the graph, total number of nodes, and totall number of edges.
 
 \subsection{Multiple Machines}
 \label{Multiple Machines}
-This section explains the multi-instance architecture. Figure \ref{fig:multiple-machine-architecture} shows the high-level architecture of the multi-instance design. Each instance (i.e., worker) is a single machine, explained in the previous subsection. Each worker receives an identifier at the time they are deployed in the cluster. When the instance is running, they load and index the sharded data they receive from the \emph{partitioner} module. The section \ref{sec:partitioning} explains this module in detail. 
+This section explains the multi-instance architecture. Figure \ref{fig:multiple-machine-architecture} shows the high-level architecture of the multi-instance design. Each instance (i.e., worker) consists of a single machine machine, explained in the previous subsection. Each worker receives an identifier (partition-ID) at the time they are deployed in the cluster. When the instance is running, they load and index the sharded data they receive from the \emph{partitioner} module. The upcomming section \ref{sec:partitioning} explains this module in detail. 
 
 
 
@@ -105,5 +106,5 @@ This section explains the multi-instance architecture. Figure \ref{fig:multiple-
 \end{figure}
 
 
-Each worker's API endpoint module receives an incoming query. Next, the workers check if the requested user-ID exists in the left index. If so, they compute the recommendations by starting the random SALSA walk. In the end step, the recommendations of each worker are sent to the \emph{data fusion} module, and depending on the method (explained in section \ref{sec:data-fusion-approaches}) used in that module, a single ranked list gets produced.
+Each worker's API endpoint module receives the incoming query. Next, the workers check if the requested user-ID exists in the left index. If so, they compute the recommendations by starting the random SALSA walk. In the last step, the recommendations of each worker are sent to the \emph{data fusion} module, and depending on the method (explained in section \ref{sec:data-fusion-approaches}) used in that module, a single ranked list gets produced.
 
