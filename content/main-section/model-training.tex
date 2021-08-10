@@ -69,7 +69,7 @@ The algorithm \ref{alg:star-space-train-data} explains how the data generation p
 \end{algorithm}
 
 
-As an example on how good the SALSA algorithm generates related tweets, take a look at the table \ref{tab:example-train-data}. This table shows the recommendations generated from the SpaceX tweet with the following content: "Live views of Starship SN8’s flight test -> https://t.co/Hs5C53qBxb https://t.co/OvAloTO6UQ"
+As an example of how well the SALSA algorithm generates related tweets, take a look at the table \ref{tab:example-train-data}. This table presents the recommendations generated from a tweet from the \emph{SpaceX} Twitter account with the following content: "Live views of Starship SN8’s flight test -> https://t.co/Hs5C53qBxb https://t.co/OvAloTO6UQ". By observing the results you can see how diverse the content of these tweets are. One containing chimical chemical equations, and one agreeing with Elon Musk. Thus, the topic of the initial tweet is somehow related to the output tweets.
 
 \begin{table}[!h]
 	\centering
@@ -105,44 +105,30 @@ As an example on how good the SALSA algorithm generates related tweets, take a l
 
 \subsection{Projection Matrix Calculation}
 \label{subsec:projection-matrix-calculation}
-After the train data is generated the StarSpace model can be trained. The training gets initialized by the train parameters and the train file. When the training finishes and the model is saved, the calculation of the projection matrix starts. The algorithm \ref{alg:projection-matrix-calc} shows how the computation is done.
-
-\begin{algorithm}[H]
-    \caption{Projection matrix calculation}
-    \label{alg:projection-matrix-calc}
-    \SetKwData{model}{model}
-    \SetKwData{allSentences}{allSentences}
-    \SetKwData{sen}{sen}
+Following the flowchart in figure \ref{fig:star-space-training}, after the training data is generated, the StarSpace model can be trained. Later the model training finishes, and the model is saved, the calculation of the projection matrix starts. The projection matrix is calculated for a trained model individually. In other words, the projection matrix should be recomputed whenever a new model is trained.
 
 
-    \SetKwFunction{loadModel}{loadModel}
-    \SetKwFunction{getAllSentencesFromTrainDataset}{getAllSentencesFromTrainDataset}
-    \SetKwFunction{computeEigenVector}{computeEigenVector}
+This computation is done by predicting the embedding vector of each sentence in the training dataset using the trained StarSpace model. Then calculating the eigenvector and eigenvalues and sort these pairs in descending order in a matrix. For more details on how mathematically the projection matrix is calculated, please refer to the main paper of PCA \cite{woldPrincipalComponentAnalysis}.
 
-    \SetKwInOut{Input}{input}
-    \SetKwInOut{Output}{output}
 
-    \Output{Projection matrix of model \emph{M}}
-    \SetAlgoLined
+The instance running the calculation needs to have enough memory to load the training dataset and the StarSpace model simultaneously. The training dataset used in this work is almost 3GB, and the StarSpace model can reach a size up to 13GB. So the projection matrix computation needs at least 16GB of memory to get initialized. The calculation itself is also memory-consuming since, for all the values in the training dataset, the eigenpairs (eigenvalue and eigenvector) need to be kept in memory.
 
-    \BlankLine\emph{//initialization}\BlankLine
-    \model $\leftarrow$ \loadModel{}\;
-    \allSentences $\leftarrow$ \getAllSentencesFromTrainDataset{}\;
+\todo{argue about the computation time...}
 
-    \BlankLine
 
-    \lForEach{sentence $\sen$ in $\allSentences$} { X $\leftarrow$ \model.getDocVector(\sen) }
+To reduce this memory footprint and speed up the computation, we can argue that this process is a map operation and can be run on multiple instances at once in parallel and then reduced to a single projection matrix.
 
-	(eigenvalue, eigenvector) $\leftarrow$ \computeEigenVector{X}
-
-    \BlankLine
-\end{algorithm}
-
-\todo{Do I really need to go through all the mathematical process of the projection matrix calculation?}
 
 \subsection{Hayperparameter Tuning}
 \label{subsec:hyperparameter-tuning}
-The model of StarSpace has multiple parameters. The parameters tune the model for a better prediction and model depending on the train data set. So it is important to tune these hyperparameters for better model prediction. A complete documentation of parameters could be found in StarSpace repository on GitHub. \footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}
+The model of StarSpace has multiple hyperparameters that control the learning process of the model. The complete documentation of parameters can be found in the StarSpace repository on GitHub\footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}. 
+
+
+The assumption here is that tuning the model parameters would affect the data distribution on the partitions (i.e., workers) and the recommendation quality, respectively. This work implemented a hyperparameter tuning tool to train different models and compare their learning quality.
+
+
+Table \ref{tab:hyperparameter-variations} shows different hyperparameters values used to train the StarSpace model. Combining these parameters variations will train 16 different models. Selecting the best model for content-based partitioning can be done in two ways: First would be the impact on the recommendation quality. The recommendation quality of different models can be found in section \todo{add a reference to hyperparameter evaluation}. The second would be the data distribution on different partitions and how balanced these partitions are. The data distribution of each model is also discussed in the section \todo{add section}.
+
 
 \begin{table}[!h]
 	\centering
@@ -150,21 +136,16 @@ The model of StarSpace has multiple parameters. The parameters tune the model fo
 	\label{tab:hyperparameter-variations}
 	\begin{tabular}{|l|c|}
 		\hline
-		\textbf{Parameter Name} & \textbf{Values} \\
+		\textbf{Parameter} & \textbf{Values} \\
 		\hline
-		lr & [0.01, 0.05] \\
+		Learning rate & [0.01, 0.05] \\
 		\hline
-		dim & [100, 300] \\
+		Size of embedding vectors & [100, 300] \\
 		\hline
-		dropoutRHS & [0.5, 0.8] \\
+		Dropout probability for RHS features & [0.5, 0.8] \\
 		\hline
-		normalizeText & [True, False]\\
+		Text normalization for input file & [True, False]\\
 		\hline
 	\end{tabular}
 \end{table}
-
-Table \ref{tab:hyperparameter-variations} shows different hyperparameters values used to train the StarSpace model. The train criteria is based on the MAP@10 value of the union result, meaning if a model has a higher MAP@10 value comparing to the other models it is the better model.
-
-
-Figure \todo{here comes the MAP@10 figure of the different models} shows the different MAP@10 values of different models.
 
