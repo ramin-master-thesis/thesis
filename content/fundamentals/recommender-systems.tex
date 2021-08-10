@@ -202,10 +202,10 @@ IDCG is the \emph{Ideal Discounted Cumulative Gain} and is mathematically define
     \label{eq:idcg}
 \end{equation}
 
-Where \emph{$REL_p$} indicates the ordered relevant documents by their relevance up to position \emph{p}. NDCG result varies between the value zero to one. If NDCG is equal to one, then IDCG is the same as DCG and representing a perfect score. The NDCG values can be averaged over all the requested queries to obtain the averaged performance of the recommender system.
+Where \emph{$REL_p$} indicates the ordered relevant documents by their relevance up to position \emph{p}. NDCG results in a range between zero to one. If NDCG is equal to one, IDCG is the same as DCG and represents a perfect score. The NDCG values can be averaged over all the requested queries to obtain the averaged performance of the recommender system.
 
 
-Although NDCG is a good metric for comparing weighted ranked list, but it fails to determine the ranking quality of disjoint lists. For example consider two result list with the score of 3,2,1 and 3,2,1,0 respecitvley, both of these these lists will have the same score. Another issue with disjoint ranked list arises when documents do not accure in both lists. Consider the two lists with the score of 3,2,1 and 3,2,1,1 respecitvley, both of these lists are denoted as perfectly equal.
+Although NDCG is a good metric for comparing weighted ranked lists, it fails to determine the ranking quality of disjoint lists. For example, consider two result lists with the score of 3,2,1 and 3,2,1,0 respectively. Both of these lists will have the same score. Another issue with disjoint ranked lists arises when different items appear in both lists. Consider the two lists with the score of 3,2,1 and 3,2,1,1 respectively. Both of these lists are denoted as perfectly equal.
 
 
 \subsubsection{Kendall rank correlation coefficient}
@@ -250,13 +250,14 @@ In works like WTF (Who To Follow) \cite{guptaWTFWhoFollow} the authors use onlin
 
 
 \subsection{Data Fusion}
+\label{subsec:data-fusion}
 Data fusion is the process of integrating and merging information gathered by multiple data sources into a single representation (i.e., ranked list) for higher effectiveness. For recommendation systems, this can be combining multiple ranked recommendation lists into a single ranked list. Data fusion approaches vary depending on the system architecture, data sources, and ranking system. A good example is MetaLens \cite{schaferMetarecommendationSystemsUsercontrolled}, a meta-recommendation system gathering information from different sources like Rotten Tomatoes and MovieLens and using them to generate more personalized recommenders.
 
 
-Studies show that data fusion methods in IR systems are complex and depend highly on the system architecture and algorithm used in the system \cite{frankhsuComparingRankScore2005}. In IR systems, specialy search engines, the incoming query get processed in a so-called query \emph{formulation} step. In this step the incomming query get tokenized, normalized,  and the stop words are removed. This step transforms the query into a digestable representation for the search engine. Afterward, a \emph{schema} processes the processed query and generates the results. 
+Studies show that data fusion methods in IR systems are complex and depend highly on the system architecture and algorithm used in the system \cite{frankhsuComparingRankScore2005}. In IR systems, especially search engines, the incoming query gets processed in a so-called query \emph{formulation} step. In this step, the incoming query gets tokenized, normalized,  and the stop words are removed. This step transforms the query into a digestible representation for the search engine. Afterward, a \emph{schema} processes the processed query and generates the results. 
 
 
-Single instance recommender systems take a query as their imput and produce a single ranked list of recommendations for a user. In recommendation systems the incomming query can only be a simple user-ID and does not need to go through the formulation step. Figure \ref{fig:data-fusion-simple} represents this behaviour.
+Single instance recommender systems take a query as their input and produce a single ranked list of recommendations for a user. The incoming query can only be a simple user-ID in recommendation systems and does not need to go through the formulation step. Figure \ref{fig:data-fusion-simple} represents this behaviour.
 
 
 \begin{figure}[!h]
@@ -276,8 +277,8 @@ With the recent developments in computer science and distributed systems, it is 
 \end{enumerate}
 
 
-Multiple formulations can use different normalization or tokanization algorithm to process the incomming queries. The end results of each formulation varies even with the same schema.
+Multiple formulations can use different normalization or tokenization algorithm to process the incoming queries. The end results of each formulation vary even with the same schema.
 
 
-This work uses an SFMS architecture for the distribution. In this architecture, the query is sent to a single formulation point and from there to multiple schemes (i.e., workers). Each scheme runs the recommendation algorithm and produces a ranked list. In the last step, these ranked lists are then integrated into a single ranked list. The section \ref{sec:data-fusion-approaches} explains the data fusion approaches used in this work. For more detail about the distributed architecture pleaser refer to section \ref{sec:system-architecture}.
+This work uses an SFMS architecture for the distribution. In this architecture, the query is sent to a single formulation point and from there to multiple schemes (i.e., workers). Each scheme runs the recommendation algorithm and produces a ranked list. In the last step, these ranked lists are then integrated into a single ranked list. Section \ref{sec:data-fusion-approaches} explains the data fusion approaches used in this work. For more detail about the distributed architecture, please refer to section \ref{sec:system-architecture}.
 
