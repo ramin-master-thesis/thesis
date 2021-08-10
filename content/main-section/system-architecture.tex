@@ -96,7 +96,7 @@ The API endpoint layer provides an interface to interact with the system. The AP
 The API endpoint also interacts with the index layer to gather information. Informations like: Degree number of a particular node in the graph, total number of nodes, and totall number of edges.
 
 \subsection{Multiple Machines}
-\label{Multiple Machines}
+\label{subsec:multiple-machines}
 This section explains the multi-instance architecture. Figure \ref{fig:multiple-machine-architecture} shows the high-level architecture of the multi-instance design. Each instance (i.e., worker) consists of a single machine, explained in the previous subsection. Each worker receives an identifier (partition-ID) at the time they are deployed in the cluster. When the instance is running, they load and index the sharded data they receive from the \emph{partitioner} module. The upcomming section \ref{sec:partitioning} explains this module in detail. 
 
 

@@ -1,28 +1,28 @@
 \section{Model Training}
 \label{sec:model-training}
-The StarSpace model is trained to be able to predict the embedding vectors of the new documents. To train the StarSpace model train data needed to be generated fromat that the model can consume. As explained in the section \ref{subsec:partitioning-star-space} to calculate the partition-ID, the StarSpace model needs the a projection matrix to reduce the dimensions of the predicted embedding vector. Figure \ref{fig:star-space-training} shows the flowchart of the training and projection matrix calculation process. At the beginign, related documents to each other are generated using the recommendation algorithm. The data is then used to train the model with the configured hyperparameters. After the training process is finished the projection matrix is calculated and saved for later use.
+The StarSpace model is trained to be able to predict the embedding vectors of the new documents. To train the StarSpace model, train data needed to be generated format that the model can consume. As explained in the section \ref{subsec:partitioning-star-space} to calculate the partition-ID, the StarSpace model needs a projection matrix to reduce the dimensions of the predicted embedding vector. Figure \ref{fig:star-space-training} shows the flowchart of the training and projection matrix calculation process. In the beginning, related documents to each other are generated using the recommendation algorithm. The data is then used to train the model with the configured hyperparameters. After the training process is finished, the projection matrix is calculated and saved for later use.
 
 In the following sections, each step of the flowchart \ref{fig:star-space-training} is explained in detail.
 
 \begin{figure}[!h]
-	\centering
-	\includegraphics[height=0.75\textwidth]{images/train-StarSpace-flow-chart}
-	\caption{Flowchart of the training process}
-	\label{fig:star-space-training}
+    \centering
+    \includegraphics[height=0.75\textwidth]{images/train-StarSpace-flow-chart}
+    \caption{Flowchart of the training process}
+    \label{fig:star-space-training}
 \end{figure}
 
 \subsection{Generating Training Data}
 \label{subsec:generating-training-data}
-The first step to train the StarSpace model is to generate train data. The train input file that StarSpace takes is a text file and has a special structure. Each line of the file is considered as a document. Each document is build with sentences and each sentence is sperated by a tab from each other. With this format StarSpace learns the mapping between the sentecnes and documents and is able to predict the related documents for a given sentece. Moreover, StarSpace would be able to calculate the embedding vecotor for a given sentece.
+The first step to train the StarSpace model is to generate train data. The train input file that StarSpace takes is a text file and has a particular structure. Each line of the file is considered a document. Each document is built with sentences, and a tab separates each sentence from each other. With this format, StarSpace learns the mapping between the sentences and documents and is able to predict the related documents for a given sentence. Moreover, StarSpace would be able to calculate the embedding vector for a given sentence.
 
 
-The train dataset used in this work to train StarSpace is crawled from Twitter directly (see section \ref{sec:data-crawling-approach}). This dataset needs to be formated to be digestable for StarSpace. StarSpace needs in each line multiple tweets related to each other that can be defined as a document. We can argue that each document in this file is build with sentences that are related to each other. This works proposes an approach in which the SALSA algorithm to find related senteces to each other.
+The training dataset used in this work to train StarSpace is crawled from Twitter directly (see section \ref{sec:data-crawling-strategy}). This dataset needs to be formatted to be digestible for StarSpace. StarSpace needs in each line multiple tweets related to each other that can be defined as a document. We can argue that each document in this file is built with sentences that are related to each other. This work proposes an approach in which the SALSA algorithm find related sentences to each other.
 
 
-As explained in the subsection \ref{subsub:storage-index-layer} this work extends the SALSA algorithm by starting the random walk from the right side index (tweet side) and return the vertix list of the right side nodes (tweets). The intution here is that SALSA produces related tweets to the tweet, which the walk started on. Therefore, the train data can be loaded into memory and by generating the bipartite graph and start to generate for each tweet, the related tweets. Then each tweet and its related tweets are writen into a text file with seperated tabs. This process continues for all the tweets.
+As explained in the subsection \ref{subsub:storage-index-layer} this work extends the SALSA algorithm by starting the random walk from the right side index (tweet side) and return the vertex list of the right side nodes (tweets). The intuition here is that SALSA produces related tweets to the tweet, which the walk started on. Therefore, the train data can be loaded into memory by generating the bipartite graph and generating the related tweets for each tweet. Then each tweet and its related tweets are written into a text file separated by tabs. This process continues for all the tweets.
 
 
-The algorithm \ref{alg:star-space-train-data} explains how the data generation process works. At the beginign all the identifiers from the right side index (tweet-IDs) are loaded. Then for each id the \emph{getRelatedIDs} function runs the SALSA walk and calculates the related node-IDs (tweets) for the given identifier with a cut-off of ten. The input identifier is also added to the end result list. After that the content of each identifier is retrieved from the identifier-content index and with tab seperated joined together as a string. This will produce one document and this particular document will be saved in a text file. The algorithm continues until all the identifiers finish.
+The algorithm \ref{alg:star-space-train-data} explains how the data generation process works. In the beginning, all the identifiers from the right side index (tweet-IDs) are loaded. Then for each id, the \emph{getRelatedIDs} function runs the SALSA walk and calculates the related node-IDs (tweets) for the given identifier, and limits the results up to ten. The input identifier is also added to the result list. Next, the content of each identifier is retrieved from the identifier-content index and converted into a tab-separated string. This will produce one document, and this particular document will be saved in a text file. The algorithm continues until all the identifiers finish.
 
 
 \begin{algorithm}[H]
