@@ -1,23 +1,74 @@
 \section{Load balancing upcoming recommendation request to each partition}
 \label{sec:load-balancing}
+The multi-machine architecture described in section \ref{subsec:multiple-machines} forwards the incoming requests to all the available instances, leading all the machines to run the SALSA algorithm and then use one of the data fusion approaches to integrate the results of the workers into a single ranked list. Each worker can run the random walk algorithm separately and in parallel. Thus, the data fusion process needs to wait for all the instances to finish the walk.
 
-\begin{itemize}
-    \item The data fusion approach proposed in subsection \ref{subsec:data-fusion-most-interactions} comes with some advantages.
-    \item The degree of the user on each partition can be saved during partitioning time. Suppose a recommendation request for a particular user is sent. In that case, the degree and partition number of the users can be retrieved, and the request can be forwarded to the partition with the highest degree. This will save \emph{1/N} of the work needed to calculate the recommendations. \emph{N} is the number of partitions. 
-    
-    This can not be done in other approaches discussed in subsecitons \ref{subsec:data-fusion-union-results} and \ref{subsec:data-fusion-highest-hit} since it is impossible to calculate the hit number of the partitions without running the SALSA algorithm.
 
-    \item Each user along with its number of interest can be stored in a probalistic data structure like \emph{Count Min Scetch (CMS)} \cite{cormode2005improved} \todo{Should I explain CMS here or in chapter 2?}
-    \item In figure \ref{fig:loadbalancer} during parittion time the load balancer saves a touple of \emph{(partitionId, <Degree-number-of-user>)} as the value and as the key the userId gets saved. 
-    \item Whenever a query request is sent, the key (userID) is used to retrive the value (tuple containing the parititonID and degree of user). The number of values match the number of parititons
-    \item If we itarate through the values we can retrive the biggest degree along with the partitionID.
-\end{itemize}
+Imagine a scenario, where the StarSpace partitioner, distributes the data on the instances and the \emph{Most Interactions} approach is used to fusion the data (see section \ref{subsec:data-fusion-most-interactions}). This data fusion approach chooses the ranked list of an instance with the highest degree of the requested user. In other words, instead of requesting all the instances to run the random walk algorithm, we can ask the particular instance with the highest degree of the user for the recommendations.
 
+
+This work proposes an architecture to implement this approach. Figure \ref{fig:loadbalancer} demonstrates this idea. A \emph{Load Balancer} is introduced that receives the incoming user-ID and forwards it to the instance with the highest degree of that user-ID. The partitioner receives a stream of events (document content), one at a time, and forwards the user-ID along with the calculated partition-ID to the load balancer and the worker. To count the frequency of the incoming data, we can use a probabilistic data structure called \emph{Count Min Sketch (CMS)} \cite{cormodeImprovedDataStream2005} in the load balancer.
 
 
 \begin{figure}[!h]
-	\centering
-	\includegraphics[width=1\textwidth]{images/future-system-architecture}
-	\caption{Proposed architecture with the load balancer to route the upcoming requests}
-	\label{fig:loadbalancer}
+    \centering
+    \includegraphics[width=1\textwidth]{images/future-system-architecture}
+    \caption{Proposed architecture with the load balancer to route the upcoming requests}
+    \label{fig:loadbalancer}
 \end{figure}
+
+
+The CMS will receive a tuple containing the user-ID and partition-ID, one at a time, and keeping track of the frequency. Consider the example in the figure \ref{fig:count-min-sketch}. This figure shows a count-min-sketch matrix with a width of \emph{W} and a length of \emph{d} containing \emph{d} hash functions. During partition time the tuple \emph{(\emph{U}, \emph{P$_1$})} is hashed by the hash functions and the frequency is incremented.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1\textwidth]{images/count-min-sketch}
+    \caption{The count min sketch data structure used in the load balancer to maintain the frequency (degree) of user \emph{U} on partition \emph{$P_1$}.}
+    \label{fig:count-min-sketch}
+\end{figure}
+
+
+During query time each user-ID, partition-ID pair frequency is retrieved from CMS and compaired against each other. Consider the algorithm \ref{alg:retrieve-degree}, imagine the incoming user-ID \emph{U} with \emph{N} instances and the set \emph{P}=\{\emph{P$_1$}, \emph{P$_1$},... ,\emph{P$_N$}\} being the partition-ID of each partition in the cluster. The load balancer needs to retrieve for each partition in the cluster the degree number of the user \emph{U} saved in the CMS. In other words, the pairs \{(\emph{U}, \emph{P$_1$}), (\emph{U}, \emph{P$_2$}),..., (\emph{U}, \emph{P$_N$})\} will be asked from the CMS in the load balancer and the retrieved value would be the degree of the user \emph{U}. From there, we can use the partition-ID to ask the instance to generate the recommendations.
+
+
+\begin{algorithm}[H]
+    \caption{Retrieve the highest degree from CMS}
+    \label{alg:retrieve-degree}
+    \SetKwData{partitionId}{partitionId}
+    \SetKwData{tuple}{tuple}
+    \SetKwData{degree}{degree}
+    \SetKwData{count}{count}
+    \SetKwData{partitionToAsk}{partitionToAsk}
+
+
+    \SetKwFunction{getAllPartitionIDs}{getAllPartitionIDs}
+    \SetKwFunction{getValueOfKey}{getValueOfKey}
+
+    \SetKwInOut{Input}{input}
+    \SetKwInOut{Output}{output}
+
+    \Input{User-ID \emph{U}}
+    \Output{Partition-ID containing the highest degree of user \emph{U}}
+    \SetAlgoLined
+
+    \BlankLine\emph{// initialization}\BlankLine
+    \degree $\leftarrow$ 0 \;
+
+    \BlankLine
+    \ForEach{identifier $\partitionId$ in \{\emph{P$_1$}, \emph{P$_1$},... ,\emph{P$_N$}\}}
+    {
+        \tuple $\leftarrow$ (\emph{U}, \partitionId)\;
+        \count $\leftarrow$ \getValueOfKey{tuple}\;
+        \If{ \count $>$ \degree}{
+                \degree $\leftarrow$ \count \;
+                \partitionToAsk $\leftarrow$ $\partitionId$
+            }
+    }
+
+    return \partitionToAsk \;
+
+    \BlankLine
+\end{algorithm}
+
+
+By asking the partition with the highest degree of the requested user, we will save \emph{1/N} of the work needed to calculate the recommendations, where \emph{N} denotes the number of partitions. It is important to notice that the other data fusion approaches, namely \emph{Union Result} and \emph{Highest Hit} can not be used to ask the right partition for recommendation calculation. These two approaches highly depend on the hit count computed by the SALSA algorithm. It is impossible to gain the hit count without running the algorithm.
+
