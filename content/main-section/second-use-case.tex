@@ -1,13 +1,13 @@
 \section{Second use-case: Tagging and Tag Recommendation for Stack Overflow Questions}
 \label{sec:second-usecase}
+The approach introduced in this thesis can be generalized and used in other use cases as well. This section will present a use case where the partitioner and the StarSpace model are used to distribute the system horizontally.
 
 
-\begin{itemize}
-    \item The proposed approch can be used in other fields and use cases.
-    \item A good use case would be Stackoverflow questions tag prediction.
-    \item It exists a bipartite graph between the questions and tags. The edges between these questions determine if a question is related to a tag or not.
-    \item We can use the same approach to partition the question-tag graph on mulptiple workers. With the difference that we store the embedding of each question on each worker.
-    \item When a new question is created, StarSpace can calculate the embedding space of that particular question and furthuremore the partition number.
-    \item After the partition is deffined we can used the stored embedding of the questions to find the most similar (i.e. "nearest") question to the newly created question. The most similar question would be the starting node on the question-tag bipartite graph for the SALSA random walk.
-    \item The end result of the random walk would be a ranked list of tags for the new question.
-\end{itemize}
+\emph{Stack Overflow}\footnote{\url{https://stackoverflow.com/}} is a website in which developers either ask or answer informatic-related questions. Each question contains one or multiple \emph{tags}. A tag is a term or phrase that expresses the subject of a question. Tags let professionals connect with questions they can answer by putting topics into distinct, well-defined categories.
+
+
+The problem is defined as follows: \emph{How can we predict and recommend proper tags for a newly asked question?} The data dump provided by stack overflow\footnote{\url{https://archive.org/download/stackexchange}} shows that each question interacts with at least one tag. Therefore, we can build a question-tag bipartite graph from the data and distribute it based on the content of questions using the approach proposed in the previous sections.
+
+
+During partition time, each question will land on a worker along with its embedding vector. When asking a new question, we can calculate its partition-ID through its embedding vector. Next, we can find the "nearest" question to the newly asked question using the partition-ID and embedding vector. This question would be the initial vertex to start the SALSA random walk. The result of the random walk would be a ranked list of tags for the new question. The user can decide which tags to keep and which to decline.
+

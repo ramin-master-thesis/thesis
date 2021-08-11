@@ -60,7 +60,7 @@ During query time each user-ID, partition-ID pair frequency is retrieved from CM
         \count $\leftarrow$ \getValueOfKey{tuple}\;
         \If{ \count $>$ \degree}{
                 \degree $\leftarrow$ \count \;
-                \partitionToAsk $\leftarrow$ $\partitionId$
+                \partitionToAsk $\leftarrow$ $\partitionId$ \;
             }
     }
 
