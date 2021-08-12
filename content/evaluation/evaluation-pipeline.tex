@@ -1,7 +1,38 @@
-\section{Evaluation Pipeline}
+\section{Evaluation Pipeline to assess recommendations quality}
 \label{sec:evaluation-pipeline}
 
 \begin{enumerate}
+    \item Assumption: The single machine recommendations are considered as Objective Ranking or Golden Standard
+    All recommendations from the single machine are relevant
+    
+    \item Recommendations from other machines (i.e. the results of multi partition workers) are defined as Observed Rankings
+    
+    \item Goal: To measure how far the observed ranking deviates from the objective ranking and keep the difference as small as possible
+\end{enumerate}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.65\textwidth]{images/evaluation-flow-chart}
+	\caption{Flowchart of the evaluation pipeline}
+	\label{fig:flowchart-evaluation-pipeline}
+\end{figure}
+
+
+\subsection{Evaluation metrics for recommendation quality}
+\label{subsec:evaluation-metrics-for-recommendation-quality}
+
+\begin{itemize}
+    \item AP and MAP at K \ref{subsubsec:ap@k-map@k}
+    \item RBO \ref{subsubsec:rbo}
+\end{itemize}
+
+
+\subsection{Baseline generation}
+\label{subsec:baseline-generation}
+
+\begin{enumerate}
+    \item One difficulty in evaluating a random-walk based recommender engine is their non-deterministic nature. Results can generally differ between random walks, meaning two engines operating on the same graph can return different recommendations, and even the same engine can return different results for two consecutive requests for the same user.
+    
     \item Random users are sampled
     500 random users 
     
@@ -19,9 +50,5 @@
     
 \end{enumerate}
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.75\textwidth]{images/evaluation-flow-chart}
-	\caption{Partitioning upcoming document using StarSpace}
-	\label{fig:partitioning-star-space}
-\end{figure}
+\subsection{Generating the observed rankings}
+\label{subsec:comparing-recommendtions}

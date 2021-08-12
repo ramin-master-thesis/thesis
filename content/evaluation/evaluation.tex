@@ -1,8 +1,3 @@
 \chapter{Evaluation}
-\label{evaluation}
-In \cite{gupta2013wtf} the authors conducted two types of evaluations:
+\label{chap:evaluation}
 
-\begin{enumerate}
-	\item Offline experiments on retrospective data. A typical evaluation would use a graph snapshot from, say, a month ago, on which an algorithm is run. Relevant metrics such as precision and recall (more on metrics below) would be computed against the current graph, using the edges that have been added since the graph snapshot as the ground truth. This is the experimental approach adopted by most academic researchers.
-	\item Online A/B testing on live traffic, which has emerged as the gold standard evaluation for web-based products. A small fraction of live users is subjected to alternative treatments (e.g., different algorithms). Prospectively (i.e., after the evaluation has begun, relevant metrics are gathered to assess the efficacy of the treatments compared to a control condition. While simple in concept, proper A/B testing is as much an art as science; see, e.g., [14] for more discussion.
-\end{enumerate}

@@ -70,7 +70,7 @@ This section introduces the evaluation metrics listed in the table \ref{tab:eval
 \end{table}
 
 \subsubsection{Precision and Recall}
-\label{Precision and Recall}
+\label{subsubsec:precision-recall}
 The \emph{retrieval effectiveness}: the ability of the system to retrieve relevant documents while at the same time suppressing the retrieval of non-relevant documents. 
 The most well-known pair of variables jointly measuring retrieval effectiveness is \emph{precision and recall}.
 
@@ -92,7 +92,7 @@ Evaluating modern information retrieval systems with recall is obsolete. These s
 Singly, each metric measures some aspect of retrieval effectiveness; together, they measure retrieval effectiveness entirely. Metrics like average precision bring these two metrics close to each other.
 
 \subsubsection{AP@K and MAP@K}
-\label{AP@K and MAP@K}
+\label{subsubsec:ap@k-map@k}
 \paragraph*{Average precision (AP)} is the metric used to calculate retrieval effectiveness, which is defined as follows. 
 Let the precision of a ranking to depth \emph{k} be
 the proportion of documents to depth \emph{k} that are relevant.
@@ -157,7 +157,7 @@ AP@K and MAP@K can evaluate disjoint and not-weighted ranking lists. This means 
 As an example of this drawback, take a look at table \ref{tab:apk-example} the AP@4 in this example is 1, although the order and ranking of the results in the observed ranking list are not the same as the objective ranking list.
 
 \subsubsection{Normalized Discounted Cumulative Gain (NDCG)}
-\label{CG, DCG, and NDCG}
+\label{subsubsection:cg-dcg-ndcg}
 When examining the ranked result list, highly relevant items (i.e., documents) are valuable to the user than less relevant ones. In other words, the higher the rank position of a relevant item, the less valuable it gets for the user. The authors of \cite{jarvelinCumulatedGainbasedEvaluation2002} define \emph{Cumulative Gain (CG)} and \emph{Discounted Cumulative Gain(DCG)} as follow: This metric measures the cumulative gain the user obtains by examining the retrieval result up to a given ranked position. 
 
 
@@ -221,6 +221,7 @@ The Kendall Tau falls in the range of [-1, +1]. Two lists are considered dissimi
 To demonstrate these drawbacks, take a look at table \ref{tab:apk-example}. Kendall's Correlation can not be calculated since the items at rank five are different. Even by replacing the fifth element with a special character (e.g., \#) on both lists, the value of $\tau$ would be 1, representing a perfect agreement between the two lists, which is wrong.
 
 \subsubsection{Rank-Biased Overlap (RBO)}
+\label{subsubsec:rbo}
 The Rank-biased overlap (RBO) \cite{webberSimilarityMeasureIndefinite2010} compares two lists by looking at the \emph{Set Overlap} at each rank. The resulting overlaps are weighted by their position in the list so that differences in the top ranks are more penalized than differences at the bottom. Let \emph{S} and \emph{T} be two infinite rankings. We can define $A_{d}$ define as the agreement between \emph{S} and \emph{T} given by the proportion of the overlap up to depth \emph{d}:
 
 \begin{equation}
