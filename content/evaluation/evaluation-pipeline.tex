@@ -1,54 +1,85 @@
 \section{Evaluation Pipeline to assess recommendations quality}
 \label{sec:evaluation-pipeline}
+This work presents a pipeline to measure the impact of the partition with different approaches on the recommendation quality. To build the pipeline each component in the section \ref{sec:eval-suit-architecture-components} is used. 
 
-\begin{enumerate}
-    \item Assumption: The single machine recommendations are considered as Objective Ranking or Golden Standard
-    All recommendations from the single machine are relevant
-    
-    \item Recommendations from other machines (i.e. the results of multi partition workers) are defined as Observed Rankings
-    
-    \item Goal: To measure how far the observed ranking deviates from the objective ranking and keep the difference as small as possible
-\end{enumerate}
+Figure \ref{fig:flowchart-evaluation-pipeline} indicates the flow of the pipeline from the start till the end. At the start, the users are sampled randomly. Next, the pipeline generates the baseline (also called Objective Ranking or Golden Standard). The step in the middle of the flowchart describes querying recommendations from the single partition instance to check the results' reproducibility. The right side of the flowchart denotes the step where the recommendations of the multi-partition instances are requested. The last step after the querying of recommendation finishes and the instances use an arbitrary data fusion approach to reduce their result to one list. In the last step, the pipeline starts comparing the results by calculating the evaluation metric configured. 
+
+The main goal of the evaluation is to measure how far the observed ranking deviates from the objective ranking and keep the difference as small as possible. Moreover, this pipeline assesses how good or bad a trained StarSpace model performs during hyperparameter tuning.
 
 \begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.65\textwidth]{images/evaluation-flow-chart}
-	\caption{Flowchart of the evaluation pipeline}
-	\label{fig:flowchart-evaluation-pipeline}
+    \centering
+    \includegraphics[width=0.60\textwidth]{images/evaluation-flow-chart}
+    \caption{Flowchart of the evaluation pipeline}
+    \label{fig:flowchart-evaluation-pipeline}
 \end{figure}
 
 
+This section will go through the details of the evaluation pipeline.
+
 \subsection{Evaluation metrics for recommendation quality}
 \label{subsec:evaluation-metrics-for-recommendation-quality}
-
-\begin{itemize}
-    \item AP and MAP at K \ref{subsubsec:ap@k-map@k}
-    \item RBO \ref{subsubsec:rbo}
-\end{itemize}
+The two main metrics used to evaluate the recommendations quality after partitioning the data are the \emph{Mean Average Precision at K (MAP@K)} (see section \ref{subsubsec:ap@k-map@k})  and \emph{Ranked-Biased Overlap (RBO)} (see section \ref{subsubsec:rbo}). 
 
 
-\subsection{Baseline generation}
+With the mean average precision, it is possible to compare the objective ranking to the observed ranking without penalizing the ranking or the order of the results. Making this metric ideal to see the impact of the partitioning on the recommendations.
+
+
+In the ranked-biased overlap, the results at the top of the list have a higher value than the one at the bottom, so the comparison is much more strict, and differences in the top ranks are more penalized than differences at the bottom. Making it an ideal metric to investigate the order of the returned results in different scenarios.
+
+
+\subsection{Baseline generation strategy}
 \label{subsec:baseline-generation}
 
+Having a baseline to compare the generated recommendations of multiple partitions with was challenging to generate. There are two main issues in creating a baseline:
 \begin{enumerate}
-    \item One difficulty in evaluating a random-walk based recommender engine is their non-deterministic nature. Results can generally differ between random walks, meaning two engines operating on the same graph can return different recommendations, and even the same engine can return different results for two consecutive requests for the same user.
+    \item The user feedback on their recommendations is missing from the dataset crawled (see section \ref{sec:data-crawling-strategy}). The lack of feedback data makes it more difficult to create a baseline that includes both relevant and non-related data.
     
-    \item Random users are sampled
-    500 random users 
-    
-    \item Calculate recommendation for each sampled user on single machine
-    Query a user N (=10) times and  take the most frequent recommendations
-    This creates the objective ranks (i.e., Golden Standard)
-    
-    \item Calculate recommendation for each sampled user on single machine
-    Check reproducibility of the results
-    
-    \item For every sampled user on each partition, calculate the recommendations
-    observed ranks
-    
-    \item Assess the objective ranks with the observed ranks
-    
+    \item In evaluating a random-walk-based recommender engine is their non-deterministic nature. Results can generally differ between random walks, meaning two engines operating on the same graph can return different recommendations, and even the same engine can return different results for two consecutive requests for the same user.
 \end{enumerate}
 
-\subsection{Generating the observed rankings}
+Assumptions were made to overcome these problems. This work assumes that all the returned values from the single partition solve the first problem. In practice however, the recommendation engine produces relevant and non-relevant results. This assumption comes with its price since it makes the evaluation strickt, especially when the algorithm is non-deterministic. In other words, when calculating the metrics (MAP@K or RBO) all the items in the baseline list are supposed to be in the obeserved ranking list for a perfect result.
+
+
+Another way to to solve the first problem is to generate a labeling function using frameworks like \emph{Snorkel}\footnote{\url{https://snorkel.org/}} to classify the data as relevant ro not relevant for a user. Thus, this was beyond the scope of this work.
+
+
+For the second issue, I ran the random walk for each user \emph{N} times and then took the most frequent recommendations. The intuition here is that gathering the most frequent recommendation (some of them even \emph{N} times) will overcome the non-deterministic behavior of the system and the baseline in general.
+\todo{Do I need to provide an algorithm? Or is it obvious?}
+
+% \begin{algorithm}[H]
+%     \caption{Generating data for the baseline}
+%     \label{alg:baseline-generation}
+%     \SetKwData{userID}{userID}
+%     \SetKwData{n}{n}
+
+
+%     \SetKwFunction{getRecommendations}{getRecommendations}
+%     \SetKwFunction{getValueOfKey}{getValueOfKey}
+
+%     \SetKwInOut{Input}{input}
+%     \SetKwInOut{Output}{output}
+
+%     \Input{List of sampled users \emph{U} and number of tries \emph{N}}
+%     \Output{Baseline list of recommendations \emph{B}}
+%     \SetAlgoLined
+
+%     \BlankLine\emph{// initialization}\BlankLine
+
+
+%     \BlankLine
+%     \ForEach{$\userID$ in \emph{U}}
+%     {
+%         \For{$\n \leftarrow$0, $\n \glq$\emph{N}, $\n$++}
+%         {
+%             \getRecommendations{$\userID$}
+%         }
+%     }
+
+
+%     \BlankLine
+% \end{algorithm}
+
+\subsection{Observed rankings generation strategy}
 \label{subsec:comparing-recommendtions}
+The observed ranking are a list of recommendations that we assess against the baseline. For the evaluation we generate two separate lists: First, a list of recommendations for each sampled user on single machine. With this list we can check the reproducibility of the results. Second, for each sampled user we generate the recommendations on a multi-partition machine and fusion the results of the partitions together. These both lists (single partition and multi-partition) is saved and used in the matric calculation step later on.
+

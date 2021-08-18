@@ -1,9 +1,19 @@
 \section{Latency}
+\label{sec:eval-latency}
+The main evaluation focus of this work is on the how the partitioning effects the recommendation qualtiy. But during the evalution of the system, I noticed that the time of recommendation computation in smaller partition sink noteably. Therefore, it was worth measuring it and discusse about the benefetis and the technical reasons of the latency improvement.
+
+
+The focus of the evaluation here is to measure the time of each instance computing the recommendations using the SALSA algorithm. The assumption here is that by partitioning the data on multiple instances the amount of data on each machine recduces respectively and this will lead to a faster random walk on the bipartite graph. 
 
 \subsection{Hardware specification}
 \label{subsec:hardware-spec}
-\todo{Best way to present the hardware specs?}
+This section describes the machine, where the expriments and evaluation of the proposed thesis took place. It is important to notice the hardware specification specialy when evaluationg the latency of the system.
 
+The instance is a VM-Host-Server with 2x AMD EPYC 7282 (Zen-Rome) 16-Core CPU, 120W, 2.80GHz, 64MB L3 Cache, DDR4-3200, Turbo Core max. 3.20GHz. The instance has 256GB (16x 16GB) DDR4-3200 DIMM, REG, ECC, 2R of RAM. The storage is a SSD 1.6TB HHHL NVMe, 24x7, 3 DWPD, Samsung PM1725b. The virtualization is runing with  QEMU-KVM/libvirt version 4.2.1 (Debian 1:4.2-3ubuntu6.17).
+
+
+\subsection{Experiment setup}
+\label{subsec:latency-experiment-setup}
 
 \subsection{Single Machine}
 \label{subsec:latency-single-machine}
