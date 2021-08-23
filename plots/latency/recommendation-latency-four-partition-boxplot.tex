@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+	\definecolor{clr1}{RGB}{254, 168, 50}
+	\definecolor{clr2}{RGB}{230, 99, 39}
+	\definecolor{clr3}{RGB}{184, 17, 62}
+	\definecolor{clr4}{RGB}{31,182,83}
+	\begin{axis}[,
+			boxplot/draw direction=y,
+			x axis line style={opacity=0},
+			axis x line*=bottom,
+			xtick={1,2,3,4},
+			xticklabels={Partition 0, Partition 1, Partition 2, Partition 3},
+			enlarge x limits=0.1,
+			xtick distance=2,
+			ylabel=Seconds,
+			width = 0.85\linewidth,
+		]
+
+		% \addplot+ [boxplot]
+		% table [y index=0] {latency/recommendation-latency-four-partition.dat};
+
+		\addplot+ [boxplot, clr1]
+		table [y index=1] {latency/recommendation-latency-four-partition.dat};
+
+		\addplot+ [boxplot, clr2]
+		table [y index=2] {latency/recommendation-latency-four-partition.dat};
+
+		\addplot+ [boxplot, clr3]
+		table [y index=3] {latency/recommendation-latency-four-partition.dat};
+
+		\addplot+ [boxplot, clr4]
+		table [y index=4] {latency/recommendation-latency-four-partition.dat};
+	\end{axis}
+\end{tikzpicture}

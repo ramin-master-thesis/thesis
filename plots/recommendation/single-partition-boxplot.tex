@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+	\begin{axis}[,
+			boxplot/draw direction=y,
+			x axis line style={opacity=0},
+			axis x line*=bottom,
+			xtick={1,2,3},
+			xticklabels={K = 8, K = 9, K = 10},
+			xtick distance=1,
+			ymin=0.55,ymax=0.75,
+			ylabel=MAP
+		]
+		% \addplot+ [boxplot]
+		% table [y index=0] {single-partition-users-MAP-at-Ks.dat};
+		% \addplot+ [boxplot]
+		% table [y index=1] {single-partition-users-MAP-at-Ks.dat};
+		% \addplot+ [boxplot]
+		% table [y index=2] {single-partition-users-MAP-at-Ks.dat};
+		% \addplot+ [boxplot]
+		% table [y index=3] {single-partition-users-MAP-at-Ks.dat};
+		% \addplot+ [boxplot]
+		% table [y index=4] {single-partition-users-MAP-at-Ks.dat};
+		% \addplot+ [boxplot]
+		% table [y index=5] {single-partition-users-MAP-at-Ks.dat};
+		% \addplot+ [boxplot]
+		% table [y index=6] {single-partition-users-MAP-at-Ks.dat};
+		\addplot+ [boxplot]
+		table [y index=7] {recommendation/single-partition-users-MAP-at-Ks.dat};
+		\addplot+ [boxplot]
+		table [y index=8] {recommendation/single-partition-users-MAP-at-Ks.dat};
+		\addplot+ [ boxplot ] 
+		table [y index=9] {recommendation/single-partition-users-MAP-at-Ks.dat};
+	\end{axis}
+\end{tikzpicture}

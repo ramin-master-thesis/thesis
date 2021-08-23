@@ -9,14 +9,13 @@
 			legend style={at={(1,1)},anchor=north east}
 		]
 				    
-		% Add values and attributes for the first plot
 		\addplot[
 			color=blue,
             mark=*,
             mark options={solid},
 		]
-		table [x=k, y=map] {single-partition.dat};
+		table [x=k, y=map] {recommendation/single-partition.dat};
 				    
-		\legend{Single Machine}
+		\legend{Single Partition}
 	\end{axis}
 \end{tikzpicture}

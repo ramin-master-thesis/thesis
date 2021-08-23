@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+	\begin{axis}[,
+			boxplot/draw direction=y,
+			x axis line style={opacity=0},
+			axis x line*=bottom,
+			xtick={1,2,3},
+			xticklabels={Single, Partition 0, Partition 1},
+			enlarge x limits=0.1,
+			xtick distance=2,
+			ylabel=Seconds,
+			width = 0.70\linewidth,
+		]
+		\addplot+ [boxplot]
+		table [y index=0] {latency/recommendation-latency.dat};
+
+		\addplot+ [boxplot]
+		table [y index=1] {latency/recommendation-latency.dat};
+
+		\addplot+ [boxplot]
+		table [y index=2] {latency/recommendation-latency.dat};
+	\end{axis}
+\end{tikzpicture}

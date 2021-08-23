@@ -15,9 +15,33 @@ The instance is a VM-Host-Server with 2x AMD EPYC 7282 (Zen-Rome) 16-Core CPU, 1
 \subsection{Experiment setup}
 \label{subsec:latency-experiment-setup}
 
-\subsection{Single Machine}
-\label{subsec:latency-single-machine}
+\subsection{Recommendation Computation Latency}
+\label{subsec:recommendation-computation-latency}
 
 
-\subsection{Multiple Machines}
-\label{subsec:latency-multiple-machines}
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \input{plots/latency/recommendation-latency-two-partition-boxplot}
+        \caption{Single partition recommendation generation compared to four partition instance}\label{a--1}
+    \end{subfigure}\qquad
+
+    \begin{subfigure}{\textwidth}
+        \centering
+        \input{plots/latency/recommendation-latency-four-partition-boxplot}
+        \caption{Single partition recommendation generation compared to four partition instance}\label{b--1}
+    \end{subfigure}\qquad
+    
+    \caption{Recommendation generation latency in seconds.}
+    \end{figure}
+
+\subsection{Data Fusion Latency}
+\label{subsec:data-fusion-latency}
+\todo{Any idea how I can improve this diagram?}
+\begin{figure}[ht!]
+    \centering
+    \input{plots/latency/data-fusion-latency}
+    \caption{Latency of different data fusion approaches in seconds. The expermients are done over a two partition instance.}
+    \label{plot:data-fusion-boxplot}
+\end{figure}
