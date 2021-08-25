@@ -10,20 +10,27 @@ As explained in section \ref{sec:evaluation-pipeline} they are parameters that w
 
 \subsection{Single Machine}
 \label{subsec:eval-single-machine}
+The non-deterministic behaviour of the random walk algorithm in generating reuslts makes it hard to create a good baseline to assess the reuslts with. To meassure the reporoducibity of the results, I asses the single partition result with the generated golden standard (see section \ref{subsec:baseline-generation}). The experiments sample 500 random users and generate the observed rankings on the single partition. The recommendation quality is meassure using the Mean Average Precision at K (MAP@K), with K starting from 1 to 10. The experiments are done ten times each time using the same sampled users. 
+
+The results of the experiments are ploted on the boxplot in figure \ref{plot:single-partition-boxplot}. To keep the diagram small and clear to read only the K values of eight, nine, and ten are shown. As the diagram denotes, the variation in each cut-off (i.e., K) is not big. This means although the non-deterministic random walk generates different recommendations each time for users, it is not impacting the overall MAP@K value. So the possibility that the random walk generates the same results each time is still considered as high.
+
+
+\begin{figure}[h!]
+	\centering
+	\input{plots/recommendation/single-partition-boxplot}
+	\caption{Different MAP values over ten interations of generating recommendation with 500 users}
+	\label{plot:single-partition-boxplot}
+\end{figure}
+
+
+The line diagram in figure \ref{plot:single-partition} shows the recommendation quality in one of the runs over the rising value of Ks. The MAP value at a cut-off of one is 90\% indicating that first ranked value of the 500 users are similar to the first value of the goldern standard. As K increases the ranked list gets longer and the MAP value decreases. Indecating that the results of lower rank values are distance from the golden standard values. In a cut-off of ten the MAP value reaches 63\%. This can be considered a low MAP value. But the experiments criteria are strickt. Regarding the fact that the baseline contains only relevant items. If a observed rank is assesst with the baseline of a user and does not contain exactly the same items it will lead to a low Average Precision and Mean Average Precision respectively.
+
 
 \begin{figure}[h!]
 	\centering
 	\input{plots/recommendation/single-partition}
 	\caption{Evaluation of the MAP value for increasing K for 500 users}
 	\label{plot:single-partition}
-\end{figure}
-
-
-\begin{figure}[h!]
-	\centering
-	\input{plots/recommendation/single-partition-boxplot}
-	\caption{Different MAP values over multiple interations}
-	\label{plot:single-partition-boxplot}
 \end{figure}
 
 \subsection{Multiple Machines}
@@ -50,7 +57,7 @@ The hyperparameter tuning benchmark was done on a two-partition setting to keep 
 	\centering
 	\caption{Trained model specifications}
 	\label{tab:models}
-	\begin{tabular}{|l|c|c|c|c|}
+	\begin{tabular}[!ht]{|l|c|c|c|c|}
 		\hline
 		\textbf{Model Nr.} & \textbf{Learning rate} & \textbf{Dimensions} & \textbf{Dropout probability} & \textbf{Text normalization} \\
         \hline
@@ -72,12 +79,12 @@ The hyperparameter tuning benchmark was done on a two-partition setting to keep 
 
 The experiments use the \emph{Most Interactions} data fusion approach. The reason is that this method was resulting in a better recommendation quality compared to the other two approaches when partitioning the data with the StarSpace model. The experiments were also done once with 500 and 2000 sampled users, respectively, to investigate the impact of the number of sampled users on the overall MAP@10 value.
 
-Before diving into the recommendation quality benchmark of each model lets see how the different trained models impact the data distribution. In the diagram \ref{plot:edge-distribution} you can see how each model distributes the edges over two partitions. Compared to the data distribution of murmur2 in the diagram \ref{} the partitions are unbalanced here. 
+Before diving into the recommendation quality benchmark of each model lets see how the different trained models impact the data distribution. In the diagram \ref{plot:edge-distribution} you can see how each model distributes the edges over two partitions. Compared to the data distribution of Murmur2 hash partitioning method in the diagram \ref{plot:edge-distribution-2-partitions-murmur2} the partitions are unbalanced here. 
 
 
 \begin{figure}[h!]
 	\centering
-	\input{plots/recommendation/hyperparameter-data-distribution}
+	\input{plots/recommendation/hyperparameter-edge-distribution}
 	\caption{Edge distribution of test dataset; sharded with different trained models over two partitions}
 	\label{plot:edge-distribution}
 \end{figure}

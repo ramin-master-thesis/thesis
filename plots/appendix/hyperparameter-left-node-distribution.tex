@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+	\begin{axis}[
+			xbar,
+			xmin=0,xmax=3545044,
+			height=19cm, width=13cm,
+			enlarge y limits=0.05,
+			xlabel={\#Left Nodes},
+			ylabel={Model Nr.},
+			xtick={0,1772522,3545044},
+			scaled x ticks=false,
+			xticklabel style={
+				/pgf/number format/fixed,
+				/pgf/number format/precision=5
+			},
+			ytick=data,
+			nodes near coords, 
+			nodes near coords align={horizontal},
+			every node near coord/.append style={
+				/pgf/number format/fixed,
+				/pgf/number format/precision=5
+			},
+			legend style={at={(0.5,-0.10)},
+				anchor=north,legend columns=-1},
+		]
+		\addplot
+		table [y index=0, x index=1] {appendix/hyperparameter-left-node-distribution.dat};
+		\addplot 
+		table [y index=0, x index=2] {appendix/hyperparameter-left-node-distribution.dat};
+		\legend{Partition 0,Partition 1}
+	\end{axis}
+\end{tikzpicture}

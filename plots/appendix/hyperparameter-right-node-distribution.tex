@@ -1,12 +1,12 @@
 \begin{tikzpicture}
 	\begin{axis}[
 			xbar,
-			xmin=0,xmax=11884898,
-			height=20cm, width=13cm,
+			xmin=0,xmax=3439934,
+			height=19cm, width=13cm,
 			enlarge y limits=0.05,
-			xlabel={\#Edges},
+			xlabel={\#Right Nodes},
 			ylabel={Model Nr.},
-			xtick={0,5942449,11884898},
+			xtick={0,1719967,3439934},
 			scaled x ticks=false,
 			xticklabel style={
 				/pgf/number format/fixed,
@@ -23,9 +23,9 @@
 				anchor=north,legend columns=-1},
 		]
 		\addplot
-		table [y index=0, x index=1] {recommendation/hyperparameter-edge-distribution.dat};
+		table [y index=0, x index=1] {appendix/hyperparameter-right-node-distribution.dat};
 		\addplot 
-		table [y index=0, x index=2] {recommendation/hyperparameter-edge-distribution.dat};
+		table [y index=0, x index=2] {appendix/hyperparameter-right-node-distribution.dat};
 		\legend{Partition 0,Partition 1}
 	\end{axis}
 \end{tikzpicture}

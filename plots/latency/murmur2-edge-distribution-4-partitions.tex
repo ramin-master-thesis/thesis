@@ -1,0 +1,42 @@
+\begin{tikzpicture}
+	\begin{axis}[
+			ybar,
+            % ybar stacked,
+			ymin=0,ymax=11884898,
+			ylabel={\#Edges},
+			xlabel={Hash Function},
+			ytick={0,5942449,11884898},
+			symbolic x coords={Murmur2},
+			scaled y ticks=false,
+			yticklabel style={
+				/pgf/number format/fixed,
+				/pgf/number format/precision=5
+			},
+			xtick=data,
+			bar width=30,
+			nodes near coords, 
+			node near coords style={
+				xshift=0.2cm,
+                yshift=1cm,
+				rotate=90,
+				},
+				every node near coord/.append style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=5
+				},
+				legend style={
+					at={(0.5,-0.2)},
+					anchor=north,legend columns=-1
+				},
+				]
+				\addplot 
+				table [y index=1, x index=0] {latency/murmur2-edge-distribution-4-partitions.dat};
+				\addplot 
+				table [y index=2, x index=0] {latency/murmur2-edge-distribution-4-partitions.dat};
+				\addplot
+				table [y index=3, x index=0] {latency/murmur2-edge-distribution-4-partitions.dat};
+                \addplot 
+                table [y index=4, x index=0] {latency/murmur2-edge-distribution-4-partitions.dat};
+				\legend{Partition 0, Partition 1, Partition 2, Partition 3}
+	\end{axis}
+\end{tikzpicture}

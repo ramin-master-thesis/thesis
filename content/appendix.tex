@@ -1,13 +1,36 @@
 \chapter{\appendixname}
+\section*{StarSpace Node distribution over two partitions}
 
-\section*{Eins (ohne extra Eintrag im Inhaltsverzeichnis)}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+\begin{figure}[hbt!]
+	\centering
+	\input{plots/appendix/hyperparameter-left-node-distribution}
+	\caption{Left node distribution of test dataset; sharded with different trained models over two partitions}
+	\label{plot:left-node-distribution}
+\end{figure}
 
-\section*{Zwei (ohne extra Eintrag im Inhaltsverzeichnis)}
-Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+\begin{figure}[hbt!]
+	\centering
+	\input{plots/appendix/hyperparameter-right-node-distribution}
+	\caption{Right node distribution of test dataset; sharded with different trained models over two partitions}
+	\label{plot:right-node-distribution}
+\end{figure}
 
-\section*{Drei (ohne extra Eintrag im Inhaltsverzeichnis)}
-At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+\section*{Murmur2 Node distribution over two partitions}
+\begin{figure}[hbt!]
+    \centering
+	\begin{subfigure}{\textwidth}
+		\centering
+		\input{plots/appendix/murmur2-left-node-distribution.tex}
+		\caption{Left node distribution of test dataset.}
+		\label{plot:left-node-distribution-murmur2}
+    \end{subfigure}\qquad
 
-\section*{Vier (ohne extra Eintrag im Inhaltsverzeichnis)}
-Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    \begin{subfigure}{\textwidth}
+		\centering
+		\input{plots/appendix/murmur2-right-node-distribution.tex}
+		\caption{Right node distribution of test dataset.}
+		\label{plot:right-node-distribution-murmur2}
+    \end{subfigure}\qquad
+    
+    \caption{Node distirbution of the test dataset. In (a) the sum of left nodes of two partitions is bigger than the total amount of the left nodes. This is because we replicate the left nodes on the partitions. In (b) the sum of two partitions maches exactly the total amount, since the partitioning is based on the right side verticies.}
+\end{figure}

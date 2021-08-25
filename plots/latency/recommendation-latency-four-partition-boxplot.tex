@@ -12,22 +12,22 @@
 			enlarge x limits=0.1,
 			xtick distance=2,
 			ylabel=Seconds,
-			width = 0.85\linewidth,
+			height = 6cm, width = 12cm
 		]
 
 		% \addplot+ [boxplot]
 		% table [y index=0] {latency/recommendation-latency-four-partition.dat};
 
-		\addplot+ [boxplot, clr1]
+		\addplot+ [boxplot]
 		table [y index=1] {latency/recommendation-latency-four-partition.dat};
 
-		\addplot+ [boxplot, clr2]
+		\addplot+ [boxplot]
 		table [y index=2] {latency/recommendation-latency-four-partition.dat};
 
-		\addplot+ [boxplot, clr3]
+		\addplot+ [boxplot]
 		table [y index=3] {latency/recommendation-latency-four-partition.dat};
 
-		\addplot+ [boxplot, clr4]
+		\addplot+ [boxplot]
 		table [y index=4] {latency/recommendation-latency-four-partition.dat};
 	\end{axis}
 \end{tikzpicture}

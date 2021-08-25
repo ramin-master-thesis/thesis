@@ -1,10 +1,11 @@
 \begin{tikzpicture}
 	\begin{axis}[
 			ybar,
-			ymin=0,ymax=11884898,
-			ylabel={\#Edges},
+			height=7cm,
+			ymin=0,ymax=3545044,
+			ylabel={\#Left Nodes},
 			xlabel={Hash Function},
-			ytick={0,5942449,11884898},
+			ytick={0,1772522,3545044},
 			symbolic x coords={Murmur2},
 			scaled y ticks=false,
 			yticklabel style={
@@ -35,9 +36,9 @@
 				},
 				]
 				\addplot 
-				table [y index=1, x index=0] {latency/murmur2-edge-distribution.dat};
+				table [y index=1, x index=0] {appendix/murmur2-left-node-distribution.dat};
 				\addplot 
-				table [y index=2, x index=0] {latency/murmur2-edge-distribution.dat};
+				table [y index=2, x index=0] {appendix/murmur2-left-node-distribution.dat};
 				\legend{Partition 0,Partition 1}
 	\end{axis}
 \end{tikzpicture}
