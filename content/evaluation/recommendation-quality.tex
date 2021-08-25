@@ -34,7 +34,7 @@ As explained in section \ref{sec:evaluation-pipeline} they are parameters that w
 As explained in section \ref{subsec:hyperparameter-tuning}, this thesis investigates how different trained StarSpace models affect the partitioning of the data and, finally, the recommendation quality. Four main parameters were tuned during the training. These parameters can be found in the table \ref{tab:hyperparameter}. In the following table \ref{tab:models} you will find 16 models and the parameters with which they got trained.
 
 
-The hyperparameter tuning benchmark was done on a two-partition setting to keep the evaluation simple, t. The hyperparameter tuning experiments were structured in the following steps:
+The hyperparameter tuning benchmark was done on a two-partition setting to keep the evaluation simple. The hyperparameter tuning experiments were structured in the following steps:
 
 \begin{enumerate}
     \item Train the StarSpace model with the training dataset and the parameters listed in each row of the table \ref{tab:models}.
@@ -45,8 +45,6 @@ The hyperparameter tuning benchmark was done on a two-partition setting to keep 
     \item Assess the observed ranking list with the baseline list and calculate the MAP@10.
 \end{enumerate}
 
-
-The experiments use the \emph{Most Interactions} data fusion approach. The reason is that this method was resulting in a better recommendation quality compared to the other two approaches when partitioning the data with the StarSpace model. The experiments were also done once with 500 and 2000 sampled users, respectively, to investigate the impact of the number of sampled users on the overall MAP@10 value.
 
 \begin{table}[!ht]
 	\centering
@@ -70,6 +68,19 @@ The experiments use the \emph{Most Interactions} data fusion approach. The reaso
 		}%
 	\end{tabular}
 \end{table}
+
+
+The experiments use the \emph{Most Interactions} data fusion approach. The reason is that this method was resulting in a better recommendation quality compared to the other two approaches when partitioning the data with the StarSpace model. The experiments were also done once with 500 and 2000 sampled users, respectively, to investigate the impact of the number of sampled users on the overall MAP@10 value.
+
+Before diving into the recommendation quality benchmark of each model lets see how the different trained models impact the data distribution. In the diagram \ref{plot:edge-distribution} you can see how each model distributes the edges over two partitions. Compared to the data distribution of murmur2 in the diagram \ref{} the partitions are unbalanced here. 
+
+
+\begin{figure}[h!]
+	\centering
+	\input{plots/recommendation/hyperparameter-data-distribution}
+	\caption{Edge distribution of test dataset; sharded with different trained models over two partitions}
+	\label{plot:edge-distribution}
+\end{figure}
 
 
 \subsubsection{Horizontall scalling}

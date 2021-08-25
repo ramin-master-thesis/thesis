@@ -19,6 +19,13 @@ The instance is a VM-Host-Server with 2x AMD EPYC 7282 (Zen-Rome) 16-Core CPU, 1
 \label{subsec:recommendation-computation-latency}
 
 
+\begin{figure}[h!]
+	\centering
+	\input{plots/latency/murmur2-edge-distribution.tex}
+	\caption{Edge distribution of test dataset; sharded with Murmur2 hash over two partitions}
+	\label{plot:edge-distribution-murmur2}
+\end{figure}
+
 \begin{figure}[ht!]
     \centering
     \begin{subfigure}{\textwidth}
