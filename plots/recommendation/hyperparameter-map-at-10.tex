@@ -1,0 +1,40 @@
+\begin{tikzpicture}
+	\begin{axis}[
+			xbar,
+            xbar=5pt,
+			xmin=0,xmax=1,
+			height=21cm, width=13cm,
+            bar width=0.1cm,
+			enlarge y limits=0.03,
+			xlabel={MAP@10},
+			ylabel={Partitioning Method},
+			xtick={0,0.25,0.5,0.75,1},
+			scaled x ticks=false,
+			xticklabel style={
+				/pgf/number format/fixed,
+				/pgf/number format/precision=5
+			},
+			ytick=data,
+            symbolic y coords={Single,Murmur2,Model-1,Model-2,Model-3,Model-4,Model-5,Model-6,Model-7,Model-8,Model-9,Model-10,Model-11,Model-12,Model-13,Model-14,Model-15,Model-16},
+			nodes near coords, 
+			nodes near coords align={horizontal},
+			every node near coord/.append style={
+				/pgf/number format/fixed,
+				/pgf/number format/precision=2,
+                font=\footnotesize
+			},
+			legend style={at={(0.5,-0.09)},
+				anchor=north,legend columns=-1},
+		]
+		\addplot
+		table [y index=0, x index=1] {recommendation/hyperparameter-map-at-10.dat};
+
+		\addplot[red, fill=red!30!white, x filter/.expression={x==0 ? nan : x}]
+		table [y index=0, x index=2] {recommendation/hyperparameter-map-at-10.dat};
+
+        \addplot[brown, fill=brown!30!white, x filter/.expression={x==0 ? nan : x}]
+		table [y index=0, x index=3] {recommendation/hyperparameter-map-at-10.dat};
+
+		\legend{Partition 0,Partition 1,highest interest}
+	\end{axis}
+\end{tikzpicture}
