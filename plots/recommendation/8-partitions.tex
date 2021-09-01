@@ -1,0 +1,41 @@
+\begin{tikzpicture}
+	\begin{axis}[
+			xlabel=K,
+			ylabel=MAP,
+			width=7cm,height=7cm,
+			xmin=0,xmax=10.5,
+			xtick distance=1,
+			ymin=0,ymax=1,
+			legend style={
+                at={(0.5,-0.2)},
+			    anchor=north,legend columns=-1
+            },
+            legend columns=3,
+            transpose legend
+            ]
+				    
+		\addplot[
+			color=blue,
+            mark=*,
+            mark options={solid},
+		]
+		table [x=k, y index=0] {recommendation/8-partitions.dat};
+        \addlegendentry{Single Partition}
+
+        \addplot[
+			color=red,
+            mark=x,
+            mark options={solid},
+		]
+		table [x=k, y index=1] {recommendation/8-partitions.dat};
+        \addlegendentry{Murmur2 Union Results}
+
+        \addplot[
+			color=brown,
+            mark=+,
+            mark options={solid},
+		]
+		table [x=k, y index=2] {recommendation/8-partitions.dat};		    
+		\addlegendentry{StarSpace Most Interactions}
+	\end{axis}
+\end{tikzpicture}
