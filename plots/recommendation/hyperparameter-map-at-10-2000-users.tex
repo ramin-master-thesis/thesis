@@ -27,13 +27,13 @@
 				anchor=north,legend columns=-1},
 		]
 		\addplot
-		table [y index=0, x index=1] {recommendation/hyperparameter-map-at-10.dat};
+		table [y index=0, x index=1] {recommendation/hyperparameter-map-at-10-2000-users.dat};
 
 		\addplot[red, fill=red!30!white, x filter/.expression={x==0 ? nan : x}]
-		table [y index=0, x index=2] {recommendation/hyperparameter-map-at-10.dat};
+		table [y index=0, x index=2] {recommendation/hyperparameter-map-at-10-2000-users.dat};
 
         \addplot[brown, fill=brown!30!white, x filter/.expression={x==0 ? nan : x}]
-		table [y index=0, x index=3] {recommendation/hyperparameter-map-at-10.dat};
+		table [y index=0, x index=3] {recommendation/hyperparameter-map-at-10-2000-users.dat};
 
 		\legend{Partition 0,Partition 1,highest interest}
 	\end{axis}
