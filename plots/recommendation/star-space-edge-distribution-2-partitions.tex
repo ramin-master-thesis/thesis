@@ -5,7 +5,7 @@
 					ylabel={\#Edges},
 					xlabel={Hash Function},
 					ytick={0,5942449,11884898},
-					symbolic x coords={Murmur2},
+					symbolic x coords={StarSpace},
 					scaled y ticks=false,
 					yticklabel style={
 						/pgf/number format/fixed,
@@ -30,14 +30,14 @@
 							/pgf/number format/precision=5
 						},
 						legend style={
-							at={(0.5,-0.2)},
+							at={(0.5,-0.3)},
 							anchor=north,legend columns=-1
 						},
 				]
 				\addplot 
-				table [y index=1, x index=0] {latency/murmur2-edge-distribution-2-partitions.dat};
+				table [y index=1, x index=0] {recommendation/star-space-edge-distribution-2-partitions.dat};
 				\addplot 
-				table [y index=2, x index=0] {latency/murmur2-edge-distribution-2-partitions.dat};
+				table [y index=2, x index=0] {recommendation/star-space-edge-distribution-2-partitions.dat};
 				\legend{Partition 0,Partition 1}
 	\end{axis}
 \end{tikzpicture}
