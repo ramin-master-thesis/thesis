@@ -1,6 +1,6 @@
 \section{Evaluation Pipeline to assess recommendations quality}
 \label{sec:evaluation-pipeline}
-This work presents a pipeline to measure the impact of the partition with different approaches on the recommendation quality. To build the pipeline each component in the section \ref{sec:eval-suit-architecture-components} is used. 
+This work presents a pipeline to measure the impact of the partition with different approaches on the recommendation quality. To build the pipeline each component in the section \ref{sec:eval-suite-architecture-components} is used. 
 
 Figure \ref{fig:flowchart-evaluation-pipeline} indicates the flow of the pipeline from the start till the end. At the start, the users are sampled randomly. Next, the pipeline generates the baseline (also called Objective Ranking or Golden Standard). The step in the middle of the flowchart describes querying recommendations from the single partition instance to check the results' reproducibility. The right side of the flowchart denotes the step where the recommendations of the multi-partition instances are requested. The last step after the querying of recommendation finishes and the instances use an arbitrary data fusion approach to reduce their result to one list. In the last step, the pipeline starts comparing the results by calculating the evaluation metric configured. 
 
