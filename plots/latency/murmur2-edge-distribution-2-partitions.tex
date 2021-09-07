@@ -16,11 +16,13 @@
 					nodes near coords, 
 					node near coords style={
 						xshift=0.05cm,
-						/utils/exec={\setbox0\hbox{\pgfmathprintnumber\pgfplotspointmeta}
+						/utils/exec={
+							\setbox0\hbox{\pgfmathprintnumber\pgfplotspointmeta}
 							\pgfmathfloattomacro{\pgfplotspointmeta}{\F}{\M}{\E}
-							\pgfmathsetmacro{\myanchor}{
+							\pgfmathsetmacro{\myanchor}
+							{
 								ifthenelse(\M*pow(10,\E-3)*2-\the\wd0>0,"east","west")
-								}
+							}
 						},
 						rotate=90,
 						anchor=\myanchor

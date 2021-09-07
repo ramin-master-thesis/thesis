@@ -16,6 +16,18 @@
 \newcommand{\hpidate}{\today}
 \newcommand\atsign{@}
 
+\definecolor{clr1}{RGB}{254, 168, 50}
+\definecolor{clr2}{RGB}{230, 99, 39}
+\definecolor{clr3}{RGB}{184, 17, 62}
+\definecolor{clr4}{RGB}{31,182,83}
+
+\pgfplotscreateplotcyclelist{default-colors}{
+	{clr1},
+	{clr2},
+	{clr3},
+	{clr4}
+}
+
 \usetikzlibrary{pgfplots.statistics}
 
 \pgfplotsset{
