@@ -6,7 +6,7 @@ This thesis aims to partition the bipartite graph and distribute the GraphJet re
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{images/graphjet/graphJet-architecture}
+	\includegraphics[width=0.75\textwidth]{images/graphjet/graphJet-architecture}
 	\caption{GraphJet overall architecture}
 	\label{fig:graphJet-architecture}
 \end{figure}
@@ -31,7 +31,7 @@ Imagine the following scenario: For a given user \textit{u} we are going to comp
 The deployment of GraphJet is shown in figure \ref{fig:graphJet-deployment}. Each node runs a GraphJet instance, and fault tolerance is guarantied by replication. A Kafka queue ingests the incoming edges inside each replica. According to the main paper, each GraphJet instance can hold up to 10$^9$ edges in less than 30 GB of RAM. Zookeeper is also used for service registry and discovery of each GraphJet instance.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{images/graphjet/graphJet-deployment}
+	\includegraphics[width=0.8\textwidth]{images/graphjet/graphJet-deployment}
 	\caption{GraphJet deployment}
 	\label{fig:graphJet-deployment}
 \end{figure}
