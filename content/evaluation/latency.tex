@@ -29,7 +29,7 @@ This section discusses how the amount of data impacts the random walk computatio
 
 The experiments investigate the random walk latency in a scenario with two partitions and once in an four partition enviroment. The diagrams \ref{plot:edge-distribution-2-partitions-murmur2} and \ref{plot:edge-distribution-4-partitions-murmur2} show the data distribution with respect to the mentioned partitioning strategy. At first glance, the diagrams denote that partitioning the data with the Murmur2 hash method distributes the edges almost equally. 
 
-\begin{figure}[ht!]
+\begin{figure}[!ht]
     \centering
     \begin{subfigure}{\textwidth}
         \centering
@@ -53,7 +53,7 @@ The results of the latency experiments are demonstrated in the diagrams \ref{plo
 
 This improvement can be explained when we look at the data distribution on each partition in figure \ref{plot:edge-distirbution-murmur2}. Each partition holds a fraction of the data, making it possible for each instance to maintain a smaller number of indices and adjacency lists. Therefore, the random walk algorithm can faster retrieve an index with its adjacency list. Concluding, by increasing the number of partitions, the amount of data on each instance reduces, and the recommendation computation time improves exponentially.
 
-\begin{figure}[ht!]
+\begin{figure}[!ht]
     \centering
     \begin{subfigure}{\textwidth}
         \centering
