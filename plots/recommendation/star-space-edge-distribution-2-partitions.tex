@@ -9,30 +9,21 @@
 					scaled y ticks=false,
 					yticklabel style={
 						/pgf/number format/fixed,
-						/pgf/number format/precision=5
+						/pgf/number format/precision=0
 					},
 					xtick=data,
 					bar width=30,
-					nodes near coords, 
-					node near coords style={
+					nodes near coords,
+					every node near coord/.append style={
 						xshift=0.05cm,
-						/utils/exec={\setbox0\hbox{\pgfmathprintnumber\pgfplotspointmeta}
-							\pgfmathfloattomacro{\pgfplotspointmeta}{\F}{\M}{\E}
-							\pgfmathsetmacro{\myanchor}{
-								ifthenelse(\M*pow(10,\E-3)*2-\the\wd0>0,"east","west")
-								}
-						},
-						rotate=90,
-						anchor=\myanchor
-						},
-						every node near coord/.append style={
-							/pgf/number format/fixed,
-							/pgf/number format/precision=5
-						},
-						legend style={
-							at={(0.5,-0.3)},
-							anchor=north,legend columns=-1
-						},
+						rotate=90,anchor=east,
+						/pgf/number format/fixed,
+						/pgf/number format/precision=0
+					},
+					legend style={
+						at={(0.5,-0.3)},
+						anchor=north,legend columns=-1
+					}
 				]
 				\addplot 
 				table [y index=1, x index=0] {recommendation/star-space-edge-distribution-2-partitions.dat};

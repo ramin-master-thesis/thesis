@@ -1,39 +1,30 @@
 \begin{tikzpicture}
 	\begin{axis}[
-			ybar,
-			height=7cm,
-			ymin=0,ymax=3545044,
-			ylabel={\#Left Nodes},
-			xlabel={Hash Function},
-			ytick={0,1772522,3545044},
-			symbolic x coords={Murmur2},
-			scaled y ticks=false,
-			yticklabel style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=5
-			},
-			xtick=data,
-			bar width=30,
-			nodes near coords, 
-			node near coords style={
-				xshift=0.05cm,
-				/utils/exec={\setbox0\hbox{\pgfmathprintnumber\pgfplotspointmeta}
-					\pgfmathfloattomacro{\pgfplotspointmeta}{\F}{\M}{\E}
-					\pgfmathsetmacro{\myanchor}{
-						ifthenelse(\M*pow(10,\E-3)*2-\the\wd0>0,"east","west")
-						}
-				},
-				rotate=90,
-				anchor=\myanchor
-				},
-				every node near coord/.append style={
-					/pgf/number format/fixed,
-					/pgf/number format/precision=5
-				},
-				legend style={
-					at={(0.5,-0.2)},
-					anchor=north,legend columns=-1
-				},
+					ybar,
+					height=7cm,
+					ymin=0,ymax=3545044,
+					ylabel={\#Left Nodes},
+					xlabel={Hash Function},
+					ytick={0,1772522,3545044},
+					symbolic x coords={Murmur2},
+					scaled y ticks=false,
+					yticklabel style={
+						/pgf/number format/fixed,
+						/pgf/number format/precision=0
+					},
+					xtick=data,
+					bar width=30,
+					nodes near coords,
+					every node near coord/.append style={
+						xshift=0.05cm,
+						rotate=90,anchor=east,
+						/pgf/number format/fixed,
+						/pgf/number format/precision=0
+					},
+					legend style={
+						at={(0.5,-0.2)},
+						anchor=north,legend columns=-1
+					}
 				]
 				\addplot 
 				table [y index=1, x index=0] {appendix/murmur2-left-node-distribution.dat};

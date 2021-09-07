@@ -9,24 +9,22 @@
 					scaled y ticks=false,
 					yticklabel style={
 						/pgf/number format/fixed,
-						/pgf/number format/precision=5
+						/pgf/number format/precision=0
 					},
 					xtick=data,
 					bar width=30,
-					nodes near coords, 
-					node near coords style={
+					nodes near coords,
+					every node near coord/.append style={
+						/pgf/number format/fixed,
+						/pgf/number format/precision=0,
 						xshift=0.2cm,
 						yshift=1cm,
 						rotate=90,
-						},
-						every node near coord/.append style={
-							/pgf/number format/fixed,
-							/pgf/number format/precision=5
-						},
-						legend style={
-							at={(0.5,-0.2)},
-							anchor=north,legend columns=-1
-						},
+					},
+					legend style={
+						at={(0.5,-0.2)},
+						anchor=north,legend columns=-1
+					},
 				]
 				\addplot 
 				table [y index=1, x index=0] {latency/murmur2-edge-distribution-4-partitions.dat};
