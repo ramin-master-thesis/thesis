@@ -127,7 +127,7 @@ The model of StarSpace has multiple hyperparameters that control the learning pr
 The assumption here is that tuning the model parameters would affect the data distribution on the partitions (i.e., workers) and the recommendation quality, respectively. This work implemented a hyperparameter tuning tool to train different models and compare their learning quality.
 
 
-Table \ref{tab:hyperparameter} shows different hyperparameters values used to train the StarSpace model. Combining these parameters variations will train 16 different models. Selecting the best model for content-based partitioning can be done in two ways: First would be the impact on the recommendation quality. The recommendation quality of different models can be found in section \todo{add a reference to hyperparameter evaluation}. The second would be the data distribution on different partitions and how balanced these partitions are. The data distribution of each model is also discussed in the section \todo{add section}.
+Table \ref{tab:hyperparameter} shows different hyperparameters values used to train the StarSpace model. Combining these parameters variations will train 16 different models. Selecting the best model for content-based partitioning can be done in two ways: First would be the impact on the recommendation quality. The recommendation quality of different models can be found. The second would be the data distribution on different partitions and how balanced these partitions are. Both topics are evaluated and discussed in the section \ref{subsubsec:eval-hyperparameter}.
 
 
 \begin{table}[!h]

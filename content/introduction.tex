@@ -1,2 +1,25 @@
 \chapter{Introduction}
 
+With the recent developments in computer science, horizontal scaling has become a factor of increasing importance in the design of distributed systems. Many systems, such as document processing systems, rely on a single instance deployment. These systems take a corpus of documents as input and send them one by one to a worker. Then the worker processes the incoming documents. Over time there is the possibility that the document corpus grows. This data growth will lead to an overload of the worker and make it a potential single point of failure.
+
+
+These systems rely on replicating the workers and distributing the request load on the replicated instances to guarantee availability. With the growth of data, the urge to scale the system vertically arises. Vertical scaling makes the deployment and maintenance for each replica costly. On the contrary, horizontal scaling will distribute a shard of data on different workers to solve these issues.
+
+
+This thesis proposes a partitioning approach based on the topic of the incoming document to distribute document data on multiple workers. The "content-based" partition uses an embedding model in its core, which reads the content of the documents and computes embedding vectors. These embedding vectors denote that documents similar to each other will land "near" each other in a so-called "embedding space." Finding these "similarities" between the documents enables calculating a partition-ID for a group of similar documents. Concretely, documents having a similar topic to each other get classified together and land on a worker.
+
+
+With the aid of this approach, the data spread across multiple workers. Each worker will hold and maintain a fraction of the document corpus. Whenever the data grows, a new worker can be added to the cluster. The worker takes off the load. This process of the partitioning of data makes it possible to scale the system horizontally. The data reduction on each worker also provides other advantages like less memory usage and faster processing of the documents.
+
+
+To examine the proposed approach, this works builds upon the work of GraphJet, a real-time recommendation engine at Twitter. This system uses the user-tweet interactions and maintains a bipartite graph in memory. The recommendation engine runs a random-walk-algorithm called SALSA to generate recommendations for a given user. GraphJet can not be distributed and the authors avoided the distribution due to expencive network calls. 
+
+
+This work uses a real-world user-tweet dataset and simulates the indexing system of GraphJet on a single instance first. Later on, the thesis introduces a partitioning module, which implements a random partitioning method and the proposed one. The random partitioning method is used for comparison reasons against the primary proposed partitioning approach. Each partition runs the random walk algorithm in complete isolation and yeilds its own results based on the data it recieved by the partitioner.
+
+
+After the documents (i.e., tweets) are distributed to multiple workers, each worker produces a list of recommendations. The works present strategies to combine or choose between the generated recommendation lists. The strategy to merge multiple recommendation lists into a single recommendation list is called data fusion.
+
+
+To evaluate the system, this thesis introduces an evaluation suite. The suite aims to measure how far the distributed system results (i.e., recommendations) deviate from the single partition results. This difference is computed by metrics used to benchmark recommendations systems. The evaluation at the end shows that the "content-based" partitioning approach delivers a better result compared to the random partitioning method. Moreover, the suite assesses the latency of each worker. The results of the experiments show improvement in recommendation calculation time. Besides, by increasing the number of workers, the latency improves exponentially.
+ 
