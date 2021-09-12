@@ -1,12 +1,12 @@
 \section{System Architecture}
 \label{sec:system-architecture}
 
-This work implements and simulates the GraphJet architecture to evaluate and test the proposed approach of data partitioning. As explained in section \ref{sec:GraphJet}, GraphJet architecture consists of three main layers: Storage, Recommendation, API Endpoint. The same layer system inspires this work's architecture. This section goes through the system architecture and the design decisions taken. In the first subsection, I explain the single instance architecture and the functionality of each layer. After that, the subsection describes the distributed architecture of the system. The implemented system can be found in the repository\footnote{\url{https://github.com/ramin-master-thesis/salsa}}.
+This work implements and simulates the GraphJet architecture to evaluate and test the proposed approach of data partitioning. As explained in section \ref{sec:GraphJet}, GraphJet architecture consists of three main layers: Storage, Recommendation, API Endpoint. The same layer system inspires this work's architecture. This section goes through the system architecture and the design decisions taken. The first subsection, explains the single instance architecture and the functionality of each layer. Afterward, the next subsection describes the distributed architecture of the system. The implemented system can be found in the repository\footnote{\url{https://github.com/ramin-master-thesis/salsa}}.
 
 
 \subsection{Single Machine}
 \label{subsec:single-machine}
-The overall high-level architecture of a single instance can be seen in figure \ref{fig:single-machine-architecture}. The worker (i.e., instance) receives an input query (i.e., user-ID) and then yields a ranked list of recommendations (i.e., tweets). The detailed architecture demonstrating each layer of the single worker is shown in figure \ref{fig:single-machine-architecture-detailed}. In the following, each section describes each component of the system and explains how each layer works.
+The high-level architecture of a single instance can be seen in figure \ref{fig:single-machine-architecture}. The worker (i.e., instance) receives an input query (i.e., user-ID) and then yields a ranked list of recommendations (i.e., tweets). The detailed single instance architecture demonstrating each layer is shown in figure \ref{fig:single-machine-architecture-detailed}. In the following, each section describes each component of the system and explains how each layer works.
 
 \begin{figure}[!h]
     \centering
@@ -28,15 +28,15 @@ The overall high-level architecture of a single instance can be seen in figure \
 
 \todo{Add UML Component Diagram of Indexer and Recommender and API Endpoint to see the dependency between the modules}
 
-\subsubsection{Storage and index layer}
+\subsubsection{Storage and Index Layer}
 \label{subsub:storage-index-layer}
-The single instance needs to maintain the dataset in for of a bipartite graph in memory. A bipartite graph is a graph whose vertices can be divided into two disjoint and independent sets U and V such that every edge connects a vertex in U to one in V \cite{skienaImplementingDiscreteMathematics1991}. The two disjoint sets of U and V can be built using two indices. In other words, the bipartite graph consists of two indices: left side index, right side index. For the specific user-tweet bipartite graph, one index stores all tweets for a specific user. The other index stores all users for a particular tweet.
+The single instance maintains a bipartite graph in memory. A bipartite graph is a graph whose vertices can be split into two disjoint and independent sets U and V such that every edge connects a vertex in U to one in V \cite{skienaImplementingDiscreteMathematics1991}. The two disjoint sets of U and V can be built using two indices. In other words, the bipartite graph consists of two indices: left side index, right side index. For the specific user-tweet bipartite graph, one index stores all tweets for a specific user. The other index stores all users for a particular tweet.
 
 
-GraphJet uses mutable (hot) and immutable (cold) index segments to store the bipartite graph \cite{sharmaGraphJetRealtimeContent2016}. With this approach, GraphJet optimizes newly incoming edge insertion. In this work, I assume that the system is not ingesting any new edges during its runtime. To keep the indexing as simple as possible, I decided to use a \emph{simple index} system. This approach uses a single vertex-ID (i.e., node-ID) as its index key. The index key points to an adjacency list containing the node-IDs that the index key interacts with. Table \ref{tab:simple-indexing} shows a small example of this approach. The node-ID 5 has interactions with node-IDs 200 and 50. The prototype generates two of these indices. First, using the user-IDs as its key and the tweet-IDs as the adjacency list values and vice versa.
+GraphJet uses mutable (hot) and immutable (cold) index segments to store the bipartite graph \cite{sharmaGraphJetRealtimeContent2016}. With this approach, GraphJet optimizes newly incoming edge insertion. This work, assumes that the system is not ingesting any new edges during its runtime. To keep the indexing as simple as possible, a \emph{simple index} system is used. This approach uses a single vertex-ID (i.e., node-ID) as its index key. The index key points to an adjacency list containing the node-IDs that the index key interacts with. Table \ref{tab:simple-indexing} shows a small example of this approach. The node-ID 5 has interactions with node-IDs 200 and 50. The prototype generates two of these indices. First, using the user-IDs as its key and the tweet-IDs as the adjacency list values and vice versa.
 
 
-This thesis also introduces a third index. The content of the tweets is also crawled and later on used for partitioning purposes. An index between the tweet-ID and the content is created, to retrieve the content of a given tweet-ID.
+This thesis also introduces a third index. The content of the tweets is also crawled and later used for partitioning purposes. An index between the tweet-ID and the content is created, to retrieve the content of a given tweet-ID.
 
 \begin{table}[!h]
     \centering
@@ -48,7 +48,7 @@ This thesis also introduces a third index. The content of the tweets is also cra
         \hline
         5 & [200, 50] \\
         \hline
-        12 & [60, 120, 60] \\
+        12 & [60, 120, 88] \\
         \hline
         ... & ... \\
         \hline
@@ -56,9 +56,9 @@ This thesis also introduces a third index. The content of the tweets is also cra
 \end{table}
 
 
-\subsubsection{Recommendation layer}
+\subsubsection{Recommendation Layer}
 \label{subsubsec:recommendation-layer}
-An implementation of the SALSA \cite{lempelSALSAStochasticApproach2001} algorithm lives in the recommendation layer. The algorithm needs some configuration parameters to initialize the random walk. These parameters are described in table \ref{tab:salsa-parameters}.
+An implementation of the SALSA \cite{lempelSALSAStochasticApproach2001} algorithm exists in the recommendation layer. The algorithm needs some configuration parameters to initialize the random walk. These parameters are described in table \ref{tab:salsa-parameters}.
 
 
 \begin{table}[!h]
@@ -90,7 +90,7 @@ The recommendation layer interacts with both the indexer and the API endpoint. T
 
 According to the main paper of GraphJet, the random walk always starts from a vertex located on the left index \cite{sharmaGraphJetRealtimeContent2016}. Concretely for the GraphJet use-case at Tweeter, the SALSA algorithm starts from the requested user-ID node on the left index and then walks to the tweet-ID on the right index. This work extends the SALSA algorithm. Instead of starting from the left side, the algorithm initiates from a vertex on the right side. The output is a list of right-side vertices (i.e., tweet-IDs). With this approach, the random walk produces related items to the initial vertex. The method is used to create train data for the StarSpace model (see section \ref{subsec:generating-training-data}).
 
-\subsubsection{API Endpoint layer}
+\subsubsection{API Endpoint Layer}
 \label{subsubsec:api-endpoint-layer}
 The API endpoint layer provides an interface to interact with the system. The API endpoint layer interacts with the recommendation layer and receives the list of recommendations. This module converts the ranked list to a JSON format and sends them back to the user.
 The API endpoint also interacts with the index layer to gather information. Informations like: Degree number of a particular node in the graph, total number of nodes, and totall number of edges.
