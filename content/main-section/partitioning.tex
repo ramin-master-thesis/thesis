@@ -1,18 +1,18 @@
 \section{Partitioning}
 \label{sec:partitioning}
-The partitioning module (i.e., partitioner) is one of the key modules of this thesis. This module helps to distribute the data based on the hash function that is injected. The partitioning module provides an abstract class. The user inherits from this abstract class and then implements its partitioning logic. 
+The partitioning module (i.e., partitioner) is one of the key modules of this thesis. This module is responsible for distributing the data over multiple partitions based on the hash function it implements. The partitioning module provides an abstract class. The user inherits from this abstract class and then implements its segmentation logic. 
 
 
-Figure \ref{fig:partitioner-uml} indicates the UML diagram of the partitioning module. The base class provides two fields, namely: \emph{name}, and \emph{paritition\_count}. The \emph{name} field denotes the name of the method (i.e., hash function name). The \emph{paritition\_count} tells the partitioner how many partitions exist in the cluster. This number is used during partition time to equidistant range partitioning on the range of hashes. The \emph{calculate\_partition} function takes a value (i.e., data entity), either the document id or the content of a document, and returns the partition-ID of the value. The partition-ID indicates on which partition this entity should land. This research implements the partitioners, abstract class, for two partitioners:
+Figure \ref{fig:partitioner-uml} indicates the UML diagram of the partitioning module. The base class provides two fields, namely: \emph{name}, and \emph{paritition\_count}. The \emph{name} field denotes the name of the partitioning method (i.e., hash function name). The \emph{paritition\_count} tells the partitioner how many partitions exist in the cluster. This number is used during partition time to equidistant the range of the hash values. The \emph{calculate\_partition} function takes a value (i.e., data entity), either the document id or the content of a document, and returns the partition-ID of the value. The partition-ID indicates on which partition this entity should land. This research implements the base class for two partitioners:
 
 \begin{enumerate}
     \item Murmur2 Partitioner
     \item StarSpace Partitioner
 \end{enumerate}
 
-In the following sections, each partitioning method is explained in detail.
+\noindent In the following sections, each partitioning method is explained in detail.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.75\textwidth]{images/partitioner-UML}
     \caption{Class diagram of the partition module. Containing a \emph{PartitionBase} abstract class and two implementation of this class: \emph{Murmur2Partition} and \emph{StarSpacePartition}}
@@ -22,22 +22,22 @@ In the following sections, each partitioning method is explained in detail.
 
 \subsection{Murmur2 Partitioner}
 \label{subsec:partitioning-murmur2}
-This component implements the Murmur2 hash function. This hash function is explained in the \ref{sec:hash-functions} sections. This study uses the Kafka python implementation of Murmur2 \footnote{\url{https://github.com/dpkp/kafka-python/blob/master/kafka/partitioner/default.py}} to implement the \emph{calculate\_partition} function from the partitioner base class.
+This component implements the Murmur2 hash function. The functionality of ths hash function is explained in \ref{sec:hash-functions}. This study uses the Kafka python implementation of Murmur2 \footnote{\url{https://github.com/dpkp/kafka-python/blob/master/kafka/partitioner/default.py}} to implement the \emph{calculate\_partition} function from the partitioner base class.
 
-The \emph{Murmur2Partition} class takes the document-ID as an input and computes the Murmur2 hash. In the end, it calculates the modulo between the \emph{partition\_count} value and the hash value to produce the partition-ID. 
+The \emph{Murmur2Partition} class takes the document-ID as an input and computes the hash value. In the end, it calculates the modulo between the \emph{partition\_count} value and the hash value to produce the partition-ID. 
 
 \subsection{StarSpace Partitioner}
 \label{subsec:partitioning-star-space}
-This thesis uses another partitioner to distribute the data based on their content, namely \emph{StarSpacePartition}. Compared to the \emph{Murmur2Partition} class, this partitioner takes the content of the document and generates the partition-ID.
+This thesis uses another partitioner to distribute the data based on their content, namely \emph{StarSpacePartition}. Compared to the \emph{Murmur2Partition} class, this partitioner takes the content of the document and returns the partition-ID.
 
 
-During the initialization of the  \emph{StarSpacePartition} class, the pre-trained StarSpace model is loaded in the memory along with the projection matrix. As explained in the sub-sub section \ref{subsubsec:pca}, the projection matrix is used to reduce the dimensions of a data matrix through a dot production. The StarSpace model is responsible for predicting the vector of the incoming documents in the embedding space it was trained. The projection matrix is responsible for reducing the StarSpace vector dimensions. For more information on how the model is trained and how the projection matrix is calculated, please refer to the section \ref{sec:model-training}.
+During the initialization of the \emph{StarSpacePartition} class, the pre-trained StarSpace model is loaded in the memory along with the projection matrix. The StarSpace model is responsible for predicting the embedding vector of the incoming documents in the embedding space it was trained. As explained in the sub-sub section \ref{subsubsec:pca}, the projection matrix is used to reduce the dimensions of the predicted embedding vector through a dot production. For more information on how the model is trained and how the projection matrix is calculated, please refer to the section \ref{sec:model-training}.
 
 
-Figure \ref{fig:star-space-partitioning-process} demonstrates the partitioning process of the incoming data on four partitions (i.e., instances). Four partitions mean that the dimension of the embedding vector produced by StarSpace needs to be reduced to at least two dimensions. Since with two dimensions (i.e., bit), we are able to produce four partition-IDs. Respectively, for two partitions, the embedding vector needs at least one dimension. After the highly dimensional embedding vector got reduced to two dimensions, the system converts the numbers depending on if they are positive or negative into bits. For example, if the dimensionally reduced vector is [-3.75, 2.14], this will be converted to [0, 1], which presents the number one, and the following document will land on partition number one.
+Figure \ref{fig:star-space-partitioning-process} demonstrates the partitioning process of the incoming data on four partitions (i.e., instances). Four partitions mean that the dimension of the embedding vector produced by StarSpace needs to be reduced to at least two dimensions. Since with two dimensions (i.e., bit), we are able to represent four partition-IDs. Respectively, for two partitions, the embedding vector needs at least one dimension. After the high dimensional embedding vector got reduced to two dimensions, the system converts the numbers depending on if they are positive or negative into bits. For example, if the dimensionally reduced vector of a document is [-3.75, 2.14], this will be converted to [0, 1], which represents the number one, and the following document will land on partition number one.
 
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.85\textwidth]{images/partition-StarSpace}
     \caption{Partitioning upcoming document using StarSpace}
@@ -45,10 +45,10 @@ Figure \ref{fig:star-space-partitioning-process} demonstrates the partitioning p
 \end{figure}
 
 
-To make this more clear, please look at figure \ref{fig:embedding-space}. This figure represents the partitions in a two-dimensional space. Each dot represents a document on a partition. These documents can be considered "similar" to each other. The intuition here is that StarSpace embedding vectors of "similar" documents would be "near" to each other. Therefore, producing the documents on each partition (i.e., quadrant) would end up having "similar" documents to each other on the same partition.
+To make this more clear, please look at figure \ref{fig:embedding-space}. This figure represents the data distribution in a two-dimensional space. Each dot illustrates a document on a partition. The documents on each quadrant can be considered "similar" to each other. The intuition here is that StarSpace embedding vectors of "similar" documents would be "near" to each other. Therefore, producing the documents on each partition (i.e., quadrant) would end up having "similar" documents to each other on the same segment.
 
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.65\textwidth]{images/embedding-2d.png}
     \caption{Demonstarting each document (as a dot) in a two dimensional space. Each quadrants represents a partition.}
