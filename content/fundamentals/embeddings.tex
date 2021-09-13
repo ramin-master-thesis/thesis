@@ -1,6 +1,6 @@
 \section{Embeddings}
 \label{sec:embeddigns}
-Latent text representations, or embeddings, are representations of words or documents as vectors, traditionally learned in an unsupervised way over large corpora. Work on neural embeddings in this domain includes \cite{bengioNeuralProbabilisticLanguage2003}, 
+Latent text representations, or embeddings, are representations of words or documents as vectors, traditionally learned in an unsupervised way over large corpora. Research on neural embeddings in this domain includes \cite{bengioNeuralProbabilisticLanguage2003}, 
 \cite{collobertNaturalLanguageProcessing2011}, \emph{word2vec} \cite{goldbergWord2vecExplainedDeriving2014}, \emph{fastText} \cite{joulinFastTextZipCompressing2016}, and \emph{BERT} \cite{devlinBERTPretrainingDeep2019}.
 
 \subsection{StarSpace}
@@ -8,78 +8,16 @@ Latent text representations, or embeddings, are representations of words or docu
 StarSpace \cite{wuStarSpaceEmbedAll2017a} is a general-purpose neural model for efficient learning of learning word, sentence, or document level embeddings.
 
 
-To generate the embeddings StarSpace trains on a training dataset. This particular model learns the mapping between sentences and documents. Given the embedding of one sentence, one can find the most relevant documents. The output of the StarSpace model is a multi-dimensional vector in a so-called "Embedding-Space." Depending on the parameters that the model has used for training, the dimensionality of the output vector varies. 
+StarSpace needs to be trained to generate the embedding vectors. This particular model learns the mapping between sentences and documents. Given the embedding of one sentence, one can find the most relevant documents. The output of the StarSpace model is a multi-dimensional vector in a so-called "Embedding-Space." Depending on the parameters that the model was trained with, the dimensionality of the output vector varies. 
 
 For more information about the implementation and other use-cases of StarSpace, please refer to the main repository\footnote{\url{https://github.com/facebookresearch/StarSpace}}.
 
 
-This work observes StarSpace as a black box. The purpose is to use StarSpace to partition the data and find similar content \emph{near} each other in the embedding-space, and not to improve the StarSpace model.
+This work observes StarSpace as a black box. The purpose of this research is to use StarSpace to calculate the embedding vector for each document. Then use these embeddings to classify similar documents together on the same partition.
 
 \subsubsection{StarSpace Text Normalization}
 \label{subsubsec:star-space-text-normalization}
-The StarSpace model uses different arguments and parameters for its training. The full documentation of these train parameter can be found in the repository\footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}. One of the parameters that effects the input is the \emph{normalizeText} argument. This argument runs a basic text process on the input and can be either true or false. It is also one of the arguments that I tune for a better model prediction in subsection \ref{subsec:hyperparameter-tuning}. The text normalization happens during partitioning time. For more details refer to \ref{subsec:partitioning-star-space}.
-
-% \begin{algorithm}[H]
-%     \caption{StarSpace text normalization algorithm}
-%     \label{alg:star-space-text-normalization}
-%     \SetKwData{allNumeric}{allNumeric}
-%     \SetKwData{containsDigits}{containsDigits}
-%     \SetKwData{flattenCase}{flattenCase}
-%     \SetKwData{flattenNum}{flattenNum}
-%     \SetKwData{normalizedText}{normalizedText}
-
-%     \SetKwFunction{isdigit}{isdigit}
-%     \SetKwFunction{isascii}{isascii}
-%     \SetKwFunction{isalpha}{isalpha}
-%     \SetKwFunction{tolower}{tolower}
-
-%     \SetKwInOut{Input}{input}
-%     \SetKwInOut{Output}{output}
-
-%     \Input{Input string $S$}
-%     \Output{Normalized string $S\prime$}
-%     \SetAlgoLined
-
-%     \BlankLine\emph{initialization}\;
-%     \allNumeric $\leftarrow$ true\;
-%     \containsDigits $\leftarrow$ false\;
-
-%     \BlankLine
-
-%     \ForEach{character $C$ of the input string $S$}
-%     {
-%         \containsDigits $\leftarrow$ \containsDigits | \isdigit{C}\;
-%         \If{not \isascii{C}}{
-%             \allNumeric $\leftarrow$ false\;
-%             \emph{continue}\;
-%         }
-%         \lIf{not \isalpha{C}}{\emph{continue}}
-%         \allNumeric $\leftarrow$ false\;
-%     }
-
-%     \BlankLine
-
-%     \flattenCase $\leftarrow$ true\;
-%     \flattenNum $\leftarrow$ \allNumeric \&\& \containsDigits\;
-%     \lIf{not \flattenNum \&\& not \flattenCase}{\emph{return}}
-%     \lIf{\flattenNum \&\& not \flattenCase}{\emph{return}}
-
-%     \BlankLine
-
-%     i $\leftarrow$ -1 \;
-
-%     \For{character $C$ of the input string $S$}{
-%         i++\;
-%         \lIf{\flattenNum \&\& \isdigit{C}}{\normalizedText[i] $\leftarrow$ 0 continue}
-%         \lIf{\isalpha{C}}{\normalizedText[i] $\leftarrow$ \tolower{C} continue}
-%         \normalizedText[i] $\leftarrow$ $C$
-%     }
-
-%     $S\prime$ $\leftarrow$ \normalizedText\;
-%     return $S\prime$ \;
-%     \BlankLine
-%     \BlankLine
-% \end{algorithm}
+The StarSpace model uses different arguments and parameters for its training. The full documentation of these train parameter can be found in the repository\footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}. One of the parameters that effects the input is the \emph{normalizeText} argument. This argument runs a basic text process on the input and can be either true or false. It is also one of the arguments that its impact on the partitioning is studied in this research \ref{subsec:hyperparameter-tuning}. The text normalization happens during partitioning time. For more details refer to \ref{subsec:partitioning-star-space}.
 
 
 The text normalization process categorizes long strings into the following buckets:
@@ -102,14 +40,9 @@ Principal component analysis (PCA), in essence, is a linear projection operator 
         Y = XP
     \end{equation}
 
-Each column of the projection matrix P is called a principal component (PC) \cite{xu10701MachineLearning}. 
+\noindent Each column of the projection matrix P is called a principal component (PC) \cite{xu10701MachineLearning}. 
 
 
 \subsubsection{Related work}
 \label{subsubsec:dimension-reduction-related-work}
-Other methods are to reduce the dimension of big datasets and visualize them. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{vandermaaten08a}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnamaLINEARDISCRIMINANTANALYSIS} can reduce the dimension of datasets with multi classes.
-
-
-In \cite{yanGraphEmbeddingExtensions2007} study and compare dimension reduction methods like PCA, LDE, and other methods, namely Locality Preserving Projections (LPP) on graphs.
-
-
+Other methods exist to reduce the dimensions and visualize datasets. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{vandermaaten08a}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnamaLINEARDISCRIMINANTANALYSIS} can reduce the dimension of datasets with multi classes. In \cite{yanGraphEmbeddingExtensions2007} study and compare dimension reduction methods like PCA, LDE, and other methods, namely Locality Preserving Projections (LPP) on graphs.
