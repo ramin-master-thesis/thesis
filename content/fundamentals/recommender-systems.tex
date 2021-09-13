@@ -1,7 +1,7 @@
 \section{Recommender Systems}
 \label{sec:recommender-systems}
 
-Recommender systems use the opinions of a community of users to help individuals in that community more effectively identify the content of interest from a potentially overwhelming set of choices \cite{gunawardanaSurveyAccuracyEvaluation}.
+Recommender systems use the opinions of a community of users to assist individuals in that community more effectively identify the content of interest from a potentially overwhelming collection of choices \cite{gunawardanaSurveyAccuracyEvaluation}.
 
 A recommendation engine recommends a set of documents from a superset that the engine finds most relevant to the user. In that sense, a recommendation engine is simply performing the task of document retrieval. Recommender systems are mainly categorized into two types:
 \begin{enumerate}
@@ -9,10 +9,10 @@ A recommendation engine recommends a set of documents from a superset that the e
     \item \emph{Collaborative filtering (CF)}
 \end{enumerate}
 
-Content-based filtering methods classify items based on the user's input on the content (e.g., like or dislike an item) to generate recommendations. On the other hand, collaborative filtering algorithms create recommendations based on the user-user relationship and their interactions with the same items.
+Content-based filtering methods classify items based on the user's interaction with the content (e.g., like or dislike an item) to generate recommendations. On the other hand, collaborative filtering algorithms create recommendations based on the user-user relationship and their interactions with the same items.
 
 
-This thesis focuses on collaborative filtering recommender systems, of which GraphJet \cite{sharmaGraphJetRealtimeContent2016} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) is an example. The approach uses a content-based partitioning method to distribute this system on multiple instances and increase the recommendation quality.
+This thesis focuses on collaborative filtering recommender systems, of which GraphJet's recommendation engine \cite{sharmaGraphJetRealtimeContent2016} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) is an example.
 The following subsection explains collaborative filtering recommender systems and related work. Lastly, the different metrics to evaluate recommender systems are discussed.
 
 \subsection{Collaborative Filtering}
@@ -20,7 +20,7 @@ The following subsection explains collaborative filtering recommender systems an
 
 Recommendations can be generated based on shared interests, correlated activities, topological configurations, and many other signals.
 
-\emph{Collaborative filtering (CF)} term, which was first introduced in \cite{goldbergUsingCollaborativeFiltering1992} means that the users in a system collaborate to perform filtering by interacting with documents and record their reactions.
+\emph{Collaborative filtering (CF)} term, which was first proposed in \cite{goldbergUsingCollaborativeFiltering1992} means that the users in a system collaborate to perform filtering by interacting with documents and record their reactions.
 In CF scenarios, the system has only access to the user and item identifiers, and no additional information over items or users is used.
 Examples of recommender systems that use collaborative filtering are: Google news recommender \cite{dasGoogleNewsPersonalization2007}, Amazon recommendation system \cite{lindenAmazonComRecommendations2003}, Pixie \cite{eksombatchaiPixieSystemRecommending2018}, and GraphJet \cite{sharmaGraphJetRealtimeContent2016}.
 
@@ -28,7 +28,7 @@ Image a document recommender system, recommending similar documents to the users
 In \cite{suSurveyCollaborativeFiltering} the different techniques used to implement CF systems are explained in detail. Moreover, they discuss multiple evaluation metrics to assess the recommendation quality.
 
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.50\textwidth]{images/collaborative-filtering}
     \caption{Collaborative filtering}
@@ -39,11 +39,11 @@ In \cite{suSurveyCollaborativeFiltering} the different techniques used to implem
 
 \subsection{Evaluation metrics}
 \label{subsec:evaluation-metrics}
-One of the key challenges when developing or enhancing a recommendation engine is evaluating its impact on the quality of the recommendations. Though we are sure about the positive impact, there is a need to quantify the same.
+One of the key challenges when developing or enhancing a recommendation engine is evaluating its impact on the quality of the recommendations. After applying the changes to a recommendation engine, the researchers need to assess the ranked lists of the main recommendation engine and the results of the newly changed recommendation engine to find out if the changes indicate an improvement or not. 
 
-After applying a new algorithm or an improvement to a recommendation engine, there is the need to compare two ranked lists of the main recommendation engine and the improved recommendation engine to find out the impact of the recommendation quality. The ranked list of the main recommendation engine is called \emph{objective ranking} (also called \emph{golden standard}), and after the changes are applied to the recommendation engine, the new ranked list is called \emph{observed ranking}. These two lists are assessed against each other.
 
-% In recommender systems, the highly relevant documents are more valuable than moderately relevant documents, which are more useful than irrelevant documents.
+The ranked list of the main recommendation engine is called \emph{objective ranking} (also called \emph{golden standard}), and after the changes are applied to the recommendation engine, the new generated ranked list is defined as \emph{observed ranking}. These two lists are assessed against each other later during the evaluation.
+
 
 According to \cite{webberSimilarityMeasureIndefinite2010} when comparing the golden standard with the newly generated observed ranking, the rank similarity measures can be broken down into four main groups. These measures are grouped as not-weighted (set-based) or weighted (ordered) and may need conjointness or disjoint rankings. Each of these terms is defined as follow: 
 
@@ -71,8 +71,8 @@ This section introduces the evaluation metrics listed in the table \ref{tab:eval
 
 \subsubsection{Precision and Recall}
 \label{subsubsec:precision-recall}
-The \emph{retrieval effectiveness}: the ability of the system to retrieve relevant documents while at the same time suppressing the retrieval of non-relevant documents. 
-The most well-known pair of variables jointly measuring retrieval effectiveness is \emph{precision and recall}.
+The \emph{retrieval effectiveness} is the system's ability to collect relevant documents while at the same time concealing the retrieval of non-relevant documents. 
+The most well-known pair of metrics that together measure retrieval effectiveness is \emph{precision and recall}.
 
 \paragraph*{Precision} is the proportion of the retrieved relevant documents. The formal definition of percision:
 \begin{equation}
@@ -87,9 +87,7 @@ The most well-known pair of variables jointly measuring retrieval effectiveness 
     \label{eq:recall}
 \end{equation}
 
-Evaluating modern information retrieval systems with recall is obsolete. These systems retrieve thousands of relevant documents that few users will be interested in reading.
-
-Singly, each metric measures some aspect of retrieval effectiveness; together, they measure retrieval effectiveness entirely. Metrics like average precision bring these two metrics close to each other.
+Evaluating modern information retrieval systems with recall is obsolete. These systems retrieve thousands of relevant documents that few users will be interested in reading. Singly, each metric measures some aspect of retrieval effectiveness; together, they measure retrieval effectiveness entirely. Metrics like average precision bring these two metrics close to each other.
 
 \subsubsection{AP@K and MAP@K}
 \label{subsubsec:ap@k-map@k}
@@ -261,7 +259,7 @@ Studies show that data fusion methods in IR systems are complex and depend highl
 Single instance recommender systems take a query as their input and produce a single ranked list of recommendations for a user. The incoming query can only be a simple user-ID in recommendation systems and does not need to go through the formulation step. Figure \ref{fig:data-fusion-simple} represents this behaviour.
 
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.75\textwidth]{images/simple-formulation-schema}
 	\caption{A simple recommendation system with a formulation and schema step. The query is sent directy to the schema \emph{S}.The formulation step \emph{F} (represented in gray) is skiped since user-ID the does not need to get normalized.}
