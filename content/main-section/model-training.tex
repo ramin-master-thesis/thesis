@@ -1,10 +1,10 @@
 \section{Model Training}
 \label{sec:model-training}
-The StarSpace model is trained to be able to predict the embedding vectors of the new documents. To train the StarSpace model, train data needed to be generated format that the model can consume. As explained in the section \ref{subsec:partitioning-star-space} to calculate the partition-ID, the StarSpace model needs a projection matrix to reduce the dimensions of the predicted embedding vector. Figure \ref{fig:star-space-training} shows the flowchart of the training and projection matrix calculation process. In the beginning, related documents to each other are generated using the recommendation algorithm. The data is then used to train the model with the configured hyperparameters. After the training process is finished, the projection matrix is calculated and saved for later use.
+The StarSpace model is trained to predict the embedding vectors of new documents. To train the StarSpace model, train data needed to be generated in a format that the model can consume. As explained in the section \ref{subsec:partitioning-star-space} to calculate the partition-ID, the StarSpace model also needs a projection matrix to reduce the dimensions of the predicted embedding vector. Figure \ref{fig:star-space-training} shows the flowchart of the training and projection matrix calculation process. In the beginning, related documents to each other are generated using the recommendation algorithm. The data is then used to train the model with the configured hyperparameters. After the training process is finished, the projection matrix is calculated and saved for later use.
 
 In the following sections, each step of the flowchart \ref{fig:star-space-training} is explained in detail.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[height=0.75\textwidth]{images/train-StarSpace-flow-chart}
     \caption{Flowchart of the training process}
@@ -13,19 +13,19 @@ In the following sections, each step of the flowchart \ref{fig:star-space-traini
 
 \subsection{Generating Training Data}
 \label{subsec:generating-training-data}
-The first step to train the StarSpace model is to generate train data. The train input file that StarSpace takes is a text file and has a particular structure. Each line of the file is considered a document. Each document is built with sentences, and a tab separates each sentence from each other. With this format, StarSpace learns the mapping between the sentences and documents and is able to predict the related documents for a given sentence. Moreover, StarSpace would be able to calculate the embedding vector for a given sentence.
+The first step to train the StarSpace model is to generate train data. The train input file that StarSpace takes is a text file and has a specific structure. Each line of the file represents a document. Each document is built with tab-separated sentences. With this format, StarSpace learns the mapping between the sentences and documents and is able to predict the related documents for a given sentence. Moreover, StarSpace would be able to calculate the embedding vector for a given sentence.
 
 
-The training dataset used in this work to train StarSpace is crawled from Twitter directly (see section \ref{sec:data-crawling-strategy}). This dataset needs to be formatted to be digestible for StarSpace. StarSpace needs in each line multiple tweets related to each other that can be defined as a document. We can argue that each document in this file is built with sentences that are related to each other. This thesis proposes an approach in which the SALSA algorithm find related sentences to each other.
+The training dataset used in this work to train StarSpace is crawled from Twitter directly (see section \ref{sec:data-crawling-strategy}). This dataset needs to be formatted to be digestible for StarSpace. StarSpace needs in each line multiple tweets related to each other that can be defined as a document. We can argue that each document in this file is built with sentences relevant to each other. This thesis proposes an approach in which the SALSA algorithm finds related sentences to each other.
 
 
-As explained in the subsection \ref{subsub:storage-index-layer} this study extends the SALSA algorithm by starting the random walk from the right side index (tweet side) and return the vertex list of the right side nodes (tweets). The intuition here is that SALSA produces related tweets to the tweet, which the walk started on. Therefore, the train data can be loaded into memory by generating the bipartite graph and generating the related tweets for each tweet. Then each tweet and its related tweets are written into a text file separated by tabs. This process continues for all the tweets.
+As explained in the subsection \ref{subsub:storage-index-layer} this study extends the SALSA algorithm by starting the random walk from the right side index (tweet side) and return the vertex list of the right side nodes (tweets). The intuition here is that SALSA produces relevant tweets to the given tweet, which the walk started on. Therefore, the train data can be loaded into memory by generating the bipartite graph and the relevant tweets for each tweet. Then each tweet and its relevant tweets are written into a text file separated by tabs. This process continues for all the existing tweets.
 
 
-The algorithm \ref{alg:star-space-train-data} explains how the data generation process works. In the beginning, all the identifiers from the right side index (tweet-IDs) are loaded. Then for each id, the \emph{getRelatedIDs} function runs the SALSA walk and calculates the related node-IDs (tweets) for the given identifier, and limits the results up to ten. The input identifier is also added to the result list. Next, the content of each identifier is retrieved from the identifier-content index and converted into a tab-separated string. This will produce one document, and this particular document will be saved in a text file. The algorithm continues until all the identifiers finish.
+The algorithm \ref{alg:star-space-train-data} explains how the data generation process works. In the beginning, all the identifiers from the right side index (tweet-IDs) are loaded. Then for each id, the \emph{getRelevantIDs} function runs the SALSA walk and calculates the relevant node-IDs (tweets-IDs) for the given identifier, and limits the results up to ten. The input identifier is also added to the result list. Next, the content of each identifier is retrieved from the identifier-content index and converted into a tab-separated string. The algorithm continues until all the identifiers in the list extend and saves the results in a text file.
 
 
-\begin{algorithm}[H]
+\begin{algorithm}[!ht]
     \caption{StarSpace train data generation algorithm}
     \label{alg:star-space-train-data}
     \SetKwData{allIDs}{allIDs}
@@ -36,7 +36,7 @@ The algorithm \ref{alg:star-space-train-data} explains how the data generation p
 
 
     \SetKwFunction{getAllRightIndexKeys}{getAllRightIndexKeys}
-    \SetKwFunction{getRelatedIDs}{getRelatedIDs}
+    \SetKwFunction{getRelevantIDs}{getRelevantIDs}
     \SetKwFunction{getContentOf}{getContentOf}
     \SetKwFunction{joinWithTab}{joinWithTab}
     \SetKwFunction{appendToTextFile}{appendToTextFile}
@@ -54,69 +54,69 @@ The algorithm \ref{alg:star-space-train-data} explains how the data generation p
 
     \ForEach{identifier $\id$ in $\allIDs$}
     {
-		\emph{//Start the random walk from the right index side with node-ID id}\;
-		\listRecommendations $\leftarrow$ \getRelatedIDs{\id}\;
-		\BlankLine
-		\emph{//Append the initial id to the results at the beginign of the resutls}\;
-		\listRecommendations.insert(0, \id)\;
-		\BlankLine
-		\listContent $\leftarrow$ \getContentOf{\listRecommendations}\;
-		\document $\leftarrow$ \joinWithTab{listContent}\;
-		\appendToTextFile{document}\;
+        \emph{//Start the random walk from the right index side with node-ID id}\;
+        \listRecommendations $\leftarrow$ \getRelevantIDs{\id}\;
+        \BlankLine
+        \emph{//Append the initial id to the results at the beginign of the resutls}\;
+        \listRecommendations.insert(0, \id)\;
+        \BlankLine
+        \listContent $\leftarrow$ \getContentOf{\listRecommendations}\;
+        \document $\leftarrow$ \joinWithTab{listContent}\;
+        \appendToTextFile{document}\;
     }
 
     \BlankLine
 \end{algorithm}
 
 
-As an example of how well the SALSA algorithm generates related tweets, take a look at the table \ref{tab:example-train-data}. This table presents the recommendations generated from a tweet from the \emph{SpaceX} Twitter account with the following content: "Live views of Starship SN8’s flight test -> https://t.co/Hs5C53qBxb https://t.co/OvAloTO6UQ". By observing the results you can see how diverse the content of these tweets are. One containing chimical chemical equations, and one agreeing with Elon Musk. Thus, the topic of the initial tweet is somehow related to the output tweets.
+To illustrate how well the SALSA algorithm generates relevant tweets, take a look at the table \ref{tab:example-train-data}. This table presents the recommendations generated from a tweet from the \emph{SpaceX} Twitter account with the following content: "Live views of Starship SN8’s flight test -> https://t.co/Hs5C53qBxb https://t.co/OvAloTO6UQ". By observing the results, you can see how diverse the content of these tweets is. One result contains chemical equations, and another one agrees with Elon Musk. Thus, the topic of the initial tweet is somehow relevant to the output tweets.
 
-\begin{table}[!h]
-	\centering
-	\caption{Example output of similar tweets for train data generation}
-	\label{tab:example-train-data}
-	\begin{tabular}{|m{0.95\textwidth}|}
-		\hline
-		\textbf{Recommendations} \\
-		\hline
-		Welcome to Mars, @NASAPersevere! Congratulations @NASA and @NASAJPL – another successful mission to the Red Planet https://t.co/EtVb2f2C5I \\
-		\hline
-		Tesla’s bold "yoke" steering system is legal on UK roads, confirms regulators \\
-		\hline
-		@Erdayastronaut @ErcXspace Short-term, CH4 delivered \& O2 produced. Propellant is ~78\% O2. Long-term, Sabatier reaction to convert CO2 + H2O -> CH4 + O2 using wind \& solar power. \\
-		\hline
-		@elonmusk Well done @elonmusk and the team, keep pushing those boundaries and ignore the competition,  you have enough vision to see the finish line whilst they are struggling to find the start! (Remember 2MWs ultracapacitor in the frunk option for 100\% regen in any temp and the win!) \\
-		\hline
-		@elonmusk @NASASpaceflight 250 tons would be nice and easy for even engine scaling , since you are using odd numbered the goal has to be 333 tons \\
-		\hline
-		@Erdayastronaut Great footage Tim and the team. The audio was great also,  the kids were covering their ears during launch!! \\
-		\hline
-		@elonmusk @Teslarati Totally agree, the new Lotus ev has additional active damping for longitudinal acceleration as well... \\
-		\hline
-		Feel your pain @SpaceX , it's only 5 year old homebrew but I shall name it SN1 https://t.co/1sf1MzXaH3 \\
-		\hline
-		\#LaunchThePengwing The naughty Elves are not clear of the pad! Thank you Felix and team. https://t.co/UF7FB8P4OL \\
-		\hline
-		@elonmusk Totally agree \\
-		\hline
-	\end{tabular}
+\begin{table}[!ht]
+    \centering
+    \caption{Example output of similar tweets for train data generation}
+    \label{tab:example-train-data}
+    \begin{tabular}{|m{0.95\textwidth}|}
+        \hline
+        \textbf{Recommendations} \\
+        \hline
+        Welcome to Mars, @NASAPersevere! Congratulations @NASA and @NASAJPL – another successful mission to the Red Planet https://t.co/EtVb2f2C5I \\
+        \hline
+        Tesla’s bold "yoke" steering system is legal on UK roads, confirms regulators \\
+        \hline
+        @Erdayastronaut @ErcXspace Short-term, CH4 delivered \& O2 produced. Propellant is ~78\% O2. Long-term, Sabatier reaction to convert CO2 + H2O -> CH4 + O2 using wind \& solar power. \\
+        \hline
+        @elonmusk Well done @elonmusk and the team, keep pushing those boundaries and ignore the competition,  you have enough vision to see the finish line whilst they are struggling to find the start! (Remember 2MWs ultracapacitor in the frunk option for 100\% regen in any temp and the win!) \\
+        \hline
+        @elonmusk @NASASpaceflight 250 tons would be nice and easy for even engine scaling , since you are using odd-numbered the goal has to be 333 tons \\
+        \hline
+        @Erdayastronaut Great footage Tim and the team. The audio was great also,  the kids were covering their ears during launch!! \\
+        \hline
+        @elonmusk @Teslarati Totally agree, the new Lotus ev has additional active damping for longitudinal acceleration as well... \\
+        \hline
+        Feel your pain @SpaceX , it's only 5 year old homebrew but I shall name it SN1 https://t.co/1sf1MzXaH3 \\
+        \hline
+        \#LaunchThePengwing The naughty Elves are not clear of the pad! Thank you Felix and team. https://t.co/UF7FB8P4OL \\
+        \hline
+        @elonmusk Totally agree \\
+        \hline
+    \end{tabular}
 \end{table}
 
 
 \subsection{Projection Matrix Calculation}
 \label{subsec:projection-matrix-calculation}
-Following the flowchart in figure \ref{fig:star-space-training}, after the training data is generated, the StarSpace model can be trained. Later the model training finishes, and the model is saved, the calculation of the projection matrix starts. The projection matrix is calculated for a trained model individually. In other words, the projection matrix should be recomputed whenever a new model is trained.
+Following the flowchart in figure \ref{fig:star-space-training}, after the training data is generated, the StarSpace model is ready for the training. After the model training finishes and the model is saved to disk, the projection matrix calculation starts. The projection matrix is calculated for a trained model individually. In other words, the projection matrix should be recomputed whenever a new model is trained.
 
 
 This computation is done by predicting the embedding vector of each sentence in the training dataset using the trained StarSpace model. Then calculating the eigenvector and eigenvalues and sort these pairs in descending order in a matrix. For more details on how mathematically the projection matrix is calculated, please refer to the main paper of PCA \cite{woldPrincipalComponentAnalysis}.
 
 
-The instance running the calculation needs to have enough memory to load the training dataset and the StarSpace model simultaneously. The training dataset used in this work is almost 3GB, and the StarSpace model can reach a size up to 13GB. So the projection matrix computation needs at least 16GB of memory to get initialized. The calculation itself is also memory-consuming since, for all the values in the training dataset, the eigenpairs (eigenvalue and eigenvector) need to be kept in memory.
+The instance running the calculation needs to have enough memory to simultaneously load the training dataset and the StarSpace model. The training dataset used in this work is almost 3GB, and the StarSpace model can reach a size up to 13GB. So the projection matrix computation needs at least 16GB of memory to get initialized. The calculation itself is also memory-consuming since, for all the values in the training dataset, the eigenpairs (eigenvalue and eigenvector) need to be kept in memory.
 
 \todo{argue about the computation time...}
 
 
-To reduce this memory footprint and speed up the computation, we can argue that this process is a map operation and can be run on multiple instances at once in parallel and then reduced to a single projection matrix.
+To reduce this memory footprint and speed up the computation, we can argue that the training data generation is a map operation and can be run on multiple instances at once in parallel and then reduced to a single projection matrix.
 
 
 \subsection{Hayperparameter Tuning}
@@ -124,28 +124,28 @@ To reduce this memory footprint and speed up the computation, we can argue that 
 The model of StarSpace has multiple hyperparameters that control the learning process of the model. The complete documentation of parameters can be found in the StarSpace repository on GitHub\footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}. 
 
 
-The assumption here is that tuning the model parameters would affect the data distribution on the partitions (i.e., workers) and the recommendation quality, respectively. This work implemented a hyperparameter tuning tool to train different models and compare their learning quality.
+The implication is that changing the model parameters will affect the data distribution on the partitions (i.e., workers) as well as the recommendation quality. This work implemented a hyperparameter tuning platform to train different models and compare their learning quality.
 
 
-Table \ref{tab:hyperparameter} shows different hyperparameters values used to train the StarSpace model. Combining these parameters variations will train 16 different models. Selecting the best model for content-based partitioning can be done in two ways: First would be the impact on the recommendation quality. The recommendation quality of different models can be found. The second would be the data distribution on different partitions and how balanced these partitions are. Both topics are evaluated and discussed in the section \ref{subsubsec:eval-hyperparameter}.
+Table \ref{tab:hyperparameter} shows different parameters values used to train the StarSpace model. Combining these parameters variations will train 16 different models. Selecting the best model for content-based partitioning can be done over two criteria: First would be the recommendation quality. Second, the data distribution and how well balanced each partition is. Both of these topics are evaluated and discussed in the section \ref{subsubsec:eval-hyperparameter}.
 
 
-\begin{table}[!h]
-	\centering
-	\caption{Configuration parameters}
-	\label{tab:hyperparameter}
-	\begin{tabular}{|l|c|}
-		\hline
-		\textbf{Parameter} & \textbf{Values} \\
-		\hline
-		Learning rate & [0.01, 0.05] \\
-		\hline
-		Size (dimension) of embedding vectors & [100, 300] \\
-		\hline
-		Dropout probability for RHS features & [0.5, 0.8] \\
-		\hline
-		Text normalization for input file & [True, False]\\
-		\hline
-	\end{tabular}
+\begin{table}[!hb]
+    \centering
+    \caption{Configuration parameters}
+    \label{tab:hyperparameter}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Parameter} & \textbf{Values} \\
+        \hline
+        Learning rate & [0.01, 0.05] \\
+        \hline
+        Size (dimension) of embedding vectors & [100, 300] \\
+        \hline
+        Dropout probability for RHS features & [0.5, 0.8] \\
+        \hline
+        Text normalization for input file & [True, False]\\
+        \hline
+    \end{tabular}
 \end{table}
 
