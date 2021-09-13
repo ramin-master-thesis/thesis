@@ -3,7 +3,7 @@
 The partitioning module (i.e., partitioner) is one of the key modules of this thesis. This module helps to distribute the data based on the hash function that is injected. The partitioning module provides an abstract class. The user inherits from this abstract class and then implements its partitioning logic. 
 
 
-Figure \ref{fig:partitioner-uml} indicates the UML diagram of the partitioning module. The base class provides two fields, namely: \emph{name}, and \emph{paritition\_count}. The \emph{name} field denotes the name of the method (i.e., hash function name). The \emph{paritition\_count} tells the partitioner how many partitions exist in the cluster. This number is used during partition time to equidistant range partitioning on the range of hashes. The \emph{calculate\_partition} function takes a value (i.e., data entity), either the document id or the content of a document, and returns the partition-ID of the value. The partition-ID indicates on which partition this entity should land. This work implements the partitioners, abstract class, for two partitioners:
+Figure \ref{fig:partitioner-uml} indicates the UML diagram of the partitioning module. The base class provides two fields, namely: \emph{name}, and \emph{paritition\_count}. The \emph{name} field denotes the name of the method (i.e., hash function name). The \emph{paritition\_count} tells the partitioner how many partitions exist in the cluster. This number is used during partition time to equidistant range partitioning on the range of hashes. The \emph{calculate\_partition} function takes a value (i.e., data entity), either the document id or the content of a document, and returns the partition-ID of the value. The partition-ID indicates on which partition this entity should land. This research implements the partitioners, abstract class, for two partitioners:
 
 \begin{enumerate}
     \item Murmur2 Partitioner
@@ -22,13 +22,13 @@ In the following sections, each partitioning method is explained in detail.
 
 \subsection{Murmur2 Partitioner}
 \label{subsec:partitioning-murmur2}
-This component implements the Murmur2 hash function. This hash function is explained in the \ref{sec:hash-functions} sections. This work uses the Kafka python implementation of Murmur2 \footnote{\url{https://github.com/dpkp/kafka-python/blob/master/kafka/partitioner/default.py}} to implement the \emph{calculate\_partition} function from the partitioner base class.
+This component implements the Murmur2 hash function. This hash function is explained in the \ref{sec:hash-functions} sections. This study uses the Kafka python implementation of Murmur2 \footnote{\url{https://github.com/dpkp/kafka-python/blob/master/kafka/partitioner/default.py}} to implement the \emph{calculate\_partition} function from the partitioner base class.
 
 The \emph{Murmur2Partition} class takes the document-ID as an input and computes the Murmur2 hash. In the end, it calculates the modulo between the \emph{partition\_count} value and the hash value to produce the partition-ID. 
 
 \subsection{StarSpace Partitioner}
 \label{subsec:partitioning-star-space}
-This work uses another partitioner to distribute the data based on their content, namely \emph{StarSpacePartition}. Compared to the \emph{Murmur2Partition} class, this partitioner takes the content of the document and generates the partition-ID.
+This thesis uses another partitioner to distribute the data based on their content, namely \emph{StarSpacePartition}. Compared to the \emph{Murmur2Partition} class, this partitioner takes the content of the document and generates the partition-ID.
 
 
 During the initialization of the  \emph{StarSpacePartition} class, the pre-trained StarSpace model is loaded in the memory along with the projection matrix. As explained in the sub-sub section \ref{subsubsec:pca}, the projection matrix is used to reduce the dimensions of a data matrix through a dot production. The StarSpace model is responsible for predicting the vector of the incoming documents in the embedding space it was trained. The projection matrix is responsible for reducing the StarSpace vector dimensions. For more information on how the model is trained and how the projection matrix is calculated, please refer to the section \ref{sec:model-training}.

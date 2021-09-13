@@ -12,7 +12,7 @@ A recommendation engine recommends a set of documents from a superset that the e
 Content-based filtering methods classify items based on the user's input on the content (e.g., like or dislike an item) to generate recommendations. On the other hand, collaborative filtering algorithms create recommendations based on the user-user relationship and their interactions with the same items.
 
 
-This work focuses on collaborative filtering recommender systems, of which GraphJet \cite{sharmaGraphJetRealtimeContent2016} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) is an example. The approach uses a content-based partitioning method to distribute this system on multiple instances and increase the recommendation quality.
+This thesis focuses on collaborative filtering recommender systems, of which GraphJet \cite{sharmaGraphJetRealtimeContent2016} (explained in section \ref{subsec:GraphJet-Recommendation-Engine}) is an example. The approach uses a content-based partitioning method to distribute this system on multiple instances and increase the recommendation quality.
 The following subsection explains collaborative filtering recommender systems and related work. Lastly, the different metrics to evaluate recommender systems are discussed.
 
 \subsection{Collaborative Filtering}
@@ -281,5 +281,5 @@ With the recent developments in computer science and distributed systems, it is 
 Multiple formulations can use different normalization or tokenization algorithm to process the incoming queries. The end results of each formulation vary even with the same schema.
 
 
-This work uses an SFMS architecture for the distribution. In this architecture, the query is sent to a single formulation point and from there to multiple schemes (i.e., workers). Each scheme runs the recommendation algorithm and produces a ranked list. In the last step, these ranked lists are then integrated into a single ranked list. Section \ref{sec:data-fusion-approaches} explains the data fusion approaches used in this work. For more detail about the distributed architecture, please refer to section \ref{sec:system-architecture}.
+This study uses an SFMS architecture for the distribution. In this architecture, the query is sent to a single formulation point and from there to multiple schemes (i.e., workers). Each scheme runs the recommendation algorithm and produces a ranked list. In the last step, these ranked lists are then integrated into a single ranked list. Section \ref{sec:data-fusion-approaches} explains the data fusion approaches used in this work. For more detail about the distributed architecture, please refer to section \ref{sec:system-architecture}.
 
