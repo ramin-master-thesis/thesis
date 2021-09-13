@@ -113,7 +113,7 @@ This computation is done by predicting the embedding vector of each sentence in 
 
 The instance running the calculation needs to have enough memory to simultaneously load the training dataset and the StarSpace model. The training dataset used in this work is almost 3GB, and the StarSpace model can reach a size up to 13GB. So the projection matrix computation needs at least 16GB of memory to get initialized. The calculation itself is also memory-consuming since, for all the values in the training dataset, the eigenpairs (eigenvalue and eigenvector) need to be kept in memory.
 
-\todo{argue about the computation time...}
+% \todo{argue about the computation time...}
 
 
 To reduce this memory footprint and speed up the computation, we can argue that the training data generation is a map operation and can be run on multiple instances at once in parallel and then reduced to a single projection matrix.

@@ -1,56 +1,56 @@
 \section{Data Fusion Approaches}
 \label{sec:data-fusion-approaches}
-As explained in the section \ref{subsec:data-fusion}, there are different approaches to fusion data into a single ranked list based on the system architecture and the algorithm used. This work's architecture is inspired by the Single formulation multiple schemes (SFMS) architecture for the destribute this recommendation system. 
+The section \ref{subsec:data-fusion} introduced multiple data fusion architecture patterns based on the system architecture and the algorithm used. This work's data fusion algorithms are inspired by the Single Formulation Multiple Schemes (SFMS) pattern. 
+
+Whenever the SALSA algorithm walks to a vertex, it keeps track of that vertex's visit count. The algorithm ranks the results by this visit count. This visit count is called the \emph{Hit} of a specific node. Based on the hit numbers, the results are sorted in descending order and returned to the user. This study mainly uses this hit number to fusion the data. Thus, using only the hit number as the main data fusion approach comes with its downsides.
 
 
-As mentioned before the SALSA algorithm ranks the results by their visit count of each vertix (node) it visits. This visit count is called the \emph{hit} of a specific node. Based on the hits the values are soreted in descending order and returned to the user. This study mainly uses this hit number to fusion the data. Although, using only the hit number as the main data fusion approach comes with its downsides.
-
-
-This section of this thesis will introduce three data fusion approaches that the data fusion component (demonstarted in section \ref{subsec:multiple-machines}) uses to generate the single ranked list of recommendations. These three approaches are:
+This section of this thesis will introduce and explain three data fusion approaches that the data fusion component (demonstrated in section \ref{subsec:multiple-machines}) uses to generate the single ranked list of recommendations. These three approaches are:
 
 \begin{enumerate}
-	\item Union Results
-	\item Highest Hit
-	\item Most Interactions
+    \item Union Results
+    \item Highest Hit
+    \item Most Interactions
 \end{enumerate}
 
 \subsection{Union Results}
 \label{subsec:data-fusion-union-results}
-In this approach, the results of each partition get merged and based on their ranking (hit count), the results get sorted, and the top \emph{K} elements are taken. Figure \ref{fig:data-fusion-union-results} demonstrates this process.
+In this approach, the results of each partition get merged first and then based on their hit count, the results get sorted, and the top \emph{K} elements are taken. Figure \ref{fig:data-fusion-union-results} demonstrates this process with an example. The first document-ID belongs to partition zero, and the two following ones belong to partition one.
 
 
 \begin{figure}[!hb]
-	\centering
-	\includegraphics[width=\textwidth]{images/data-fusion-union-results}
-	\caption{Data fusion using the union results}
-	\label{fig:data-fusion-union-results}
+    \centering
+    \includegraphics[width=\textwidth]{images/data-fusion-union-results}
+    \caption{Data fusion using the union results}
+    \label{fig:data-fusion-union-results}
 \end{figure}
 
 \subsection{Highest Hit}
 \label{subsec:data-fusion-highest-hit}
-Another approach to creating a single ranked list from multiple partitions is to take the results of the partition with the highest hit. Figure \ref{fig:data-fusion-highest-hit} highlights this clearly. The first partition has a higher hit number comparing to the second partition (134 versus 99). Therefore all the results of the first partition are chosen as the output.
+This method chooses the results from a partition with the biggest hit number. Figure \ref{fig:data-fusion-highest-hit} highlights this process clearly. The first partition (partition zero) has a higher hit number compared to the second partition (134 versus 99). Therefore all the results of the first partition are chosen as the end result.
+
 \begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{images/data-fusion-highest-hit}
-	\caption{Data fusion using the highest hit that a partition contains}
-	\label{fig:data-fusion-highest-hit}
+    \centering
+    \includegraphics[width=\textwidth]{images/data-fusion-highest-hit}
+    \caption{Data fusion using the highest hit that a partition contains}
+    \label{fig:data-fusion-highest-hit}
 \end{figure}
 
 \subsection{Most Interactions}
 \label{subsec:data-fusion-most-interactions}
-The last approach is based on user interactions and their interests. After partitioning the data using the StarSpace model, we can argue that if users have a bigger degree on a particular partition, their interests are on that partition.
+The last approach is based on user interactions and their interests. After segmenting the data using the StarSpace model, we can argue that if users have a bigger degree on a particular partition, their interests are on that partition.
 
 
-Figure \ref{fig:data-fusion-highest-ineterest} explains this approach more clearly. As we can see, the user has five interactions in total. Four interactions are in a similar category, colored in yellow, and one (colored in red) has a completely different topic. The four documents land on the first partition and the other document in the other partition. After calculating the recommendations for this user on each partition, the system takes the partition results with the biggest degree (partition 0).
+Figure \ref{fig:data-fusion-highest-ineterest} explains this approach more clearly. The user interacted with five documents. The first four interactions are in a similar category, colored in yellow, and one (colored in red) has a completely different subject. The four documents land on the first partition and the other document in the other partition. After calculating the recommendations for this user on each partition, the data fusion module retrieves the degree of the user on each partition. Then the partition results with the biggest degree are chosen (partition zero in this example).
 
 
 \begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.85\textwidth]{images/data-fusion-highest-interest}
-	\caption{Data fusion using the highest degree of each user}
-	\label{fig:data-fusion-highest-ineterest}
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/data-fusion-highest-interest}
+    \caption{Data fusion using the highest degree of each user}
+    \label{fig:data-fusion-highest-ineterest}
 \end{figure}
 
 
-This approach is entirely independent of the hit number that the random walk of SALSA generates. The amount of data on a partition affects the hit count of the returned values. This means if a partition has a dense graph with many vertices, the hit numbers will be lower than a partition maintaining a spares graph. This is because the possibility to return to the same node again reduces whenever the graph is dense. The first two discussed approaches are helpful for balanced partitioning (like Murmur2). The third approach focuses more on the interest and content of the documents, making them more suitable for the StarSpace partitioning method. The evaluation of different data fusion approaches is discussed in \ref{subsubsec:eval-data-fusion}.
+This approach is entirely independent of the hit number that the random walk of SALSA generates. The amount of data on a partition affects the hit count. This means if a partition has a dense graph with many vertices, the hit numbers will be lower compared to a partition maintaining a spares graph. This is because the possibility of returning to a node already visited reduces for a dense graph. The first two discussed approaches are helpful for partitioning methods that keep the partitions balanced (like Murmur2). The third approach focuses more on the interest and content of the documents, making it more suitable for the StarSpace partitioning method. The evaluation of different data fusion approaches is discussed in \ref{subsubsec:eval-data-fusion}.
 
