@@ -1,37 +1,73 @@
 \chapter{\appendixname}
-\todo{WIP}
-\section*{StarSpace Node distribution over two partitions}
+% \section*{Murmur2 Node Distribution Over two Partitions}
 
-\begin{figure}[!hbt]
-	\centering
-	\input{plots/appendix/hyperparameter-left-node-distribution}
-	\caption{Left node distribution of test dataset; sharded with different trained models over two partitions}
-	\label{plot:left-node-distribution}
-\end{figure}
-
-\begin{figure}[!hbt]
-	\centering
-	\input{plots/appendix/hyperparameter-right-node-distribution}
-	\caption{Right node distribution of test dataset; sharded with different trained models over two partitions}
-	\label{plot:right-node-distribution}
-\end{figure}
-
-\section*{Murmur2 Node distribution over two partitions}
-\begin{figure}[!hbt]
+\begin{figure}[!htb]
     \centering
 	\begin{subfigure}{\textwidth}
 		\centering
 		\input{plots/appendix/murmur2-left-node-distribution.tex}
-		\caption{Left node distribution of test dataset.}
+		\caption{Left node (users) distribution}
 		\label{plot:left-node-distribution-murmur2}
     \end{subfigure}\qquad
 
     \begin{subfigure}{\textwidth}
 		\centering
 		\input{plots/appendix/murmur2-right-node-distribution.tex}
-		\caption{Right node distribution of test dataset.}
+		\caption{Right node (tweets) distribution}
 		\label{plot:right-node-distribution-murmur2}
     \end{subfigure}\qquad
     
-    \caption{Node distirbution of the test dataset. In (a) the sum of left nodes of two partitions is bigger than the total amount of the left nodes. This is because we replicate the left nodes on the partitions. In (b) the sum of two partitions maches exactly the total amount, since the partitioning is based on the right side verticies.}
+    \caption{Node distirbution on two partitions using Murmur2 partitioning method. In (a) the sum of left nodes of two partitions is bigger than the total amount of the left nodes. This is because we replicate the left nodes on the partitions. In (b) the sum of two partitions maches exactly the total amount, since the partitioning is based on the right side verticies.}
+\end{figure}
+
+% \section*{StarSpace Node Distribution Over Two Partitions}
+
+\begin{figure}[!htb]
+	\centering
+	\input{plots/appendix/hyperparameter-left-node-distribution}
+	\caption{Left node (users) distribution of test dataset; segmented with different trained models over two partitions}
+	\label{plot:left-node-distribution}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\input{plots/appendix/hyperparameter-right-node-distribution}
+	\caption{Right node (tweets) distribution of test dataset; segmented with different trained models over two partitions}
+	\label{plot:right-node-distribution}
+\end{figure}
+
+
+% \section*{Rank-Biased Overlap}
+
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}[b]{0.5\linewidth}
+	  \centering
+	  \input{plots/appendix/2-partitions}
+	  \caption{2 Partitions} 
+	  \label{fig:RBO-horizontall-scaling-2-partitions-a} 
+	  \vspace{1cm}
+	\end{subfigure}%% 
+	\begin{subfigure}[b]{0.5\linewidth}
+	  \centering
+	  \input{plots/appendix/4-partitions}
+	  \caption{4 Partitions} 
+	  \label{fig:RBO-horizontall-scaling-4-partitions-b} 
+	  \vspace{1cm}
+	\end{subfigure} 
+	\begin{subfigure}[b]{0.5\linewidth}
+	  \centering
+	  \input{plots/appendix/8-partitions}
+	  \caption{8 Partitions} 
+	  \label{fig:RBO-horizontall-scaling-8-partitions-c} 
+	\end{subfigure}%%
+	\begin{subfigure}[b]{0.5\linewidth}
+	  \centering
+	  \input{plots/appendix/16-partitions}
+	  \caption{16 Partitions} 
+	  \label{fig:RBO-horizontall-scaling-16-partitions-d} 
+	\end{subfigure} 
+	\caption{Assessing the Recommendation quality with RBO when scaling horizontally. The \emph{p} parameter is set to 0.9, which gives the first ten results 86\% of the weight in the similarity comparison.}
+	\label{fig:RBO-horizontall-scaling} 
 \end{figure}

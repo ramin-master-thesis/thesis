@@ -1,7 +1,7 @@
 \begin{tikzpicture}
 	\begin{axis}[
 			xlabel=K,
-			ylabel=MAP,
+			ylabel=RBO,
 			width=7cm,height=7cm,
 			xmin=0,xmax=10.5,
 			xtick distance=1,
@@ -19,7 +19,7 @@
             mark=*,
             mark options={solid},
 		]
-		table [x=k, y index=0] {recommendation/16-partitions.dat};
+		table [x=k, y index=0] {appendix/2-partitions.dat};
         \addlegendentry{Single Partition}
 
         \addplot[
@@ -27,7 +27,7 @@
             mark=x,
             mark options={solid},
 		]
-		table [x=k, y index=1] {recommendation/16-partitions.dat};
+		table [x=k, y index=1] {appendix/2-partitions.dat};
         \addlegendentry{Murmur2 Union Results}
 
         \addplot[
@@ -35,7 +35,7 @@
             mark=+,
             mark options={solid},
 		]
-		table [x=k, y index=2] {recommendation/16-partitions.dat};		    
+		table [x=k, y index=2] {appendix/2-partitions.dat};		    
 		\addlegendentry{StarSpace Most Interactions}
 	\end{axis}
 \end{tikzpicture}
