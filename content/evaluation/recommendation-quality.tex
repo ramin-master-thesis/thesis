@@ -182,6 +182,9 @@ The results of the evaluations are illustrated on the plots in figure \ref{fig:h
 
 In the original paper of GraphJet, the authors keep a bipartite graph with $10^9$ edges on a machine with 30GB memory \cite{sharmaGraphJetRealtimeContent2016}. Distributing this amount of interactions among their edges on 16 devices or more can help reduce the memory needed for maintaining the bipartite graph on a single machine and help to improve the computation speed of the random walk algorithm. These improvements are penalized by the recommendation quality, but I believe that, in general, the recommendation quality has not reduced so drastically.
 
+
+\todo{Add how much percent of the data is chosen from which partition with most interactions}
+
 \begin{figure}[!ht]
 	\centering
 	\begin{subfigure}[b]{0.5\linewidth}
