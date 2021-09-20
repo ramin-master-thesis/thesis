@@ -47,17 +47,17 @@ The algorithm \ref{alg:star-space-train-data} explains how the data generation p
     \Output{Train data in a text file }
     \SetAlgoLined
 
-    \BlankLine\emph{//initialization}\BlankLine
+    \BlankLine\emph{// Initialization}\BlankLine
     \allIDs $\leftarrow$ \getAllRightIndexKeys{}\;
 
     \BlankLine
 
     \ForEach{identifier $\id$ in $\allIDs$}
     {
-        \emph{//Start the random walk from the right index side with node-ID id}\;
+        \emph{// Start the random walk from the right index side with node-ID id}\;
         \listRecommendations $\leftarrow$ \getRelevantIDs{\id}\;
         \BlankLine
-        \emph{//Append the initial id to the results at the beginign of the resutls}\;
+        \emph{// Append the initial id to the results at the beginning of the results}\;
         \listRecommendations.insert(0, \id)\;
         \BlankLine
         \listContent $\leftarrow$ \getContentOf{\listRecommendations}\;
@@ -69,7 +69,7 @@ The algorithm \ref{alg:star-space-train-data} explains how the data generation p
 \end{algorithm}
 
 
-To illustrate how well the SALSA algorithm generates relevant tweets, take a look at the table \ref{tab:example-train-data}. This table presents the recommendations generated from a tweet from the \emph{SpaceX} Twitter account with the following content: "Live views of Starship SN8’s flight test -> https://t.co/Hs5C53qBxb https://t.co/OvAloTO6UQ". By observing the results, you can see how diverse the content of these tweets is. One result contains chemical equations, and another one agrees with Elon Musk. Thus, the topic of the initial tweet is somehow relevant to the output tweets.
+To illustrate how well the SALSA algorithm generates relevant tweets, take a look at the table \ref{tab:example-train-data}. This table presents the recommendations generated from a tweet from the \emph{SpaceX} Twitter account with the following content: \texttt{"Live views of Starship SN8’s flight test -> https://t.co/Hs5C53qBxb https://t.co/OvAloTO6UQ"}. By observing the results, you can see how diverse the content of these tweets is. One result contains chemical equations, and another one agrees with Elon Musk. Thus, the topic of the initial tweet is somehow relevant to the output tweets.
 
 \begin{table}[!ht]
     \centering

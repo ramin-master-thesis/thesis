@@ -1,7 +1,9 @@
 \section{Embeddings}
 \label{sec:embeddigns}
-Latent text representations, or embeddings, are representations of words or documents as vectors, traditionally learned in an unsupervised way over large corpora. Research on neural embeddings in this domain includes \cite{bengioNeuralProbabilisticLanguage2003}, 
-\cite{collobertNaturalLanguageProcessing2011}, \emph{word2vec} \cite{goldbergWord2vecExplainedDeriving2014}, \emph{fastText} \cite{joulinFastTextZipCompressing2016}, and \emph{BERT} \cite{devlinBERTPretrainingDeep2019}.
+Latent text representations, or embeddings, are representations of words or documents as vectors, traditionally learned in an unsupervised way over large corpora. It is possible to use these embedding tools to convert the document data of this work into verctors. 
+
+Research on neural embeddings in this domain includes \cite{bengioNeuralProbabilisticLanguage2003}, 
+\cite{collobertNaturalLanguageProcessing2011}, \emph{word2vec} \cite{goldbergWord2vecExplainedDeriving2014}, \emph{fastText} \cite{joulinFastTextZipCompressing2016}, and \emph{BERT} \cite{devlinBERTPretrainingDeep2019}. Compared to the other researchs, StarSpace embedding model represents the document vectors by their similarites to the documents it was trained with. It also out performs its predecessor \emph{fastText} \cite{wuStarSpaceEmbedAll2017a}. In the following this embedding model is explained in more details.
 
 \subsection{StarSpace}
 \label{subsec:StarSpace}
@@ -28,7 +30,7 @@ The text normalization process categorizes long strings into the following bucke
     \item Mixed letters and numbers (e.g., product ID): All the letters get case-flattened, and numbers are not changed.
 \end{enumerate}
 
-\subsection{Dimension Reduction}
+\subsection{Dimensionality reduction}
 \label{subsec:dimension-reduction}
 The output vector of the embedding model has enormous dimensions. The dimensions can go up to 300. They are different approaches to reduce the dimension and at the same time minimize the information loss. The dimension reduction in this thesis relies on a dimensionality reduction method called \emph{Prenciple Component Analysis (PCA)} \cite{woldPrincipalComponentAnalysis}.
 

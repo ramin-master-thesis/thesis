@@ -18,13 +18,13 @@ The following subsection explains collaborative filtering recommender systems an
 \subsection{Collaborative Filtering}
 \label{subsec:collaborative-filtering}
 
-Recommendations can be generated based on shared interests, correlated activities, topological configurations, and many other signals.
+Recommendations can be generated based on shared interests, correlated activities, topological configurations, and other signals.
 
 \emph{Collaborative filtering (CF)} term, which was first proposed in \cite{goldbergUsingCollaborativeFiltering1992} means that the users in a system collaborate to perform filtering by interacting with documents and record their reactions.
 In CF scenarios, the system has only access to the user and item identifiers, and no additional information over items or users is used.
 Examples of recommender systems that use collaborative filtering are: Google news recommender \cite{dasGoogleNewsPersonalization2007}, Amazon recommendation system \cite{lindenAmazonComRecommendations2003}, Pixie \cite{eksombatchaiPixieSystemRecommending2018}, and GraphJet \cite{sharmaGraphJetRealtimeContent2016}.
 
-Image a document recommender system, recommending similar documents to the users. In a typical CF scenario there is set of \emph{m} users \{\emph{$u_{1}$,$u_{2}$,...,$u_{m}$}\} and set of \emph{n} documents \{\emph{$d_{1}$,$d_{2}$,...,$d_{n}$}\}, and each user, \emph{$u_{i}$}, has a list of documents, \emph{D$u_{i}$}, which the user has interacted with. Similar to the first user there is a list of documents for user \emph{$u_{j}$}. If the intersection between the document list of these both users is not empty, these users can be considered "similar" to each other. Therefore, if user \emph{$u_{i}$} interacts with a document, \emph{$d_{i}$}, which the user \emph{D$u_{j}$} has not interacted with yet. Document \emph{$d_{i}$} can be recommended to the user \emph{$u_{j}$}. This can be seen in figure \ref{fig:collaborative-filtering}.
+Image a document recommender system, recommending similar documents to the users. In a typical CF scenario there is set of \emph{m} users \{\emph{$u_{1}$,$u_{2}$,...,$u_{m}$}\} and set of \emph{n} documents \{\emph{$d_{1}$,$d_{2}$,...,$d_{n}$}\}, and each user, \emph{$u_{i}$}, has a list of documents, \emph{D$u_{i}$}, which the user has interacted with. Similar to the first user there is a list of documents for user \emph{$u_{j}$}. If the intersection between the document list of these both users is not empty, these users can be considered "similar" to each other. Therefore, if user \emph{$u_{i}$} interacts with document \emph{$d_{i}$} (which the user \emph{$u_{j}$} has not interacted with yet) this document becomes a recommendation potential for the user \emph{$u_{j}$}. This can be seen in figure \ref{fig:collaborative-filtering}.
 In \cite{suSurveyCollaborativeFiltering} the different techniques used to implement CF systems are explained in detail. Moreover, they discuss multiple evaluation metrics to assess the recommendation quality.
 
 
@@ -45,7 +45,7 @@ One of the key challenges when developing or enhancing a recommendation engine i
 The ranked list of the main recommendation engine is called \emph{objective ranking} (also called \emph{golden standard}), and after the changes are applied to the recommendation engine, the new generated ranked list is defined as \emph{observed ranking}. These two lists are assessed against each other later during the evaluation.
 
 
-According to \cite{webberSimilarityMeasureIndefinite2010} when comparing the golden standard with the newly generated observed ranking, the rank similarity measures can be broken down into four main groups. These measures are grouped as not-weighted (set-based) or weighted (ordered) and may need conjointness or disjoint rankings. Each of these terms is defined as follow: 
+According to \cite{webberSimilarityMeasureIndefinite2010} when comparing the golden standard with the newly generated observed ranking, the rank similarity measures can be broken down into four main groups. These measures are grouped as not-weighted (set-based) or weighted (ordered) and may need conjointness or disjoint rankings. Each of these terms is defined as follows: 
 
 \begin{description}
     \item \emph{conjoint} Both of the ranked lists consisting of the same items.
@@ -54,7 +54,7 @@ According to \cite{webberSimilarityMeasureIndefinite2010} when comparing the gol
     \item \emph{not-weighted (set-based)} There is no known or inferred ordering of the items.
 \end{description}
 
-This section introduces the evaluation metrics listed in the table \ref{tab:evaluation-metrics}. For more metrics for evaluating collaborative filtering recommender system, please refer to \cite{herlockerEvaluatingCollaborativeFiltering2004}.
+This section introduces the evaluation metrics listed in the table \ref{tab:evaluation-metrics}. For more metrics for evaluating collaborative filtering recommender system please refer to \cite{herlockerEvaluatingCollaborativeFiltering2004}.
 
 \begin{table}[!ht]
     \centering
@@ -74,10 +74,10 @@ This section introduces the evaluation metrics listed in the table \ref{tab:eval
 The \emph{retrieval effectiveness} is the system's ability to collect relevant documents while at the same time concealing the retrieval of non-relevant documents. 
 The most well-known pair of metrics that together measure retrieval effectiveness is \emph{precision and recall}.
 
-\paragraph*{Precision} is the proportion of the retrieved relevant documents. The formal definition of percision:
+\paragraph*{Precision} is the proportion of the retrieved relevant documents. The formal definition of precision:
 \begin{equation}
-    percision = \frac{|\emph{\{relevant document\}} \cap \emph{\{retrieved documents\}}|}{|\emph{\{retrieved documents\}}|}
-    \label{eq:percision}
+    precision = \frac{|\emph{\{relevant document\}} \cap \emph{\{retrieved documents\}}|}{|\emph{\{retrieved documents\}}|}
+    \label{eq:precision}
 \end{equation}
 
 
@@ -105,7 +105,7 @@ The mathematical equation of average precision at cut-off \emph{k}:
 where \emph{k} is the rank in the sequence of retrieved documents, \emph{m} is the number of relevant documents, \emph{P(k)} is the precision at cut-off \emph{k} in the list. \emph{rel(k)}
 is an indicator function equaling 1 if the item at rank \emph{k} is a relevant document, zero otherwise.
 
-Tables \ref{tab:apk-example} shows two ranked lists (objective, observed) of movie recommendations. If we consider all the results of the objective rankings as relevant, then the AP@5 for the observed ranking is calculated as follow:
+Tables \ref{tab:apk-example} shows two ranked lists (objective, observed) of movie recommendations. If we consider all the results of the objective rankings as relevant, then the AP@5 for the observed ranking is calculated as follows:
 
 AP@5=$\frac{1}{5}$$\times$(1$\times$1 + 1$\times$$\frac{2}{2}$ + 1$\times$$\frac{3}{3}$ + 1$\times$$\frac{4}{4}$ + 0$\times$$\frac{0}{5}$) = $\frac{4}{5}$ = 0.80
 
@@ -152,18 +152,18 @@ Where \emph{U} is the number of queries.
 
 AP@K and MAP@K can evaluate disjoint and not-weighted ranking lists. This means the gold standard and the observed rankings contain different items, and the order of these items does not matter.
 
-As an example of this drawback, take a look at table \ref{tab:apk-example} the AP@4 in this example is 1, although the order and ranking of the results in the observed ranking list are not the same as the objective ranking list.
+Table \ref{tab:apk-example} shows this drawback with an example. The AP@4 in this example is 1, although the order and ranking of the results in the observed ranking list are not the same as the objective ranking list.
 
 \subsubsection{Normalized Discounted Cumulative Gain (NDCG)}
 \label{subsubsection:cg-dcg-ndcg}
-When examining the ranked result list, highly relevant items (i.e., documents) are valuable to the user than less relevant ones. In other words, the higher the rank position of a relevant item, the less valuable it gets for the user. The authors of \cite{jarvelinCumulatedGainbasedEvaluation2002} define \emph{Cumulative Gain (CG)} and \emph{Discounted Cumulative Gain(DCG)} as follow: This metric measures the cumulative gain the user obtains by examining the retrieval result up to a given ranked position. 
+When examining the ranked result list, highly relevant items (i.e., documents) are more valuable to the user than less relevant ones. In other words, the higher the rank position of a relevant item, the less valuable it gets for the user. The authors of \cite{jarvelinCumulatedGainbasedEvaluation2002} define \emph{Cumulative Gain (CG)} and \emph{Discounted Cumulative Gain(DCG)} as follows: This metric measures the cumulative gain the user obtains by examining the retrieval result up to a given ranked position. 
 
 
-CG also uses a so-called \emph{relevance score} for its computation. A relevance score is a number determining how relevant an item is. This score depends on the ranking and scoring algorithm of the system. For example, the relevance score can be defined as a boolean score, hit number, or self-defined rankings. In the boolean score, the relevance score is either zero or one. The hit number used in an algorithm like SALSA \cite{lempelSALSAStochasticApproach2001} is the count visit of each item. The resulting ranked list is ordered descending base on the hit number of each item. Self-defined scores are numbers determining the relevancy of each item. For example, a recommender system could only score items based on three numbers: items with a score of zero are not relevant at all, items with a score of one or two are somewhat relevant, and items with a score of three are highly relevant for the user. This work uses the idea behind the relevancy score to generate self-defined scores for the baseline results. For more details pleaser refer to section \ref{sec:evaluation-pipeline}.
+CG also uses a so-called \emph{relevance score} for its computation. A relevance score is a number determining how relevant an item is. This score depends on the ranking and scoring algorithm of the system. For example, the relevance score can be defined as a boolean score, hit number, or self-defined rankings. In the boolean score, the relevance score is either zero or one. The hit number used in an algorithm like SALSA \cite{lempelSALSAStochasticApproach2001} is the count visit of each item. The resulting ranked list is sorted in descending order based on the hit number of each item. Self-defined scores are numbers determining the relevancy of each item. For example, a recommender system could only score items based on three numbers: items with a score of zero are not relevant, items with a score of one or two are somewhat relevant, and items with a score of three are highly relevant for the user. This work uses the idea behind the relevance score to generate self-defined scores for the baseline results. For more details pleaser refer to section \ref{sec:evaluation-pipeline}.
 
 
 \paragraph*{Cumulative Gain (CG)}
-is the sum of the relevance scores (i.e. hit count) of a all items in a ranked list. Mathematically defined as follow:
+is the sum of the relevance scores (i.e., hit count) of all items in a ranked list. Mathematically defined as follows:
 
 \begin{equation}
     CG_p = \sum_{i=1}^{p}rel_i
@@ -171,7 +171,7 @@ is the sum of the relevance scores (i.e. hit count) of a all items in a ranked l
 \end{equation}
 The cumulative gain can be calculated at the rank position \emph{p}, \emph{$rel_i$} is the relevance score of the result item at position \emph{i}.
 
-CG does not consider the ranking of the result list. For example the two relave score list: rel\_score\_a = [0, 1, 4, 0, 3] and rel\_score\_b = [4, 3, 1, 0, 0]. The CG of both of these lists is 8, but it is obvious that the \emph{rel\_score\_b} has a better order of the relevant items. \emph{Discounted Cumulative Gain(DCG)} overcomes this problem.
+CG does not consider the ranking of the result list. For example the two relative score list: rel\_score\_a = [0, 1, 4, 0, 3] and rel\_score\_b = [4, 3, 1, 0, 0]. The CG of both of these lists is 8, but it is obvious that the \emph{rel\_score\_b} has a better order of the relevant items. \emph{Discounted Cumulative Gain(DCG)} overcomes this problem.
 
 \paragraph*{Discounted Cumulative Gain(DCG)}
 uses a logarithmic proportional reduction as a penalty for items that appear later in the result list. This can be Mathematically written as:
@@ -186,7 +186,7 @@ Considering the example before, the DCG of \emph{rel\_score\_a} would be 10.838 
 One issue that arises with DCG is when comparing the results of different queries vary in length. \emph{Normalized Discounted Cumulative Gain (NDCG)} solves this issue by normalizing the cumulative gain at each position for a chosen value of \emph{p}.
 
 \paragraph*{Normalized Discounted Cumulative Gain (NDCG)} 
-produces the maximum possible DCG through position \emph{p} by soritig all items in the list according through their relative score. NDCG is computet as follow:
+produces the maximum possible DCG through position \emph{p} by sorting all items in the list according to their relative score. NDCG is computed as follows:
 
 \begin{equation}
     NDCG_p = \frac{DCG_p}{IDCG_p}
@@ -200,7 +200,7 @@ IDCG is the \emph{Ideal Discounted Cumulative Gain} and is mathematically define
     \label{eq:idcg}
 \end{equation}
 
-Where \emph{$REL_p$} indicates the ordered relevant documents by their relevance up to position \emph{p}. NDCG results in a range between zero to one. If NDCG is equal to one, IDCG is the same as DCG and represents a perfect score. The NDCG values can be averaged over all the requested queries to obtain the averaged performance of the recommender system.
+Where \emph{$REL_p$} indicates the ordered relevant documents by their relevance up to position \emph{p}. NDCG falls in a range between zero to one. If NDCG is equal to one, IDCG is the same as DCG and represents a perfect score. The NDCG values can be averaged over all the requested queries to obtain the averaged performance of the recommender system.
 
 
 Although NDCG is a good metric for comparing weighted ranked lists, it fails to determine the ranking quality of disjoint lists. For example, consider two result lists with the score of 3,2,1 and 3,2,1,0 respectively. Both of these lists will have the same score. Another issue with disjoint ranked lists arises when different items appear in both lists. Consider the two lists with the score of 3,2,1 and 3,2,1,1 respectively. Both of these lists are denoted as perfectly equal.
@@ -236,14 +236,17 @@ RBO between the two lists \emph{S} and \emph{T} can be calculated using:
 \end{equation}
 
 
-The result is in the range of [0, 1], where zero means disjoint, and one means identical. \emph{d} is the depth of the rankings being examined, falls in the range of [1, $\infty$]. The tunable parameter \emph{p} determines how steep the decline in weights is. If \emph{p} reaches zero, the more top-weighted the metric gets. In the limit, when p = 0, only the top-ranked item is considered, and the RBO score is either zero or one. The weights get flattened when \emph{p} approaches 1.
+The result is in the range of [0, 1], where zero means disjoint, and one means identical. \emph{d} is the depth of the rankings being examined, falls in the range of [1, $\infty$]. The tunable parameter \emph{p} determines how steep the decline in weights is. If \emph{p} reaches zero, the more top-weighted the metric gets. When p = 0, only the top-ranked item is considered, and the RBO score is either zero or one. The weights get flattened when \emph{p} approaches 1.
 
 
 \subsubsection{A/B testing}
 \label{subsubsec:ab-testing}
 \emph{A/B testing} also known as \emph{split testing} is a user experience methodology of comparing two versions of a single variable, A and B. Statical analysis is used to ascertain which variation is performing better for a conventional goal.
 
-When doing A/B testing of recommendation systems, the experiments fall into three main categories: First, the recommendation algorithm (i.e., new rankings, data fusion, recommendation parameters). The second would be the distribution of a system (i.e., how many instances one system is running)—lastly, showing recommendations only to a specific group of users under test. We can create different test scenarios based on these three categories where system A is assessed against system B. By running each scenario, the feedback data is gathered and statically analyzed to determine if the newly added changes improved the recommendation quality or not.
+When adding new features and maintaining a recommender system, the main changes fall into two categories: First, the recommendation algorithm like new ranking computation approaches, data fusion, or just changing the recommendation parameters. The second would be the distribution of a system and how the partitioning of the data would affect the results. 
+
+
+After the changes are applied to the system, a group of randomly chosen users interacts with system A (i.e., the current recommender system in production), and another group of users interacts with system B (i.e., the system with the newest modifications). The feedback data of each users group is gathered and statically analyzed to determine if the newly added changes improve the recommendation system or not.
 
 In works like WTF (Who To Follow) \cite{guptaWTFWhoFollow} the authors use online A/B testing to evaluate the system in production condition exclusively. This method is also used to assess Pinterest recommendation system Pixie. The authors could determine a 50\% increase of pin engagement compared to the previous recommendations systems they used before \cite{eksombatchaiPixieSystemRecommending2018}.
 
@@ -260,10 +263,10 @@ Single instance recommender systems take a query as their input and produce a si
 
 
 \begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.75\textwidth]{images/simple-formulation-schema}
-	\caption{A simple recommendation system with a formulation and schema step. The query is sent directy to the schema \emph{S}.The formulation step \emph{F} (represented in gray) is skiped since user-ID the does not need to get normalized.}
-	\label{fig:data-fusion-simple}
+    \centering
+    \includegraphics[width=0.90\textwidth]{images/simple-formulation-schema}
+    \caption{A simple recommendation system with a formulation and schema step. The query is sent directy to the schema \emph{S}.The formulation step \emph{F} (represented in gray) is skiped since user-ID the does not need to get normalized.}
+    \label{fig:data-fusion-simple}
 \end{figure}
 
 

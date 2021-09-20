@@ -1,6 +1,9 @@
 \section{Graph Embeddign and Partitioning Techniques}
 \label{sec:graph-partitioning-techniques}
-Graph embedding is an approach that transforms nodes, edges into vector spaces. Graph embedding frameworks use approaches to turn the graph into a computationally digestible format by reducing the dimensionality of the graph. The embedding of a graph can be used in different fields \cite{goyalGraphEmbeddingTechniques2018}, namely : 
+StarSpace embedding model predicts the vector for a given document. Moreover, this research studies the partitioning of the maintained bipartite graph by GraphJet. \emph{Graph Embedding} are related techniques and worth discussing.
+
+
+Graph embedding is an approach that transforms nodes, edges into vector spaces. Graph embedding frameworks use strategies to turn the graph into a computationally digestible format by reducing the dimensionality of the graph. The embedding of a graph can be used in different fields \cite{goyalGraphEmbeddingTechniques2018}, namely : 
 
 \begin{enumerate}
     \item Node classification
@@ -25,8 +28,7 @@ Factorization-based methods determine the connections between the nodes in a mat
 Random walk-based approaches generate embedding based on the similarity between the nodes. Embeddign techniques like \emph{Deep Walk} \cite{perozziDeepWalkOnlineLearning2014} and \emph{node2vec} \cite{groverNode2vecScalableFeature2016} are used for graph representation.
 
 
-More recent approaches like \cite{satuluriSimClustersCommunityBasedRepresentations2020a} present a technique called \emph{Simclusters}. Instead of matrix factorization methods, the authors rely on a combination of similarity search
-and community discovery. The authors discuss that the calculation of the matrix factorization is not optimized for a massive scale. To solve many personalization and recommendation problems at scale, the authors propose a novel method to detect similar communities between users from the user-user bipartite graph.
+More recent approaches like \cite{satuluriSimClustersCommunityBasedRepresentations2020a} present a technique called \emph{Simclusters}. Instead of matrix factorization methods, the authors rely on a combination of similarity search and community discovery. The authors discuss that the calculation of the matrix factorization is not optimized for a massive scale. The authors propose a novel method to detect similar communities between users from the user-user bipartite graph to solve many personalization and recommendation problems at scale.
 
 
 Recently deep learning has achieved great success in many classification applications. This can also be extended to graph classification and clustering. In \cite{tianLearningDeepRepresentations2014} they apply deep learning to learn the embeddings and run a \emph{k}-mean algorithm on the embedding to create the clusters. The semi-supervised node classification method proposed in \cite{kipfSemiSupervisedClassificationGraph2017} uses Graph convolutional networks (GCN) model to tackle this problem. 
@@ -34,4 +36,4 @@ Recently deep learning has achieved great success in many classification applica
 Hybrid approaches introduced in \cite{yingGraphConvolutionalNeural2018}, called \emph{PinSage}. PinSage is an efficient random walk approach combined with graph convolutional neural networks (GCN) to generate embeddings of nodes.
 
 
-The learnings from PinSage and Simclusters lead me to adopt an embedding model like StarSpace (explained in subsection \ref{subsec:StarSpace}) to classify the nodes. The training data will be generated with the random walk algorithm SALSA (described in subsection \ref{subsec:GraphJet-Recommendation-Engine}). I believe this approach can develop more personalized recommendations for the users.
+The learnings from PinSage and Simclusters lead to the use of a hybrid method, combining GraphJet's SALSA algorithm with StarSpace. Rather than using a new random-walk approach of the discussed graph embedding techniques, the GraphJet recommendation layer already implements a random-walk algorithm (SALSA). This thesis leverages this algorithm to generate similar documents (i.e., tweets) to each other. The StarSpace model reads the generated documents and trains on them. With this approach, the StarSpace model can predict newly incoming documents vectors. By reducing the dimensions of these vectors, we can classify similar documents with each other and send them to a partition. 
