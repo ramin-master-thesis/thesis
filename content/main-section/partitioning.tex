@@ -1,6 +1,6 @@
 \section{Partitioning}
 \label{sec:partitioning}
-The partitioning module (i.e., partitioner) is one of the key modules of this thesis. This module is responsible for distributing the data over multiple partitions based on the hash function it implements. The partitioning module provides an abstract class. The user inherits from this abstract class and then implements its segmentation logic. 
+The partitioning module (i.e., partitioner) is one of the key modules of this thesis. This module is responsible for distributing the data over multiple partitions based on the partitioning method it implements. The partitioning module provides an abstract class. The user inherits from this abstract class and then implements its segmentation logic. 
 
 
 Figure \ref{fig:partitioner-uml} indicates the UML diagram of the partitioning module. The base class provides two fields, namely: \emph{name}, and \emph{paritition\_count}. The \emph{name} field denotes the name of the partitioning method (i.e., hash function name). The \emph{paritition\_count} tells the partitioner how many partitions exist in the cluster. This number is used during partition time to equidistant the range of the hash values. The \emph{calculate\_partition} function takes a value (i.e., data entity), either the document id or the content of a document, and returns the partition-ID of the value. The partition-ID indicates on which partition this entity should land. This research implements the base class for two partitioners:
@@ -12,9 +12,9 @@ Figure \ref{fig:partitioner-uml} indicates the UML diagram of the partitioning m
 
 \noindent In the following sections, each partitioning method is explained in detail.
 
-\begin{figure}[!ht]
+\begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.75\textwidth]{images/partitioner-UML}
+    \includegraphics[width=0.9\textwidth]{images/partitioner-UML}
     \caption{Class diagram of the partition module. Containing a \emph{PartitionBase} abstract class and two implementation of this class: \emph{Murmur2Partition} and \emph{StarSpacePartition}}
     \label{fig:partitioner-uml}
 \end{figure}
@@ -31,27 +31,32 @@ The \emph{Murmur2Partition} class takes the document-ID as an input and computes
 This thesis uses another partitioner to distribute the data based on their content, namely \emph{StarSpacePartition}. Compared to the \emph{Murmur2Partition} class, this partitioner takes the content of the document and returns the partition-ID.
 
 
-During the initialization of the \emph{StarSpacePartition} class, the pre-trained StarSpace model is loaded in the memory along with the projection matrix. The StarSpace model is responsible for predicting the embedding vector of the incoming documents in the embedding space it was trained. As explained in the sub-sub section \ref{subsubsec:pca}, the projection matrix is used to reduce the dimensions of the predicted embedding vector through a dot production. For more information on how the model is trained and how the projection matrix is calculated, please refer to the section \ref{sec:model-training}.
+During the initialization of the \emph{StarSpacePartition} class, the pre-trained StarSpace model is loaded in the memory along with the projection matrix. The StarSpace model is responsible for predicting the embedding vector of the incoming documents in the embedding space it was trained. As explained in the section \ref{subsubsec:pca}, the projection matrix is used to reduce the dimensions of the predicted embedding vector. This transformation is achived by a dot production between the multi-dimensional vector and the projection matrix. For more information on how the model is trained and how the projection matrix is calculated, please refer to the section \ref{sec:model-training}.
 
 
-Figure \ref{fig:star-space-partitioning-process} demonstrates the partitioning process of the incoming data on four partitions (i.e., instances). Four partitions mean that the dimension of the embedding vector produced by StarSpace needs to be reduced to at least two dimensions. Since with two dimensions (i.e., bit), we are able to represent four partition-IDs. Respectively, for two partitions, the embedding vector needs at least one dimension. After the high dimensional embedding vector got reduced to two dimensions, the system converts the numbers depending on if they are positive or negative into bits. For example, if the dimensionally reduced vector of a document is [-3.75, 2.14], this will be converted to [0, 1], which represents the number one, and the following document will land on partition number one.
+To illustrate the partitioning method, consider the following scenario: Four partitions are runnings and the StarSpace model is loaded with its pre calculated projection matrix. Figure \ref{fig:star-space-partitioning-process} visualizes this scenrio. 
+
+Each of the partitions can be projected on a two-dimensional space. Figure \ref{fig:embedding-space} illustrates a Cartesian coordinate plane. Each dot illustrates a document on a partition. This study assumes that each quadrant, represents a partition in this space. Therefore, when document vector representation contains two positive number it will land on partition zero. It is possible to spread a quadrant into two sub partitions as well. Each sub partition will then contain documents within a specific range of vector values.
 
 
-\begin{figure}[!ht]
+Four partitions mean that the dimension of the embedding vector produced by StarSpace needs to be reduced to at least two dimensions. Since with two dimensions (i.e., bit), we are able to represent four partition-IDs. Respectively, for two partitions, the embedding vector needs at least one dimension. After the high dimensional embedding vector got reduced to two dimensions, the system converts the numbers depending on if they are positive or negative into bits. For example, if the dimensionally reduced vector of a document is [-3.75, 2.14], this will be converted to [0, 1], which represents the number one, and the following document will land on partition number one.
+
+
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=0.85\textwidth]{images/partition-StarSpace}
-    \caption{Partitioning upcoming document using StarSpace}
+    \caption{Partitioning upcoming documents using StarSpace. The embedding vector of the document gets computed by the model. Depending on the number of partitions, the dimensionality of the vectors gets reduced by the projection matrix. According to the range of the reduced vector, we want to spread the data on a partition.}
     \label{fig:star-space-partitioning-process}
 \end{figure}
 
 
-To make this more clear, please look at figure \ref{fig:embedding-space}. This figure represents the data distribution in a two-dimensional space. Each dot illustrates a document on a partition. The documents on each quadrant can be considered "similar" to each other. The intuition here is that StarSpace embedding vectors of "similar" documents would be "near" to each other. Therefore, producing the documents on each partition (i.e., quadrant) would end up having "similar" documents to each other on the same segment.
+The intuition here is that StarSpace embedding vectors of "similar" documents would be "near" to each other. Therefore, producing the documents on each partition (i.e., quadrant) would end up having "similar" documents to each other on the same segment. Whenever the distance between two group of documents enlarges the partition (i.e., quadrant) can be split into two sub-partitions.
 
 
-\begin{figure}[!ht]
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=0.65\textwidth]{images/embedding-2d.png}
-    \caption{Demonstarting each document (as a dot) in a two dimensional space. Each quadrants represents a partition.}
+    \caption{Demonstarting each document (as a dot) in a two dimensional space. Each quadrant represents a partition.}
     \label{fig:embedding-space}
 \end{figure}
 

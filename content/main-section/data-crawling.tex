@@ -1,10 +1,13 @@
 \section{Data Crawling Strategy}
 \label{sec:data-crawling-strategy}
 
-GraphJet maintains a user-tweet bipartite graph. Creating this graph requires a real-world data set. In works like \cite{kwakWhatTwitterSocial2010} the authors study a massive dataset of tweets that they crawled. Twitter provides several APIs to access a variety of resources like tweets, users, and timelines. However, the Twitter API comes with its limitations. Twitter allows only sending 900 requests over any 15-minute interval\footnote{\url{https://developer.twitter.com/en/docs/twitter-api/rate-limits}}. 
+GraphJet is developed at Tweeter to create real-time recommendations for a given user. GraphJet maintains a (user-tweet) bipartite graph in memory and traverses this graph to produce the recommendations. This study reaches the partitioning of the bipartite graph on multiple instances. Therefore, the single instances graph needs to be so massive that it can be sharded into multiple subgraphs. An enormous dataset is required in order to create such a dense graph.
 
 
-This thesis uses an open-source Twitter crawler\footnote{\url{https://github.com/philipphager/twitter-crawler}} to gather data. The crawler uses multiple crawl processes in parallel with different API keys to make requests. Starting multiple crawling processes in parallel overcomes the API limitation of Twitter. Ten crawling processes were used to speed up the crawling by a factor of 10. 
+Twitter is a massive document data source where users write and post tweets. In works like \cite{kwakWhatTwitterSocial2010} the authors study a massive dataset of tweets that they crawled. Twitter offers an Application Programming Interface (API) that is easy to crawl and collect data. However, the Twitter API comes with its limitations. Twitter allows only sending 900 requests over any 15-minute interval\footnote{\url{https://developer.twitter.com/en/docs/twitter-api/rate-limits}}. 
+
+
+This thesis uses an open-source Twitter crawler\footnote{\url{https://github.com/philipphager/twitter-crawler}} to gather data. The crawler uses multiple crawl processes in parallel with different API keys to make requests. Despite the API limitations, the overall crawling process will not stop and continuously gather data from each started process.
 
 
 At first, the crawler could only crawl user-ID, tweet-ID, and user-tweet interaction types (tweet, like, and retweet). This work extended the Twitter crawler. The extension also gathers the content of each tweet to the dataset. 
@@ -19,28 +22,28 @@ The authors of \cite{kwakWhatTwitterSocial2010} use different methods to clean t
 The StarSpace model needs a training dataset to train the model and a test dataset to evaluate the system. For a better evaluation quality, these two datasets should be different from each other. Therefore the crawling process was started two times in different periods. The training dataset was crawled between March 1st to March 5st. For the test dataset, the crawling started from March 10th to March 15st. Details of each dataset are shown in the tables \ref{tab:dataset}. These interactions between the users and tweets create the edges when generating the bipartite graph.
 
 \begin{table}[!ht]
-	\caption{Dataset specification}
-	\label{tab:dataset}
-	\begin{subtable}{.5\linewidth}
-		\caption{Training Dataset}
-		\centering
+    \caption{Dataset specification}
+    \label{tab:dataset}
+    \begin{subtable}{.5\linewidth}
+        \caption{Training Dataset}
+        \centering
         \begin{tabular}{|l|c|r|m{0.4\linewidth}|}
             \hline
             \textbf{Interactions} & \textbf{Users} & \textbf{Tweets} \\
             \hline
-            9,360,562 & 2,200,377 & 3,151,992	\\
+            9,360,562 & 2,200,377 & 3,151,992   \\
             \hline
         \end{tabular}
-	\end{subtable}%
-	\begin{subtable}{.5\linewidth}
-		\caption{Test Dataset}
-		\centering
+    \end{subtable}%
+    \begin{subtable}{.5\linewidth}
+        \caption{Test Dataset}
+        \centering
         \begin{tabular}{|l|c|r|m{0.4\linewidth}|}
             \hline
             \textbf{Interactions} & \textbf{Users} & \textbf{Tweets} \\
             \hline
-            11,884,898 & 3,545,044 & 3,439,934	\\
+            11,884,898 & 3,545,044 & 3,439,934  \\
             \hline
         \end{tabular}
-	\end{subtable}%
+    \end{subtable}%
 \end{table}

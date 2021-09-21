@@ -9,7 +9,7 @@ GraphJet is a suitable use case for the proposed approach in this research: Firs
 This study prototypes a simplified indexing system of GraphJet. The dataset is gathered from Tweeter to create a user-tweet bipartite graph. The main goal is to partition the user-tweet bipartite graph and distribute the GraphJet recommendation system over several machines while obtaining the recommendation of the single instance.
 
 
-Figure \ref{fig:graphJet-architecture} shows the overall architecture of GraphJet, which is divided into three main modules: a storage engine, a recommendation engine, and an API endpoint. The API endpoint receives the requests and forwards them to the recommendation engine. Afterward, the recommendation engine runs an algorithm called SALSA \cite{lempelSALSAStochasticApproach2001} on the bipartite graph, which the storage engine maintains. Finally, the resulting recommendations are sent back to the requesting user. In the following, we describe each module in more depth. 
+Figure \ref{fig:graphJet-architecture} shows the overall architecture of GraphJet, which is divided into three main modules: a storage engine, a recommendation engine, and an API endpoint. The API endpoint receives the requests and forwards them to the recommendation engine. Afterwards, the recommendation engine runs an algorithm called SALSA \cite{lempelSALSAStochasticApproach2001} on the bipartite graph, which the storage engine maintains. Finally, the resulting recommendations are sent back to the requesting user. In the following, we describe each module in more depth. 
 
 \begin{figure}[!htb]
     \centering

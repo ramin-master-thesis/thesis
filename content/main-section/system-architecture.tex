@@ -4,7 +4,7 @@
 This research implements and simulates the GraphJet architecture to evaluate and test the proposed approach of data partitioning. As explained in section \ref{sec:GraphJet}, GraphJet architecture consists of three main layers: storage, recommendation, and an API endpoint layer. The same layer system inspires this work's architecture. 
 
 
-This section goes through the prototyped system architecture and the design decisions taken. The first subsection explains the single instance architecture and the functionality of each layer. Afterward, the next subsection describes the distributed architecture of the system. The implemented prototype can be found in the repository\footnote{\url{https://github.com/ramin-master-thesis/salsa}}.
+This section goes through the prototyped system architecture and the design decisions taken. The first subsection explains the single instance architecture and the functionality of each layer. Afterwards, the next subsection describes the distributed architecture of the system. The implemented prototype can be found in the repository\footnote{\url{https://github.com/ramin-master-thesis/salsa}}.
 
 
 \subsection{Single Machine}
@@ -14,29 +14,27 @@ The high-level architecture of a single instance can be seen in figure \ref{fig:
 \begin{figure}[!ht]
     \centering
     \begin{subfigure}[b]{0.75\textwidth}
-       \includegraphics[width=1\linewidth]{images/simple-worker.png}
+       \includegraphics[width=1\linewidth]{images/simple-worker}
        \caption{Single machine high level overview}
        \label{fig:single-machine-architecture} 
     \end{subfigure}
     
     \begin{subfigure}[b]{0.8\textwidth}
-       \includegraphics[width=1\linewidth]{images/simple-worker-detailed.png}
+       \includegraphics[width=1\linewidth]{images/simple-worker-detailed}
        \caption{Single machine including each layer}
        \label{fig:single-machine-architecture-detailed}
     \end{subfigure}
     
-    \caption {Architecture of single instance, (a) Receives a user-ID as input query and generates recommendations. (b) More detailed view of each layer of a single worker. The layers consist of: Indexer, Recommender, and API Endpoint.}
+    \caption {The architecture of a single worker, (a) Receives a query when new recommendations are requested. It also ingests incoming documents. (b) More detailed view of each layer of a single worker. The layers consist of: Indexer, Recommender, and API Endpoint. The index layer receives the incoming document and creates the left, right indices. The API endpoint layer receives the read queries.}
 \end{figure}
 
-
-\todo{Add UML Component Diagram of Indexer and Recommender and API Endpoint to see the dependency between the modules}
 
 \subsubsection{Storage Layer}
 \label{subsub:storage-index-layer}
 The storage layer is responsible for maintaining the bipartite graph in memory. A bipartite graph is a graph whose vertices can be split into two disjoint and independent sets U and V such that every edge connects a vertex in U to one in V \cite{skienaImplementingDiscreteMathematics1991}. The two disjoint sets of U and V can be built using two indices. In other words, the bipartite graph consists of two indices: left side index, right side index. For the specific user-tweet bipartite graph, one index stores all tweets for a specific user. The other index stores all users for a particular tweet.
 
 
-GraphJet uses mutable (hot) and immutable (cold) index segments to store the bipartite graph \cite{sharmaGraphJetRealtimeContent2016}. With this approach, GraphJet optimizes newly incoming edge insertion. This research assumes that the system is not receiving any new edges during its runtime. To keep the indexing as simple as possible, a \emph{simple index} system is used. This approach uses a single vertex-ID (i.e., node-ID) as its index key. The index key points to an adjacency list containing the node-IDs that the index key interacts with. Table \ref{tab:simple-indexing} illustrates a small example of this indexing system. The node-ID 5 has interactions with node-IDs 200 and 50. Concretely, the left index of the user-tweet bipartite graph uses the user-IDs as its key and the tweet-IDs as the adjacency list values and vice versa.
+GraphJet uses mutable (hot) and immutable (cold) index segments to store the bipartite graph \cite{sharmaGraphJetRealtimeContent2016}. With this approach, GraphJet optimizes newly incoming edge insertion. This research assumes that the system is not receiving any new edges during its runtime. To keep the indexing as simple as possible, a \emph{simple index} system is used. This approach uses a single vertex-ID (i.e., node-ID) as its index key. The index key points to an adjacency list containing the node-IDs that the index key interacts with. Table \ref{tab:simple-indexing} illustrates a small example of this indexing system. The node-ID 5 has interactions with node-IDs 200 and 50. To summarize, the left index of the user-tweet bipartite graph uses the user-IDs as its key and the tweet-IDs as the adjacency list values and vice versa.
 
 
 This thesis also introduces a third index. The content of the tweets is also crawled and later used for partitioning purposes. An index between the tweet-ID and the content is created to retrieve the content of a given tweet-ID. This index generates a \emph{Content Graph}.
@@ -107,17 +105,28 @@ The API endpoint also interacts with the index layer to gather information. This
 
 \subsection{Multiple Machines}
 \label{subsec:multiple-machines}
-This section explains the multi-instance architecture. Figure \ref{fig:multiple-machine-architecture} shows the high-level architecture of the multi-instance design. Each instance (i.e., worker) consists of a single machine, explained in the previous subsection. Each worker receives an identifier (partition-ID) at deployment time in the cluster. Whenever the instance is running, they load the segmented data they receive from the \emph{partitioner} module. The partitioner module is explained in section \ref{sec:partitioning}. 
+This section explains the multi-instance architecture. Each instance (i.e., worker) consists of a single machine, explained in the previous subsection. Each worker receives an identifier (partition-ID) at deployment time in the cluster. Each data entity gets a partition-ID through the \emph{partitioner} module and lands on the desired partition. Figure \ref{fig:multiple-machine-architecture-write} visualizes this process. The partitioner module is explained in section \ref{sec:partitioning}. After the data is spread across the workers, the system is ready to receive the read queries. 
+
+
+Figure \ref{fig:multiple-machine-architecture-read} shows what happens when a read query is sent. The query (i.e., user-ID) is forwarded to all the workers. If the user-ID exists in the left index of the worker, the worker will start the random-walk algorithm. Each worker then sends their list of recommendations to the \emph{Data Fusion} module. This module, depending on the method chosen(explained in section \ref{sec:data-fusion-approaches}), will then generate a single list of recommendations and yield it to the given user.
 
 
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=1\textwidth]{images/multi-partition-workers.png}
-	\caption{Multiple instance architecture}
-	\label{fig:multiple-machine-architecture}
+\begin{figure}[!htb]
+    \centering
+    \begin{subfigure}[b]{0.75\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{images/multi-partition-workers-write}
+        \caption{Multiple instance environment during write time}
+        \label{fig:multiple-machine-architecture-write}
+    \end{subfigure}
+    
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{images/multi-partition-workers-read}
+        \caption{Multiple instance environment during read time}
+        \label{fig:multiple-machine-architecture-read}
+    \end{subfigure}
+    
+    \caption {The multi-instance environment with three workers. (a) visualizes the partitioning process. Whenever a new document is received, the partitioner will compute its partition-ID and send it to a worker. (b) Showing the multi-instance environment after the data partitioning has finished and the system is ready to receive read queries. Each worker runs the SALSA algorithm in complete isolation and forwards its results to the data fusion module.}
 \end{figure}
-
-
-Each worker's API endpoint module receives the incoming query. Next, the workers check if the requested user-ID exists on the left index side. If so, they compute the recommendations by starting the random SALSA walk. Afterward, the recommendations of each worker are sent to the \emph{data fusion} module, and depending on the method (explained in section \ref{sec:data-fusion-approaches}), a single ranked list gets produced.
-

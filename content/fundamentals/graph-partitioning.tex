@@ -1,6 +1,9 @@
 \section{Graph Embeddign and Partitioning Techniques}
 \label{sec:graph-partitioning-techniques}
-StarSpace embedding model predicts the vector for a given document. Moreover, this research studies the partitioning of the maintained bipartite graph by GraphJet. \emph{Graph Embedding} are related techniques and worth discussing.
+The section \ref{subsec:StarSpace} introduced the embedding model StarSpace. The pre-trained StarSpace model predicts the vector for a given document. Moreover, this research employs StarSpace to partition the maintained bipartite graph by GraphJet on multiple instances. 
+
+
+\emph{Graph Embedding} are related techniques to this thesis that use embedding approaches to partition graphs. This section will define explain in which fields graph embeddings can be used. It then discusses related work and the difference between them.
 
 
 Graph embedding is an approach that transforms nodes, edges into vector spaces. Graph embedding frameworks use strategies to turn the graph into a computationally digestible format by reducing the dimensionality of the graph. The embedding of a graph can be used in different fields \cite{goyalGraphEmbeddingTechniques2018}, namely : 
@@ -36,4 +39,4 @@ Recently deep learning has achieved great success in many classification applica
 Hybrid approaches introduced in \cite{yingGraphConvolutionalNeural2018}, called \emph{PinSage}. PinSage is an efficient random walk approach combined with graph convolutional neural networks (GCN) to generate embeddings of nodes.
 
 
-The learnings from PinSage and Simclusters lead to the use of a hybrid method, combining GraphJet's SALSA algorithm with StarSpace. Rather than using a new random-walk approach of the discussed graph embedding techniques, the GraphJet recommendation layer already implements a random-walk algorithm (SALSA). This thesis leverages this algorithm to generate similar documents (i.e., tweets) to each other. The StarSpace model reads the generated documents and trains on them. With this approach, the StarSpace model can predict newly incoming documents vectors. By reducing the dimensions of these vectors, we can classify similar documents with each other and send them to a partition. 
+The learnings from PinSage and Simclusters lead to the use of a hybrid method, combining GraphJet's SALSA algorithm with StarSpace. Rather than using a new random-walk approach of the discussed graph embedding techniques, we can apply GraphJet's random-walk algorithm (SALSA) to find similar documents (i.e., tweets) to each other. The SALSA algorithm can generate relevant documents for a given user. Finding relevant documents also applies to a given document. In other words, instead of starting from a user's vertex, the random walk initializes the walk from a document and locates similar documents to the starting node. This process continues for all the documents and creates an input file for the StarSpace model. The StarSpace model reads the generated documents and trains on them. With this approach, the StarSpace model can predict newly incoming documents vectors. By reducing the dimensions of these vectors, we can classify similar documents with each other and send them to a partition. 

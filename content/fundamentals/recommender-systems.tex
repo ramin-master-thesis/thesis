@@ -216,7 +216,7 @@ The \emph{Kendall Tau} \cite{kendallNewMeasureRank1938} metric, also known as Ke
 
 The Kendall Tau falls in the range of [-1, +1]. Two lists are considered dissimilar if Kendall Tau is -1 and similar if the tau value is +1. Kendall Tau's calculation requires both ranked lists to be conjoint. This metric is also not weighted, which means that the top results matter the same as the bottom of the list.
 
-To demonstrate these drawbacks, take a look at table \ref{tab:apk-example}. Kendall's Correlation can not be calculated since the items at rank five are different. Even by replacing the fifth element with a special character (e.g., \#) on both lists, the value of $\tau$ would be 1, representing a perfect agreement between the two lists, which is wrong.
+Table \ref{tab:apk-example} demonstrate these drawbacks. Kendall's Correlation can not be calculated since the items at rank five are different. Even by replacing the fifth element with a special character (e.g., \#) on both lists, the value of $\tau$ would be 1, representing a perfect agreement between the two lists, which is wrong.
 
 \subsubsection{Rank-Biased Overlap (RBO)}
 \label{subsubsec:rbo}
@@ -256,7 +256,7 @@ In works like WTF (Who To Follow) \cite{guptaWTFWhoFollow} the authors use onlin
 Data fusion is the process of integrating and merging information gathered by multiple data sources into a single representation (i.e., ranked list) for higher effectiveness. For recommendation systems, this can be combining multiple ranked recommendation lists into a single ranked list. Data fusion approaches vary depending on the system architecture, data sources, and ranking system. A good example is MetaLens \cite{schaferMetarecommendationSystemsUsercontrolled}, a meta-recommendation system gathering information from different sources like Rotten Tomatoes and MovieLens and using them to generate more personalized recommenders.
 
 
-Studies show that data fusion methods in IR systems are complex and depend highly on the system architecture and algorithm used in the system \cite{frankhsuComparingRankScore2005}. In IR systems, especially search engines, the incoming query gets processed in a so-called query \emph{formulation} step. In this step, the incoming query gets tokenized, normalized,  and the stop words are removed. This step transforms the query into a digestible representation for the search engine. Afterward, a \emph{schema} processes the processed query and generates the results. 
+Studies show that data fusion methods in IR systems are complex and depend highly on the system architecture and algorithm used in the system \cite{frankhsuComparingRankScore2005}. In IR systems, especially search engines, the incoming query gets processed in a so-called query \emph{formulation} step. In this step, the incoming query gets tokenized, normalized,  and the stop words are removed. This step transforms the query into a digestible representation for the search engine. s, a \emph{schema} processes the processed query and generates the results. 
 
 
 Single instance recommender systems take a query as their input and produce a single ranked list of recommendations for a user. The incoming query can only be a simple user-ID in recommendation systems and does not need to go through the formulation step. Figure \ref{fig:data-fusion-simple} represents this behaviour.
