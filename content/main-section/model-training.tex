@@ -1,8 +1,17 @@
 \section{Model Training}
 \label{sec:model-training}
-The StarSpace model is trained to predict the embedding vectors of new documents. To train the StarSpace model, train data needed to be generated in a format that the model can consume. As explained in the section \ref{subsec:partitioning-star-space} to calculate the partition-ID, the StarSpace model also needs a projection matrix to reduce the dimensions of the predicted embedding vector. Figure \ref{fig:star-space-training} shows the flowchart of the training and projection matrix calculation process. In the beginning, related documents to each other are generated using the recommendation algorithm. The data is then used to train the model with the configured hyperparameters. After the training process is finished, the projection matrix is calculated and saved for later use. In the following sections, each step of the flowchart \ref{fig:star-space-training} is explained in detail.
+Section \ref{subsec:StarSpace} explained that the StarSpace model learns the mapping between documents it was trained on. We can define "similar" documents to each other for the StarSpace model and train the model based on that data. The trained model then reads the content of newly arrived documents and computes the embedding vector. 
 
-\begin{figure}[!ht]
+
+For example the trained model receives new documents three documents: \emph{D$_1$, D$_2$}, and \emph{D$_3$}. Imagine that the first two documents are related to each other. The trained model calculates the embedding vector of these three documents. Since \emph{D$_1$} and \emph{D$_2$} are similar to each other, their distance in the so-called embedding space would be smaller to each other. Respectively, the \emph{D$_3$} would be distant to two other documents in this space.
+
+
+As explained in the section \ref{subsec:partitioning-star-space} to calculate the partition-ID, the StarSpace model also needs a projection matrix to reduce the dimensions of the predicted embedding vector. Figure \ref{fig:star-space-training} shows the flowchart of the training and projection matrix calculation process.
+
+
+In the beginning, related documents are generated in a format that the StarSpace model can digest. The generated data is then used to train the model with the configured parameters. After the training process is finished, the projection matrix is calculated and saved for later use. In the following sections, each step of the flowchart \ref{fig:star-space-training} is explained in detail.
+
+\begin{figure}[!htb]
     \centering
     \includegraphics[height=0.75\textwidth]{images/train-StarSpace-flow-chart}
     \caption{Flowchart of the training process}
@@ -11,22 +20,18 @@ The StarSpace model is trained to predict the embedding vectors of new documents
 
 \subsection{Generating Training Data}
 \label{subsec:generating-training-data}
-The first step to train the StarSpace model is to generate train data. The train input file that StarSpace takes is a text file and has a specific structure. Each line of the file represents a document. Each document is built with tab-separated sentences. With this format, StarSpace learns the mapping between the sentences and documents and is able to predict the related documents for a given sentence. Moreover, StarSpace would be able to calculate the embedding vector for a given sentence.
+The training data needs to be generated so that "similar" documents (i.e., tweets) to each other would land next to each other in the training file that the StarSpace model consumes. The following will describe the process of how the training data is generated.
+
+The SALSA algorithm can produce relevant recommendations for a given user. Perciecly, for a given node on the left index side, a list of related nodes on the right side index gets produced. The idea of finding relevant documents for a user can be applied to documents as well. In other words, the SALSA algorithm initiates the random walk from the right index side (tweet side) and returns the right side nodes (tweets). Finally, putting these tweets together will create a group (entity) of "similar" tweets related to each other. This group of similar tweets can then be used to train the StarSpace model.
 
 
-The training dataset used in this work to train StarSpace is crawled from Twitter directly (see section \ref{sec:data-crawling-strategy}). This dataset needs to be formatted to be digestible for StarSpace. StarSpace needs in each line multiple tweets related to each other that can be defined as a document. We can argue that each document in this file is built with sentences relevant to each other. This thesis proposes an approach in which the SALSA algorithm finds related sentences to each other.
+The algorithm \ref{alg:star-space-train-data} explains how the data generation process works. In the beginning, all the identifiers from the right side index (tweet-IDs) are loaded. Then for each id, the \emph{startRandomWalkFromRightIndex} function runs the SALSA random walk and returns a list (during the data generation, the length of the list was set to 10) of relevant node-IDs (i.e., tweets-IDs) for the given identifier. The input identifier is also added to the result list. Next, the content of each identifier is retrieved from the identifier-content index and joined together into a tab-separated string. The algorithm continues until all the identifiers in the list extend and saves the results in a text file.
 
 
-As explained in the subsection \ref{subsub:storage-index-layer} this study extends the SALSA algorithm by starting the random walk from the right side index (tweet side) and return the vertex list of the right side nodes (tweets). The intuition here is that SALSA produces relevant tweets to the given tweet, which the walk started on. Therefore, the train data can be loaded into memory by generating the bipartite graph and the relevant tweets for each tweet. Then each tweet and its relevant tweets are written into a text file separated by tabs. This process continues for all the existing tweets.
+To speed up the computation time, we can argue that the training data generation is a map operation and can be run in parallel for each document separately.
 
 
-The algorithm \ref{alg:star-space-train-data} explains how the data generation process works. In the beginning, all the identifiers from the right side index (tweet-IDs) are loaded. Then for each id, the \emph{getRelevantIDs} function runs the SALSA walk and calculates the relevant node-IDs (tweets-IDs) for the given identifier, and limits the results up to ten. The input identifier is also added to the result list. Next, the content of each identifier is retrieved from the identifier-content index and converted into a tab-separated string. The algorithm continues until all the identifiers in the list extend and saves the results in a text file.
-
-
-To speed up the computation, we can argue that the training data generation is a map operation and can be run in parallel for each document separately.
-
-
-\begin{algorithm}[!ht]
+\begin{algorithm}[!htb]
     \caption{StarSpace train data generation algorithm}
     \label{alg:star-space-train-data}
     \SetKwData{allIDs}{allIDs}
@@ -37,7 +42,7 @@ To speed up the computation, we can argue that the training data generation is a
 
 
     \SetKwFunction{getAllRightIndexKeys}{getAllRightIndexKeys}
-    \SetKwFunction{getRelevantIDs}{getRelevantIDs}
+    \SetKwFunction{startRandomWalkFromRightIndex}{startRandomWalkFromRightIndex}
     \SetKwFunction{getContentOf}{getContentOf}
     \SetKwFunction{joinWithTab}{joinWithTab}
     \SetKwFunction{appendToTextFile}{appendToTextFile}
@@ -56,7 +61,7 @@ To speed up the computation, we can argue that the training data generation is a
     \ForEach{identifier $\id$ in $\allIDs$}
     {
         \emph{// Start the random walk from the right index side with node-ID id}\;
-        \listRecommendations $\leftarrow$ \getRelevantIDs{\id}\;
+        \listRecommendations $\leftarrow$ \startRandomWalkFromRightIndex{\id}\;
         \BlankLine
         \emph{// Append the initial id to the results at the beginning of the results}\;
         \listRecommendations.insert(0, \id)\;
@@ -116,18 +121,24 @@ This computation is done by predicting the embedding vector of each sentence in 
 The instance running the calculation needs to have enough memory to simultaneously load the training dataset and the StarSpace model. The training dataset used in this work is almost 3GB, and the StarSpace model can reach a size up to 13GB. So the projection matrix computation needs at least 16GB of memory to get initialized. The calculation itself is also memory-consuming since, for all the values in the training dataset, the eigenpairs (eigenvalue and eigenvector) need to be kept in memory.
 
 
-\subsection{Hayperparameter Tuning}
+Key findings emerge from the massive StarSpace model size: The model's size depends on the dataset it was trained with. The model creates a mapping for each unique word it sees during train time. The dataset used in this work is directly crawled from Twitter without going through any data cleansing process. The dataset contains Twitter-ID, emojis, and URLs. These elements enlarge the mapping of the model. Besides, the tweets are in different languages, which adds even more words to the model mapping.
+
+
+Techniques like data cleansing (like removing the Twitter-IDs, emojis, and URLs) can be applied to reduce the model's size. Moreover, the dataset can be separated into different languages, and each model can be trained for a language separately. These improvements can be considered as future work.
+
+
+\subsection{Hyperparameter Tuning}
 \label{subsec:hyperparameter-tuning}
 The model of StarSpace has multiple hyperparameters that control the learning process of the model. The complete documentation of parameters can be found in the StarSpace repository on GitHub\footnote{\url{https://github.com/facebookresearch/StarSpace\#full-documentation-of-parameters}}. 
 
 
-The implication is that changing the model parameters will affect the data distribution on the partitions (i.e., workers) as well as the recommendation quality. This work implemented a hyperparameter tuning platform to train different models and compare their learning quality.
+The implication is that changing the model parameters will affect two essential aspects of this reach: First, how the data gets distributed on the partitions (i.e., workers). In other words, how balanced the partitions get. Second, the recommendation quality. Since each model computes different embedding vectors for a document, this will determine which partition the document eventually lands. Such effects can not be found in methods like Murmur2 hash since this method computes the hash of a given identifier with a consistent mathematical approach. This work implemented a hyperparameter tuning platform to train different models and compare their learning quality.
 
 
 Table \ref{tab:hyperparameter} shows different parameters values used to train the StarSpace model. Combining these parameters variations will train 16 different models. Selecting the best model for content-based partitioning can be done over two criteria: First would be the recommendation quality. Second, the data distribution and how well balanced each partition is. Both of these topics are evaluated and discussed in the section \ref{subsubsec:eval-hyperparameter}.
 
 
-\begin{table}[!hb]
+\begin{table}[!htb]
     \centering
     \caption{Configuration parameters}
     \label{tab:hyperparameter}
@@ -145,4 +156,3 @@ Table \ref{tab:hyperparameter} shows different parameters values used to train t
         \hline
     \end{tabular}
 \end{table}
-

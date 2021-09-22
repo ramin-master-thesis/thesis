@@ -3,7 +3,7 @@
 The multi-machine architecture described in section \ref{subsec:multiple-machines} forwards the incoming requests to all the available instances, leading all the machines to run the SALSA algorithm and then use one of the data fusion approaches to integrate the results of the workers into a single ranked list. Each worker (in parallel) runs the random walk algorithm in complete isolation. However, the data fusion process waits for all the instances to finish the random walk. 
 
 
-Running the random walk algorithm on all machines is expensive and not optimal. Instead, if we know which machine to ask for, we can reduce the total work. Imagine a scenario, where the StarSpace partitioner, distributes the data on the instances and the \emph{Most Interactions} approach is used to fusion the data (see section \ref{subsec:data-fusion-most-interactions}). In other words, rather than requesting all the instances to run the random walk algorithm and then check which machine holds the most significant degree, we can ask the particular machine with the highest degree for the user recommendations.
+Running the random walk algorithm on all machines is expensive and not optimal. Instead, if we know which machine to ask for, we can reduce the total work. Imagine a scenario, where the StarSpace partitioner distributes the data on the instances and the \emph{Most Interactions} approach is used to fusion the data (see section \ref{subsec:data-fusion-most-interactions}). In other words, rather than requesting all the instances to run the random walk algorithm and then check which machine holds the most significant degree, we can ask the particular machine with the highest degree for the user recommendations.
 
 This research proposes an idea to implement this approach. Figure \ref{fig:loadbalancer} demonstrates this idea. A \emph{Load Balancer} is introduced that receives the queried user-ID and forwards it to the instance with the highest degree of that user-ID. The degree of a user can be stored during partition time. To keep track of the incoming data frequency, a probabilistic data structure called \emph{Count Min Sketch (CMS)} \cite{cormodeImprovedDataStream2005} in the load balancer can be used.
 
@@ -11,7 +11,7 @@ This research proposes an idea to implement this approach. Figure \ref{fig:loadb
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=1\textwidth]{images/future-system-architecture}
-    \caption{Proposed architecture with the load balancer to route the upcoming requests}
+    \caption{Proposed architecture with the load balancer to route the upcoming requests. The yellow arrow visualizes a new user-document interaction that is being forwarded to its worker. The yellow arrow indicates that the partitioner sends a tuple containing the user-ID and partition-ID (Worker 3) to the load balancer. The red arrow illustrates a forwarded read query to a worker holding the most significant node degree number of the queried user.}
     \label{fig:loadbalancer}
 \end{figure}
 
@@ -49,7 +49,7 @@ During query time, each user-ID, partition-ID pair frequency is retrieved from C
     \Output{Partition-ID containing the highest degree of user \emph{U}}
     \SetAlgoLined
 
-    \BlankLine\emph{// initialization}\BlankLine
+    \BlankLine\emph{// Initialization}\BlankLine
     \degree $\leftarrow$ 0 \;
 
     \BlankLine
@@ -69,5 +69,5 @@ During query time, each user-ID, partition-ID pair frequency is retrieved from C
 \end{algorithm}
 
 
-By asking the partition with the highest degree of the requested user, we will save \emph{1/N} of the work needed to calculate the recommendations, where \emph{N} denotes the number of partitions. It is important to notice that the other data fusion approaches, namely \emph{Union Result} and \emph{Highest Hit} can not be used to ask the right partition for recommendation calculation. These two approaches depend on the hit count computed by the SALSA algorithm. It is impossible to gain the hit count without running the random walk algorithm first.
+By asking the partition with the highest degree of the requested user, we will save \emph{1/N} of the work needed to calculate the recommendations, where \emph{N} denotes the number of partitions. It is crucial to notice that the other data fusion approaches, namely \emph{Union Result} and \emph{Highest Hit} can not be used to load balance the incoming requests. Hence, these two approaches depend on the hit count computed by the SALSA algorithm. It is impossible to gain the hit count without running the random walk algorithm first.
 

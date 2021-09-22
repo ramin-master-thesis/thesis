@@ -1,4 +1,4 @@
-\section{Graph Embeddign and Partitioning Techniques}
+\section{Graph Embedding and Partitioning Techniques}
 \label{sec:graph-partitioning-techniques}
 The section \ref{subsec:StarSpace} introduced the embedding model StarSpace. The pre-trained StarSpace model predicts the vector for a given document. Moreover, this research employs StarSpace to partition the maintained bipartite graph by GraphJet on multiple instances. 
 
@@ -28,7 +28,7 @@ Graph embedding is an approach that transforms nodes, edges into vector spaces. 
 Factorization-based methods determine the connections between the nodes in a matrix and decompose this matrix to partition the graph. This can be archived with methods like Boolean matrix factorization \cite{miettinenModelOrderSelection2011}, which has been extended to streaming environments for biclustering bipartite graphs \cite{neumannBiclusteringBooleanMatrix2020}. Other approaches like \emph{HOPE} \cite{ouAsymmetricTransitivityPreserving2016b} use rely on other factorization methods, i.e., \emph{SVD} \cite{vanloanGeneralizingSingularValue1976} to generate the embeddings.
 
 
-Random walk-based approaches generate embedding based on the similarity between the nodes. Embeddign techniques like \emph{Deep Walk} \cite{perozziDeepWalkOnlineLearning2014} and \emph{node2vec} \cite{groverNode2vecScalableFeature2016} are used for graph representation.
+Random walk-based approaches generate embedding based on the similarity between the nodes. Embedding techniques like \emph{Deep Walk} \cite{perozziDeepWalkOnlineLearning2014} and \emph{node2vec} \cite{groverNode2vecScalableFeature2016} are used for graph representation.
 
 
 More recent approaches like \cite{satuluriSimClustersCommunityBasedRepresentations2020a} present a technique called \emph{Simclusters}. Instead of matrix factorization methods, the authors rely on a combination of similarity search and community discovery. The authors discuss that the calculation of the matrix factorization is not optimized for a massive scale. The authors propose a novel method to detect similar communities between users from the user-user bipartite graph to solve many personalization and recommendation problems at scale.
