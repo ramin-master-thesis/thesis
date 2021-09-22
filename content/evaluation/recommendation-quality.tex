@@ -144,7 +144,7 @@ Before diving into the recommendation quality benchmark of each model, let's see
 \end{figure}
 
 
-Diagram \ref{plot:hyperparameter-recommendation-quality} shows the computed mean average precision at cut-off ten for different trained models compared to the single partition and the Murmur2 hash function over 500 users. The Highest Interest approach is used to fusion the data together. Model 15 has the highest MAP@10 value for the merged values of two partitions among all other trained models, followed by model 7 with a value of 0.467. The chart \ref{plot:edge-distribution} shows that the data distribution of model 7 is better than model 15. In further evaluations, model 7 is used.
+Diagram \ref{plot:hyperparameter-recommendation-quality} shows the computed mean average precision at cut-off ten for different trained models compared to the single partition and the Murmur2 hash function over 500 users. The Most interaction approach is used to fusion the data together. Model 15 has the highest MAP@10 value for the merged values of two partitions among all other trained models, followed by model 7 with a value of 0.467. The chart \ref{plot:edge-distribution} shows that the data distribution of model 7 is better than model 15. In further evaluations, model 7 is used.
 
 
 Another promising finding was that the text normalization does not impact the overall recommendation quality. On the other hand, it influences the data distribution on each partition. When comparing the edge distribution of models 7 and 8 in the diagram \ref{plot:star-space-edge-distribution-2-partitions}, which only differ in the text normalization parameter, we can determine that model 7 is delivering an equal distribution on two partitions. Thus, the text normalization is set to false. 
@@ -152,7 +152,7 @@ Another promising finding was that the text normalization does not impact the ov
 
 The tweets data set explains why trained models with no text normalization are delivering a better performance than those with text normalization enabled. The tweets are noisy and contain emojis and special characters that do not land in any of the text normalization buckets (see section \ref{subsubsec:star-space-text-normalization}). Therefore, the text normalization delivers a bad performance on this specific dataset.
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
     \centering
     \input{plots/recommendation/hyperparameter-map-at-10}
     \caption{Comparing recommendation quality of different partitioning methods and models for 500 users}
@@ -163,7 +163,7 @@ The tweets data set explains why trained models with no text normalization are d
 As explained in the begining of this section the hyperparameter tests were also done over 2000 users to see if the number of sampled users affects the MAP value. The experiments do not significantly increase or decrease in the overall MAP value in each model and partitioning method. This can be seen in the chart \ref{plot:hyperparameter-recommendation-quality-2000-users}. Therefore all other experiments are done over 500 sampled users.
 
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
     \centering
     \input{plots/recommendation/hyperparameter-map-at-10-2000-users}
     \caption{Comparing recommendation quality of different partitioning methods and models for 2000 users}

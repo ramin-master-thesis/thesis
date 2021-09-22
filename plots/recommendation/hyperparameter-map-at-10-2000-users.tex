@@ -35,6 +35,6 @@
         \addplot[brown, fill=brown!30!white, x filter/.expression={x==0 ? nan : x}]
 		table [y index=0, x index=3] {recommendation/hyperparameter-map-at-10-2000-users.dat};
 
-		\legend{Partition 0,Partition 1,highest interest}
+		\legend{Partition 0,Partition 1,most interactions}
 	\end{axis}
 \end{tikzpicture}
