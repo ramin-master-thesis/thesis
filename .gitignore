@@ -29,3 +29,4 @@ preview-*.png
 *.tdo
 *.aux
 !images/*
+!images/graphjet/*
