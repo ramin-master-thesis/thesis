@@ -182,17 +182,17 @@ The results confirm that this is a good choice for applying the load balancer id
 \begin{figure}[!htb]
     \centering
     \input{plots/recommendation/request-distribution.tex}
-    \caption{Propotion of chosen recommendations list of 500 users between two partitions with the \emph{Most Interactions} data fusion approach.}
+    \caption{Propotion of requests on each partition the data fusion module (with the \emph{Most Interactions} approach) makes to unify the results.}
     \label{plot:request-distribution}
 \end{figure}
 
 
-\subsubsection{Horizontall scalling}
-\label{subsubsec:eval-horizontall-scalling}
+\subsubsection{Horizontal Scalling}
+\label{subsubsec:eval-horizontal-scalling}
 The previous experiments were done on two partitions to compare different partitioning methods and data fusion approaches. The following section will discuss how the number of partitions affects the recommendation quality. In other words, how the recommendation quality will change when we scale the system horizontally. The experiments are done with 500 randomly sampled users using the Murmur2 hash partitioning and the StarSpace model number 7 (refer to the table \ref{tab:models}); with data fusion approaches \emph{Union Results} and \emph{Most Interactions} respectively.
 
 
-The results of the evaluations are illustrated on the plots in figure \ref{fig:horizontall-scaling}. As the plots denote, the overall MAP value decreases whenever the number of partitions grows. This decrease is because the amount of data declines on each partition, creating a sparse bipartite graph. The random walk fails to produce sound recommendations due to fewer items on each partition for the users. By increasing the amount of data, the partitions can generate better recommendations. 
+The results of the evaluations are illustrated on the plots in figure \ref{fig:horizontal-scaling}. As the plots denote, the overall MAP value decreases whenever the number of partitions grows. This decrease is because the amount of data declines on each partition, creating a sparse bipartite graph. The random walk fails to produce sound recommendations due to fewer items on each partition for the users. By increasing the amount of data, the partitions can generate better recommendations. 
 
 
 In the original paper of GraphJet, the authors keep a bipartite graph with $10^9$ edges on a machine with 30GB memory \cite{sharmaGraphJetRealtimeContent2016}. Distributing this amount of interactions among their edges on 16 devices or more can help reduce the memory needed for maintaining the bipartite graph on a single machine and help to improve the computation speed of the random walk algorithm. These improvements are penalized by the recommendation quality, but with the current measuremnts it is hard to justify such conclusion.
@@ -204,28 +204,28 @@ In the original paper of GraphJet, the authors keep a bipartite graph with $10^9
 	  \centering
 	  \input{plots/recommendation/2-partitions}
 	  \caption{2 Partitions} 
-	  \label{fig:horizontall-scaling-2-partitions-a} 
+	  \label{fig:horizontal-scaling-2-partitions-a} 
 	  \vspace{1cm}
 	\end{subfigure}%% 
 	\begin{subfigure}[b]{0.5\linewidth}
 	  \centering
 	  \input{plots/recommendation/4-partitions}
 	  \caption{4 Partitions} 
-	  \label{fig:horizontall-scaling-4-partitions-b} 
+	  \label{fig:horizontal-scaling-4-partitions-b} 
 	  \vspace{1cm}
 	\end{subfigure} 
 	\begin{subfigure}[b]{0.5\linewidth}
 	  \centering
 	  \input{plots/recommendation/8-partitions}
 	  \caption{8 Partitions} 
-	  \label{fig:horizontall-scaling-8-partitions-c} 
+	  \label{fig:horizontal-scaling-8-partitions-c} 
 	\end{subfigure}%%
 	\begin{subfigure}[b]{0.5\linewidth}
 	  \centering
 	  \input{plots/recommendation/16-partitions}
 	  \caption{16 Partitions} 
-	  \label{fig:horizontall-scaling-16-partitions-d} 
+	  \label{fig:horizontal-scaling-16-partitions-d} 
 	\end{subfigure} 
 	\caption{Recommendation quality when scaling horizontally}
-	\label{fig:horizontall-scaling} 
+	\label{fig:horizontal-scaling} 
 \end{figure}
