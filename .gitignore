@@ -28,5 +28,4 @@ preview-*.png
 *.lol
 *.tdo
 *.aux
-!images/*
-!images/graphjet/*
+!images/**
