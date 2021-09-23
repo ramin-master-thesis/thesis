@@ -11,7 +11,7 @@ This section goes through the prototyped system architecture and the design deci
 \label{subsec:single-machine}
 The high-level architecture of a single instance can be seen in figure \ref{fig:single-machine-architecture}. The worker (i.e., instance) receives an input query (i.e., user-ID) and then yields a ranked list of recommendations (i.e., tweets). The detailed single instance architecture demonstrating each layer is shown in figure \ref{fig:single-machine-architecture-detailed}. In the following, each section describes each component of the system and explains how each layer works.
 
-\begin{figure}[!ht]
+\begin{figure}[!htb]
     \centering
     \begin{subfigure}[b]{0.75\textwidth}
        \includegraphics[width=1\linewidth]{images/simple-worker}
@@ -39,7 +39,7 @@ GraphJet uses mutable (hot) and immutable (cold) index segments to store the bip
 
 This thesis also introduces a third index. The content of the tweets is also crawled and later used for partitioning purposes. An index between the tweet-ID and the content is created to retrieve the content of a given tweet-ID. This index generates a \emph{Content Graph}.
 
-\begin{table}[!ht]
+\begin{table}[!htb]
     \centering
     \caption{Simple indexing example}
     \label{tab:simple-indexing}
@@ -63,7 +63,7 @@ The recommendation layer implements the SALSA \cite{lempelSALSAStochasticApproac
 
 
 
-\begin{table}[!ht]
+\begin{table}[!htb]
     \centering
     \caption{SALSA algorithm parameters}
     \label{tab:salsa-parameters}

@@ -1,6 +1,26 @@
 \chapter{\appendixname}
 % \section*{Murmur2 Node Distribution Over two Partitions}
 
+
+\begin{figure}[!htb]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \input{plots/appendix/recommendation-latency-two-partition-boxplot}
+        \caption{Single partition recommendation generation latency compared to two partitions}
+        \label{plot:recommendation-latency-two-partitions}
+    \end{subfigure}\qquad
+
+    \begin{subfigure}{\textwidth}
+        \centering
+        \input{plots/appendix/recommendation-latency-four-partition-boxplot}
+        \caption{Recommendation generation latency in four partition}
+        \label{plot:recommendation-latency-four-partitions}
+    \end{subfigure}\qquad
+    \caption{Recommendation generation latency in seconds.}
+    \label{plot:recommendation-latency}
+\end{figure}
+
 \begin{figure}[!htb]
     \centering
 	\begin{subfigure}{\textwidth}

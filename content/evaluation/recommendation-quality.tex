@@ -3,23 +3,23 @@
 This section will go through the experiments that evaluate the impact of the partitioning over the recommendation quality. As explained in section \ref{sec:evaluation-pipeline} they are parameters that can be injected into the pipeline to create different experiment scenarios like choosing partitioning methods, amount of partitions, data fusion methods, evaluation metrics, number of sampled users, and the frequency of repeated recommendation for the baseline.
 
 
-The experiments are done on the same machine with a hardware specification described in section \ref{subsec:hardware-spec}. Most of the tests are done with 500 sampled users. Some experiments are done with 2000 randomly sampled users to investigate the impact of sampled users on the recommendation quality.
+The experiments are done on the same machine with a hardware specification described in section \ref{subsec:hardware-spec}. Most of the tests are done with 500 sampled users. Some experiments are done with 2000 randomly sampled users to investigate the impact of sampled users on the consistency of the results.
 
 
-In the first section, the experiments compare a single instance with the baseline to check the reproducibility of the results. Next, the experiments determine which data fusion approach works best with a partitioning technique. Afterwards, different StarSpace models are trained and assessed. The last section scales the system horizontally and shows the recommendation quality results on four, eight, sixteen partitions. 
+In the first section, the experiments compare a single instance with the baseline to check the reproducibility of the results. Next, the experiments determine which data fusion approach works best with a partitioning technique. Afterwards, different StarSpace models are trained and assessed. The last section scales the system horizontally and shows the recommendation quality results on four, eight, and sixteen partitions. 
 
 
 \subsection{Single Machine}
 \label{subsec:eval-single-machine}
-The non-deterministic behavior of the random walk algorithm in generating results makes it hard to create an excellent baseline to assess the results with. To inspect the reproducibility of the results, I compare the single partition result with the generated golden standard (see section \ref{subsec:baseline-generation}). The experiments sample 500 random users and generate the objective, observed rankings on the single partition machine. The recommendation quality is measured using the Mean Average Precision at K (MAP@K), with K starting from 1 to 10. The experiments are done ten times each time using the same sampled users. 
+The non-deterministic behavior of the random walk algorithm in generating results makes it hard to create an excellent baseline to assess the results with. To inspect the reproducibility of the results, the single partition results are compared with the generated golden standard (see section \ref{subsec:baseline-generation}). The experiments sample 500 random users and generate the objective, observed rankings on the single partition machine. The recommendation quality is measured using the Mean Average Precision at K (MAP@K), with K starting from 1 to 10. The experiments are done ten times each time using the same sampled users. 
 
 The results of the experiments are plotted on the boxplot in figure \ref{plot:single-partition-boxplot}. Only the K values of eight, nine, and ten are shown to keep the diagram small and clear to read. As the chart denotes, the variation in each cut-off (i.e., K) is not significant. Although the non-deterministic random walk generates different recommendations each time for users, it does not impact the overall MAP@K value. So the possibility that the random walk generates the same results each time is still considered as high.
 
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
     \centering
     \input{plots/recommendation/single-partition-boxplot}
-    \caption{Different MAP values over ten interations of generating recommendation with 500 users}
+    \caption{Different MAP values over ten interations of generating recommendation with 500 users. In the experiment the single partition results is assessed with the golden standard.}
     \label{plot:single-partition-boxplot}
 \end{figure}
 
@@ -30,7 +30,7 @@ The line diagram in figure \ref{plot:single-partition} shows the recommendation 
 
 One may consider this result a low MAP value when comparing the results of the same machine. It is important to note that the experiments criteria are strict, assuming that all the items in the baseline are considered relevant. If an observed ranked list is assessed with a user's baseline and does not contain the same items, it will lead to low average precision and mean average precision, respectively.
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
     \centering
     \input{plots/recommendation/single-partition}
     \caption{Evaluation of the MAP value for increasing K for 500 users}
@@ -45,7 +45,7 @@ One may consider this result a low MAP value when comparing the results of the s
 The following section will compare the recommendation quality of three data fusion methods introduced in the section \ref{sec:data-fusion-approaches} for the Murmur2 and StarSpace partitioning approaches. The main purpose of these experiments is to identify which data fusion approach produces the best single ranked list for a given partitioning method. The results are shown in the diagrams of figure \ref{plot:murmur2-data-fusion} for the Murmur2 hash partitioning method and \ref{plot:star-space-data-fusion} for the StarSpace partitioning method.
 
 
-\begin{figure}[!ht]
+\begin{figure}[!htb]
     \centering
     \begin{subfigure}{\textwidth}
         \centering
@@ -70,13 +70,13 @@ Comparing the results of the two diagrams indicates that the \emph{Union Results
 Looking at the chart \ref{plot:star-space-data-fusion}, it can be seen that both \emph{Union Results}, and \emph{Highest Hit} approaches deliver a weak recommendation quality. The reason for this low result is related to the data volume on the partitions and can be explained with the \emph{hit} number produced by the SALSA algorithm. 
 
 
-The two approaches algorithm depends heavily on the hit number to create the single ranked list. Compared to the Murmur2 hash partitioning method, the StarSpace partitioner distributes the data much more unbalanced, creating a smaller and a bigger partition. The data distribution on two partitions with the StarSpace partitioner is demonstraited in the plot \ref{plot:star-space-edge-distribution-2-partitions}. The hit count changes with the amount of data on each partition, respectively. Observing the recommendations and their hit counts on the partition with fewer data show that users with fewer interactions (i.e., vertices with a small degree) create loops in the SALSA algorithm. These loops lead the random walk to visit the same node continuously, and this will make a recommendation with a large hit number affecting the \emph{Union Results}, and \emph{Highest Hit} approaches results.
+The two approaches algorithm depends heavily on the hit number to create the single ranked list. Compared to the Murmur2 hash partitioning method, the StarSpace partitioner distributes the data much more unbalanced, creating a smaller and a bigger partition. The data distribution on two partitions with the StarSpace partitioner is illustrated on the plot \ref{plot:star-space-edge-distribution-2-partitions}. The hit count changes with the amount of data on each partition, respectively. Observing the recommendations and their hit counts on the partition with fewer data show that users with fewer interactions (i.e., vertices with a small degree) create loops in the SALSA algorithm. These loops lead the random walk to visit the same node continuously, and this will make a recommendation with a large hit number affecting the \emph{Union Results}, and \emph{Highest Hit} approaches results.
 
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
     \centering
     \input{plots/recommendation/star-space-edge-distribution-2-partitions}
-    \caption{StarSpace edge distribution over two partitions}
+    \caption{Edge distribution of a randomly chosen StarSpace model over two partitions. The numbers on the bars indicate that the model spreads the data unevenly.}
     \label{plot:star-space-edge-distribution-2-partitions}
 \end{figure}
 
@@ -87,7 +87,7 @@ The \emph{Most Interactions} approach works well on the StarSpace partitioning m
 On the other hand, the \emph{Most Interactions} method does not work well for the Murmur2 hash partitioning since the data is sharded randomly and not based on the user interests. \emph{Union Results} delivers the best results for the Murmur2 hash partitioning due to its balanced distribution of data shown in the diagram \ref{plot:edge-distribution-2-partitions-murmur2}. 
 
 
-The results confirm that this is a good choice to use the \emph{Most Interactions} approach with the StarSpace partitioner and \emph{Union Results} method for the Murmur2 hash partitioning method. Therefore, in the upcoming experiments for the further partitioners evaluations, these methods are chosen.
+The results confirm that this is a good choice to use the \emph{Most Interactions} approach with the StarSpace partitioner and \emph{Union Results} method for the Murmur2 hash partitioning method. Therefore, in the upcoming experiments for further evaluations, the combination StarSpace partitioning with \emph{Most Interactions} data fusion method is assessed against the Murmur2 hash partitioning combined with \emph{Union Results} data fusion technique is chosen.
 
 
 \subsubsection{Hyperparameter evaluation results}
@@ -107,13 +107,13 @@ The hyperparameter tuning benchmark was done on a two-partition setting to keep 
 \end{enumerate}
 
 
-\begin{table}[!ht]
+\begin{table}[!htb]
     \centering
     \caption{Trained model specifications}
     \label{tab:models}
     \begin{tabular}[!ht]{|l|c|c|c|c|}
         \hline
-        \textbf{Model Nr.} & \textbf{Learning rate} & \textbf{Dimensions} & \textbf{Dropout probability} & \textbf{Text normalization} \\
+        \textbf{Model Nr.} & \textbf{Learning rate} & \textbf{Dropout probability} & \textbf{Dimensions} & \textbf{Text normalization} \\
         \hline
         \csvreader[
         late after line=\\\hline
@@ -133,24 +133,18 @@ The hyperparameter tuning benchmark was done on a two-partition setting to keep 
 
 The experiments use only the \emph{Most Interactions} data fusion approach. This decision is taken with the respect to the experiments results in section \ref{subsubsec:eval-data-fusion}. This method was resulting in a better recommendation quality compared to the other two approaches when partitioning the data with the StarSpace model. The experiments were also done once with 500 and 2000 sampled users to investigate the impact of the number of sampled users on the overall MAP@10 value.
 
-Before diving into the recommendation quality benchmark of each model, let's see how the different trained models impact the data (i.e., edge) distribution. In the diagram \ref{plot:edge-distribution} you can see how each model distributes the edges over two partitions. Compared to the data distribution of the Murmur2 hash partitioning method in the diagram \ref{plot:edge-distribution-2-partitions-murmur2} the partitions are unbalanced.
+Before diving into the recommendation quality benchmark of each model, we investigate how the different trained models impact the data (i.e., edge) distribution. The diagram \ref{plot:edge-distribution} visualizes how each model spreads the edges across two partitions. Compared to the data distribution of the Murmur2 hash partitioning method in the diagram \ref{plot:edge-distribution-2-partitions-murmur2} the partitions are uneven.
 
 
-\begin{figure}[!h]
+Diagram \ref{plot:hyperparameter-recommendation-quality} shows the computed mean average precision at cut-off ten for different trained models compared to the single partition and the Murmur2 hash function over 500 users. The Most interaction approach is used to unify the data together. Model 15 has the highest MAP@10 value for the merged values of two partitions among all other trained models, followed by model 7 with a value of 0.467. The chart \ref{plot:edge-distribution} shows that the data distribution of model 7 is better than model 15. In further evaluations, model 7 is used.
+
+
+\begin{figure}[!htb]
     \centering
     \input{plots/recommendation/hyperparameter-edge-distribution}
     \caption{Edge distribution of test dataset; sharded with different trained models over two partitions}
     \label{plot:edge-distribution}
 \end{figure}
-
-
-Diagram \ref{plot:hyperparameter-recommendation-quality} shows the computed mean average precision at cut-off ten for different trained models compared to the single partition and the Murmur2 hash function over 500 users. The Most interaction approach is used to fusion the data together. Model 15 has the highest MAP@10 value for the merged values of two partitions among all other trained models, followed by model 7 with a value of 0.467. The chart \ref{plot:edge-distribution} shows that the data distribution of model 7 is better than model 15. In further evaluations, model 7 is used.
-
-
-Another promising finding was that the text normalization does not impact the overall recommendation quality. On the other hand, it influences the data distribution on each partition. When comparing the edge distribution of models 7 and 8 in the diagram \ref{plot:star-space-edge-distribution-2-partitions}, which only differ in the text normalization parameter, we can determine that model 7 is delivering an equal distribution on two partitions. Thus, the text normalization is set to false. 
-
-
-The tweets data set explains why trained models with no text normalization are delivering a better performance than those with text normalization enabled. The tweets are noisy and contain emojis and special characters that do not land in any of the text normalization buckets (see section \ref{subsubsec:star-space-text-normalization}). Therefore, the text normalization delivers a bad performance on this specific dataset.
 
 \begin{figure}[!htb]
     \centering
@@ -160,8 +154,13 @@ The tweets data set explains why trained models with no text normalization are d
 \end{figure}
 
 
-As explained in the begining of this section the hyperparameter tests were also done over 2000 users to see if the number of sampled users affects the MAP value. The experiments do not significantly increase or decrease in the overall MAP value in each model and partitioning method. This can be seen in the chart \ref{plot:hyperparameter-recommendation-quality-2000-users}. Therefore all other experiments are done over 500 sampled users.
+Another promising finding was that the text normalization does not impact the overall recommendation quality. On the other hand, it influences the data distribution on each partition. When comparing the edge distribution of models 7 and 8 in the diagram \ref{plot:star-space-edge-distribution-2-partitions}, which only differ in the text normalization parameter, we can determine that model 7 is delivering an equal distribution on two partitions. Thus, the text normalization is set to false. 
 
+
+The tweets data set explains why trained models with no text normalization are delivering a better performance than those with text normalization enabled. The tweets are noisy and contain emojis and special characters that do not land in any of the text normalization buckets (see section \ref{subsubsec:star-space-text-normalization}). Therefore, the text normalization delivers a bad performance on this specific dataset.
+
+
+As explained in the begining of this section the hyperparameter tests were also done over 2000 users to see if the number of sampled users affects the MAP value. The experiments do not significantly increase or decrease in the overall MAP value in each model and partitioning method. This can be seen in the chart \ref{plot:hyperparameter-recommendation-quality-2000-users}. Therefore all other experiments are done over 500 sampled users.
 
 \begin{figure}[!htb]
     \centering
@@ -170,6 +169,22 @@ As explained in the begining of this section the hyperparameter tests were also 
     \label{plot:hyperparameter-recommendation-quality-2000-users}
 \end{figure}
 
+
+\subsubsection{Partition Request Load}
+\label{subsubsec:partition-request-load}
+The results of the experiments with the StarSpace model number 7 (refer to table \ref{tab:models}, and the diagrams \ref{plot:hyperparameter-recommendation-quality}, \ref{plot:star-space-edge-distribution-2-partitions}) combined with the \emph{Most Interactions} data fusion approach point out two important findings: First, this combination delivers the most similar recommendations to the baseline. Second, compared to the other trained models, this model keeps the two partition balance.
+
+
+One might say that the data fusion module might only choose the recommendations list from a partition containing more data. Since the possibility that the users on a partition with more data have a significant degree number is higher. Although this hypothesis is logical, the measurements in the diagram \ref{subsubsec:partition-request-load} that the load is almost equally balanced. Approximately 43\% of the generated recommendations list is chosen from partition zero and 57\% from partition one.
+
+The results confirm that this is a good choice for applying the load balancer idea (see section \ref{sec:load-balancing}). The load balancer can forward the load almost equally between the two partitions.
+
+\begin{figure}[!htb]
+    \centering
+    \input{plots/recommendation/request-distribution.tex}
+    \caption{Propotion of chosen recommendations list of 500 users between two partitions with the \emph{Most Interactions} data fusion approach.}
+    \label{plot:request-distribution}
+\end{figure}
 
 
 \subsubsection{Horizontall scalling}
@@ -180,12 +195,10 @@ The previous experiments were done on two partitions to compare different partit
 The results of the evaluations are illustrated on the plots in figure \ref{fig:horizontall-scaling}. As the plots denote, the overall MAP value decreases whenever the number of partitions grows. This decrease is because the amount of data declines on each partition, creating a sparse bipartite graph. The random walk fails to produce sound recommendations due to fewer items on each partition for the users. By increasing the amount of data, the partitions can generate better recommendations. 
 
 
-In the original paper of GraphJet, the authors keep a bipartite graph with $10^9$ edges on a machine with 30GB memory \cite{sharmaGraphJetRealtimeContent2016}. Distributing this amount of interactions among their edges on 16 devices or more can help reduce the memory needed for maintaining the bipartite graph on a single machine and help to improve the computation speed of the random walk algorithm. These improvements are penalized by the recommendation quality, but I believe that, in general, the recommendation quality has not reduced so drastically.
+In the original paper of GraphJet, the authors keep a bipartite graph with $10^9$ edges on a machine with 30GB memory \cite{sharmaGraphJetRealtimeContent2016}. Distributing this amount of interactions among their edges on 16 devices or more can help reduce the memory needed for maintaining the bipartite graph on a single machine and help to improve the computation speed of the random walk algorithm. These improvements are penalized by the recommendation quality, but with the current measuremnts it is hard to justify such conclusion.
 
 
-\todo{Add how much percent of the data is chosen from which partition with most interactions}
-
-\begin{figure}[!ht]
+\begin{figure}[!htb]
 	\centering
 	\begin{subfigure}[b]{0.5\linewidth}
 	  \centering

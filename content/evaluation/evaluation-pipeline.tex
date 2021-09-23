@@ -5,18 +5,18 @@ This work presents an evaluation pipeline to measure the impact of partitioning 
 Figure \ref{fig:flowchart-evaluation-pipeline} indicates the flow of the pipeline from the start till the end. In the beginning, the users are sampled randomly. Next, the pipeline generates the baseline (also called Objective Ranking or Golden Standard). The step in the middle of the flowchart describes querying recommendations from the single partition instance to check the results' reproducibility; this evaluation is discussed in \ref{subsec:eval-single-machine}. 
 
 
-The right side of the flowchart denotes the step where the recommendations of the multi-partition instances are requested. After the querying recommendations finish, an arbitrary data fusion approach reduces the result of the partitions to one list. In the last step, the pipeline starts comparing the results by calculating the evaluation metric configured. 
+The right side of the flowchart denotes the step where the recommendations of the multi-partition instances are queried. After that, an arbitrary data fusion approach reduces the result of the partitions to one list. In the last step, the pipeline starts comparing the results by calculating the evaluation metric configured. 
 
 The main goal of the evaluation is to measure how far the observed ranking deviates from the objective ranking and keep the difference as small as possible. Moreover, this pipeline assesses how good or bad a trained StarSpace model performs during hyperparameter tuning (see section \ref{subsec:hyperparameter-tuning}).
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.60\textwidth]{images/evaluation-flow-chart}
+    \includegraphics[width=0.75\textwidth]{images/evaluation-flow-chart}
     \caption{Flowchart of the evaluation pipeline}
     \label{fig:flowchart-evaluation-pipeline}
 \end{figure}
 
-The following subsections will describe the evaluation metrics used to compute the recommendation quality and then go through the strategy to create a baseline and the observed ranking lists.
+The following sections will describe the evaluation metrics used to compute the recommendation quality and then go through the strategy to create a baseline and the observed ranking lists.
 
 \subsection{Evaluation metrics for recommendation quality}
 \label{subsec:evaluation-metrics-for-recommendation-quality}
@@ -44,7 +44,7 @@ Assumptions were made to overcome these problems. For the first issue, this work
 Another solution to solve the first problem is to use \emph{Weak Supervision} approaches to employ labels on the dataset. Generate a labeling function using frameworks like \emph{Snorkel}\footnote{\url{https://snorkel.org/}} to classify the data as relevant or not relevant for a user. Thus, labeling the dataset was beyond the scope of this thesis.
 
 
-For the second issue, this research proposes a novel idea: run the random walk for each user \emph{N} times and then take the most frequent recommendations that appeared. The intuition here is that gathering the most frequent recommendation will filter the items picked few times by the random walk. Moreover, with this technique, we collect recommendations that appear even \emph{N} times, ensuring that these recommendations are important for a user. This approach will overcome the non-deterministic nature of the random-walk algorithm and crate a baseline top \emph{N} frequent results.
+For the second issue, this research proposes a novel idea: run the random walk for each user \emph{N} times and then take the most frequent recommendations that appeared. The intuition here is that gathering the most frequent recommendation will filter the items picked few times by the random walk. Moreover, with this technique, we collect recommendations that appear even \emph{N} times, ensuring that these recommendations are important for a user. This approach will help to overcome the non-deterministic nature of the random-walk algorithm and crate a baseline top \emph{N} frequent results.
 
 
 \subsection{Observed rankings generation strategy}

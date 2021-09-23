@@ -1,22 +1,25 @@
 \section{Latency}
 \label{sec:eval-latency}
-The main focus of this work's evaluation is how partitioning affects the recommendation quality. But during the assessment of the system, I noticed that the computation time of recommendation in smaller partitions sinks notably. Therefore, it was worth investigating, measuring, and discuss the latency improvements.
+The evaluation of the system focuses on how partitioning affects the recommendation quality. It is worth discussing these exciting facts revealed by the results of the recommendation computation time. Observing the results denote that the recommendation computation latency on smaller partitions sinks notably. Therefore, it was worth investigating, measuring, and discuss the latency improvements.
 
 
-The focus of the evaluation here is to measure the time of each instance computing the recommendations using the SALSA algorithm. The intuition here is that by partitioning the data on multiple machines, the amount of data on each machine reduces respectively, leading to a faster random walk on the bipartite graph. 
+The experiments here are designed to measure the time of each instance when computing the recommendations using the SALSA algorithm. The intuition here is that by partitioning the data on multiple machines, the amount of data on each machine reduces respectively, leading to a faster random walk on the bipartite graph. 
 
 \subsection{Hardware specification}
 \label{subsec:hardware-spec}
-This section describes the hardware specification, where the expriments and evaluation of the proposed thesis ran.
+The experiments and tests were run on a machine with the following hardware specifications:
 
-The instance is a VM-Host-Server with 2x AMD EPYC 7282 (Zen-Rome) 16-Core CPU. The CPU clock speed is 2.80GHz and can reach up to 3.20GHz. The machine has 256GB (16x 16GB) DDR4-3200 RAM. The storage is a Samsung PM1725b SSD 1.6TB. The virtualization is runing on QEMU-KVM/libvirt version 4.2.1 (Debian 1:4.2-3ubuntu6.17).
+The instance is a VM-Host-Server with 2x AMD EPYC 7282 (Zen-Rome) 16-Core CPU. The CPU clock speed is 2.80GHz and can reach up to 3.20GHz. The machine has 256GB (16x 16GB) DDR4-3200 RAM. The storage is a Samsung PM1725b SSD 1.6TB. The virtualization is running on QEMU-KVM/libvirt version 4.2.1.
 
 
 \subsection{Experiment strategy}
 \label{subsec:latency-experiment-strategy}
-The benchmarks are done over one, two, and four partitions. The partitioning method used to distribute the test dataset is \emph{Murmur2 Hash} (see section \ref{subsec:partitioning-murmur2}). Using only this partitioning method is sufficient for the latency evaluation since we can see the relation between the amount of data on each partition and the execution time of the random walk and the data fusion approaches.
+The benchmarks are done over one, two, and four partitions. The experiments are repeated ten times. On each run, 500 new users are sampled, and the recommendations are computed. The partitioning method used to distribute the test dataset is \emph{Murmur2 Hash} (see section \ref{subsec:partitioning-murmur2}). 
 
-The experiments are repeated ten times. On each run, 500 new users are sampled, and the recommendations are computed; then, the three data fusion approaches are used to fusion the results.
+
+Using only this partitioning method is sufficient for the latency evaluation since we can see the relation between the amount of data on each partition and the execution time of the random walk and the data fusion approaches. The Murmur2 Hash partitioning technique distributes the data more evenly across the workers compared to the StarSpace partitioning method. Therefore, the latency variance between unbalanced partitions is bigger compared to the more equally balanced partitions.
+
+The latencies of the data fusion approaches are also measured. The three data fusion approaches are executed seperatly to fuse the results of each partition together.
 
 
 It is crucial to notice that the code used to simulate GraphJet is not a production code. Thus, these results can also be excepted in a production-like system. The simulated GraphJet system is written in Python (3.8) and uses Pandas' (version 1.2.3) DataFrame to store and retrieve the left, right-side indices. Furthermore, Python's Flask (version 1.1.2) is used to send the request to each partition (i.e., instance).
@@ -29,7 +32,7 @@ This section discusses how the amount of data impacts the random walk computatio
 
 The experiments investigate the random walk latency in a scenario with two partitions and once in an four partition enviroment. The diagrams \ref{plot:edge-distribution-2-partitions-murmur2} and \ref{plot:edge-distribution-4-partitions-murmur2} show the data distribution with respect to the mentioned partitioning strategy. At first glance, the diagrams denote that partitioning the data with the Murmur2 hash method distributes the edges almost equally. 
 
-\begin{figure}[!ht]
+\begin{figure}[!htb]
     \centering
     \begin{subfigure}{\textwidth}
         \centering
@@ -49,27 +52,28 @@ The experiments investigate the random walk latency in a scenario with two parti
 \end{figure}
 
 
-The results of the latency experiments are demonstrated in the diagrams \ref{plot:recommendation-latency}. The boxplot in \ref{plot:recommendation-latency-two-partitions} indicates the difference between the single partition and two partition instances. There is approximately 9.5\% latency improvement when comparing the single partition latency with the first partition (i.e., partition 0). The latency improves when the amount of partitions increases. The plot in \ref{plot:recommendation-latency-two-partitions} demonstrates this. The latency improves over 40\% with the increase of partitions. 
+The averaged results of the latency experiments are visualized in the diagram \ref{plot:average-recommendation-latency}. For better visualization only the avrage results are shown. The boxplots of the experiments can be found in the appendix \ref{plot:recommendation-latency}. The scatter plot in \ref{plot:average-recommendation-latency-two-partitions} indicates the difference between the single partition and two partition instances. There is approximately 9.5\% latency improvement when comparing the single partition latency with the first partition (i.e., partition 0). The latency improves when the amount of partitions increases. The plot in \ref{plot:average-recommendation-latency-two-partitions} indicates this. The latency improves over 40\% with the increase of partitions.
 
 This improvement can be explained when we look at the data distribution on each partition in figure \ref{plot:edge-distirbution-murmur2}. Each partition holds a fraction of the data, making it possible for each instance to maintain a smaller number of indices and adjacency lists. Therefore, the random walk algorithm can faster retrieve an index with its adjacency list. Concluding, by increasing the number of partitions, the amount of data on each instance reduces, and the recommendation computation time improves exponentially.
 
-\begin{figure}[!ht]
+
+\begin{figure}[!htb]
     \centering
     \begin{subfigure}{\textwidth}
         \centering
-        \input{plots/latency/recommendation-latency-two-partition-boxplot}
-        \caption{Single partition recommendation generation latency compared to two partitions}
-        \label{plot:recommendation-latency-two-partitions}
+        \input{plots/latency/average-latency-two-partitions.tex}
+        \caption{Average partition recommendation generation latency of single instance compared to two partitions}
+        \label{plot:average-recommendation-latency-two-partitions}
     \end{subfigure}\qquad
 
     \begin{subfigure}{\textwidth}
         \centering
-        \input{plots/latency/recommendation-latency-four-partition-boxplot}
-        \caption{Recommendation generation latency in four partition}
-        \label{plot:recommendation-latency-four-partitions}
+        \input{plots/latency/average-latency-four-partitions.tex}
+        \caption{Average partition recommendation generation latency of single instance compared to four partitions}
+        \label{plot:average-recommendation-latency-four-partitions}
     \end{subfigure}\qquad
-    \caption{Recommendation generation latency in seconds.}
-    \label{plot:recommendation-latency}
+    \caption{Averange recommendation generation latency in seconds. These diagrams visualize the latency improvement when scaling the system horizontally.}
+    \label{plot:average-recommendation-latency}
 \end{figure}
 
 
@@ -85,15 +89,15 @@ The \emph{Most Interactions} method has the most significant latency. For each u
 The idea of storing the degrees of the user during partitioning time and using a load balancer to make the correct partition mentioned in \ref{fig:loadbalancer} could improve the latency. Although, further investigations are needed to benchmark the latency of the proposed load balancer idea.
 
 
-\begin{table}[!ht]
+\begin{table}[!htb]
     \centering
-    \caption{Average latency in seconds of different data fusion approaches for 500 users}
+    \caption{Average latency in seconds of different data fusion approaches for 500 users when unifying the reuslts of two partitions}
     \label{tab:data-fusion-latency}
     \begin{tabular}{|c|c|c|}
         \hline
         \textbf{Union Results} & \textbf{Highest Hit} & \textbf{Most Interactions} \\
         \hline
-        0.13 & 0.50 & 4.55 \\
+        0.13 Seconds & 0.50 Seconds & 4.55 Seconds \\
         \hline
     \end{tabular}
 \end{table}

@@ -3,12 +3,12 @@
 The multi-machine architecture described in section \ref{subsec:multiple-machines} forwards the incoming requests to all the available instances, leading all the machines to run the SALSA algorithm and then use one of the data fusion approaches to integrate the results of the workers into a single ranked list. Each worker (in parallel) runs the random walk algorithm in complete isolation. However, the data fusion process waits for all the instances to finish the random walk. 
 
 
-Running the random walk algorithm on all machines is expensive and not optimal. Instead, if we know which machine to ask for, we can reduce the total work. Imagine a scenario, where the StarSpace partitioner distributes the data on the instances and the \emph{Most Interactions} approach is used to fusion the data (see section \ref{subsec:data-fusion-most-interactions}). In other words, rather than requesting all the instances to run the random walk algorithm and then check which machine holds the most significant degree, we can ask the particular machine with the highest degree for the user recommendations.
+Running the random walk algorithm on all machines is expensive and not optimal. Instead, if we know which machine to ask for, we can reduce the total work. Imagine a scenario, where the StarSpace partitioner distributes the data on the instances and the \emph{Most Interactions} approach is used to fuse the data (see section \ref{subsec:data-fusion-most-interactions}). In other words, rather than requesting all the instances to run the random walk algorithm and then check which machine holds the most significant degree, we can ask the particular machine with the highest degree for the user recommendations.
 
 This research proposes an idea to implement this approach. Figure \ref{fig:loadbalancer} demonstrates this idea. A \emph{Load Balancer} is introduced that receives the queried user-ID and forwards it to the instance with the highest degree of that user-ID. The degree of a user can be stored during partition time. To keep track of the incoming data frequency, a probabilistic data structure called \emph{Count Min Sketch (CMS)} \cite{cormodeImprovedDataStream2005} in the load balancer can be used.
 
 
-\begin{figure}[!ht]
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=1\textwidth]{images/future-system-architecture}
     \caption{Proposed architecture with the load balancer to route the upcoming requests. The yellow arrow visualizes a new user-document interaction that is being forwarded to its worker. The yellow arrow indicates that the partitioner sends a tuple containing the user-ID and partition-ID (Worker 3) to the load balancer. The red arrow illustrates a forwarded read query to a worker holding the most significant node degree number of the queried user.}
@@ -18,7 +18,7 @@ This research proposes an idea to implement this approach. Figure \ref{fig:loadb
 
 The CMS will receive from the partitioner a tuple containing the user-ID and the calculated partition-ID, one at a time, and stores it. The CMS can keep track of the frequency of the tuples it saved. Consider the example in the figure \ref{fig:count-min-sketch}. This figure shows a count-min-sketch matrix with a width of \emph{W} and a length of \emph{d} containing \emph{d} hash functions. During partition time, the tuple \emph{(\emph{U}, \emph{P$_1$})} is hashed by the hash functions, and the frequency is incremented.
 
-\begin{figure}[!ht]
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=1\textwidth]{images/count-min-sketch}
     \caption{The count min sketch data structure used in the load balancer to maintain the frequency (degree) of user \emph{U} on partition \emph{$P_1$}.}
@@ -29,7 +29,7 @@ The CMS will receive from the partitioner a tuple containing the user-ID and the
 During query time, each user-ID, partition-ID pair frequency is retrieved from CMS and compared against each other. Consider the algorithm \ref{alg:retrieve-degree}, imagine the user-ID \emph{U} is queried and \emph{N} being the number of existing partitions. The set \emph{P}=\{\emph{P$_1$}, \emph{P$_1$},... ,\emph{P$_N$}\} defining the partition-ID of each partition in the cluster. The load balancer needs to retrieve for each partition in the cluster the degree number of the user \emph{U} saved in the CMS. In other words, the pairs \{(\emph{U}, \emph{P$_1$}), (\emph{U}, \emph{P$_2$}),..., (\emph{U}, \emph{P$_N$})\} will be asked from the CMS in the load balancer and the retrieved value would be the degree of the user \emph{U}. From there, we can use the partition-ID to ask the instance to generate the recommendations.
 
 
-\begin{algorithm}[!ht]
+\begin{algorithm}[!htb]
     \caption{Retrieve the highest degree from CMS}
     \label{alg:retrieve-degree}
     \SetKwData{partitionId}{partitionId}

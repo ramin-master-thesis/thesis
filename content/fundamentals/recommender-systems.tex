@@ -28,7 +28,7 @@ Image a document recommender system, recommending similar documents to the users
 In \cite{suSurveyCollaborativeFiltering} the different techniques used to implement CF systems are explained in detail. Moreover, they discuss multiple evaluation metrics to assess the recommendation quality.
 
 
-\begin{figure}[!ht]
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=0.50\textwidth]{images/collaborative-filtering}
     \caption{Collaborative filtering}
@@ -56,7 +56,7 @@ According to \cite{webberSimilarityMeasureIndefinite2010} when comparing the gol
 
 This section introduces the evaluation metrics listed in the table \ref{tab:evaluation-metrics}. For more metrics for evaluating collaborative filtering recommender system please refer to \cite{herlockerEvaluatingCollaborativeFiltering2004}.
 
-\begin{table}[!ht]
+\begin{table}[!htb]
     \centering
     \caption{Evaluation metrics}
     \label{tab:evaluation-metrics}
@@ -119,7 +119,7 @@ Average precision calculates the retrieval effectiveness for the results of one 
 \end{equation}
 Where \emph{U} is the number of queries.
 
-\begin{table}[!ht]
+\begin{table}[!htb]
     \caption{Comparing results of objective and observed ranking}
     \label{tab:apk-example}
     \begin{subtable}{.5\linewidth}
@@ -262,7 +262,7 @@ Studies show that data fusion methods in IR systems are complex and depend highl
 Single instance recommender systems take a query as their input and produce a single ranked list of recommendations for a user. The incoming query can only be a simple user-ID in recommendation systems and does not need to go through the formulation step. Figure \ref{fig:data-fusion-simple} represents this behaviour.
 
 
-\begin{figure}[!ht]
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=0.90\textwidth]{images/simple-formulation-schema}
     \caption{A simple recommendation system with a formulation and schema step. The query is sent directy to the schema \emph{S}.The formulation step \emph{F} (represented in gray) is skiped since user-ID the does not need to get normalized.}
