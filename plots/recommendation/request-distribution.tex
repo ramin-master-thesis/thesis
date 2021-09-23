@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        xbar, 
+        xmin=0, xmax=500,
+        width=12cm, height=4cm, enlarge y limits=0.5,
+        xlabel={Amount of Chosen Recommendation's List},
+        ytick={0, 1},
+        yticklabels={Partition 0, Partition 1},
+        nodes near coords, nodes near coords align={horizontal},
+        every axis plot/.append style={
+            xbar,
+            bar shift=0pt,
+        }
+    ]
+        \addplot coordinates {(214, 0)};
+        \addplot coordinates {(286, 1)};
+    \end{axis}
+\end{tikzpicture}

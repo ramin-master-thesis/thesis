@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+    \begin{axis}[
+			x axis line style={opacity=0},
+			axis x line*=bottom,
+			xtick={1,2,3,4,5},
+			xticklabels={Single, Partition 0, Partition 1, Partition 2, Partition 3},
+			enlarge x limits=0.1,
+			xtick distance=2,
+			ylabel=Seconds,
+			width = 12cm, height=8cm,
+            ymin=0,
+            scatter/classes={
+                a={mark=*,blue},
+                b={mark=*,red},
+                c={mark=*,brown},
+                d={mark=*,black},
+                e={mark=*,green}
+            },
+        ]
+        \addplot [
+            scatter,
+            only marks,
+            point meta=explicit symbolic,
+        ]
+        coordinates {
+            (1, 381.0540895) [a]
+            (2, 225.9576324) [b]
+            (3, 226.8004911) [c]
+            (4, 229.6559840) [d]
+            (5, 223.8021929) [e]
+            };
+    \end{axis}
+\end{tikzpicture}

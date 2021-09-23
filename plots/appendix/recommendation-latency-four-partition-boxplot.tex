@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+	\begin{axis}[,
+			boxplot/draw direction=y,
+			x axis line style={opacity=0},
+			axis x line*=bottom,
+			xtick={1,2,3,4},
+			xticklabels={Partition 0, Partition 1, Partition 2, Partition 3},
+			enlarge x limits=0.1,
+			xtick distance=2,
+			ylabel=Seconds,
+			height = 6cm, width = 12cm
+		]
+
+		\addplot+ [boxplot]
+		table [y index=1] {appendix/recommendation-latency-four-partition.dat};
+
+		\addplot+ [boxplot]
+		table [y index=2] {appendix/recommendation-latency-four-partition.dat};
+
+		\addplot+ [boxplot]
+		table [y index=3] {appendix/recommendation-latency-four-partition.dat};
+
+		\addplot+ [boxplot]
+		table [y index=4] {appendix/recommendation-latency-four-partition.dat};
+	\end{axis}
+\end{tikzpicture}

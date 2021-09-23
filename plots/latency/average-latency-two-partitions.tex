@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+    \begin{axis}[
+			x axis line style={opacity=0},
+			axis x line*=bottom,
+			xtick={1,2,3},
+			xticklabels={Single, Partition 0, Partition 1},
+			enlarge x limits=0.1,
+			xtick distance=2,
+			ylabel=Seconds,
+			width = 0.70\linewidth,
+            ymin=0,
+            scatter/classes={
+                a={mark=*,blue},
+                b={mark=*,red},
+                c={mark=*,black}
+            },
+        ]
+        \addplot [
+            scatter,
+            only marks,
+            point meta=explicit symbolic,
+        ]
+        coordinates {
+            (1, 381.0540895) [a]
+            (2, 343.2726167) [b]
+            (3, 343.0042631) [c]
+            };
+    \end{axis}
+\end{tikzpicture}
