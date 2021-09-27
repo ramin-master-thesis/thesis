@@ -128,5 +128,5 @@ Figure \ref{fig:multiple-machine-architecture-read} shows what happens when a re
         \label{fig:multiple-machine-architecture-read}
     \end{subfigure}
     
-    \caption {The multi-instance environment with three workers. (a) visualizes the partitioning process. Whenever a new document is received, the partitioner will compute its partition-ID and send it to a worker. (b) Showing the multi-instance environment after the data partitioning has finished and the system is ready to receive read queries. Each worker runs the SALSA algorithm in complete isolation and forwards its results to the data fusion module.}
+    \caption {The multi-instance environment with three workers. (a) visualizes the partitioning process. Whenever a new document is received, the partitioner will compute its partition-ID and send it to a worker. The shape between the partitioner and the workers indicates an exclusive gateway (XOR) that the partitioner will choose only one worker. (b) Showing the multi-instance environment after the data partitioning has finished and the system is ready to receive read queries. Each worker runs the SALSA algorithm in complete isolation and forwards its results to the data fusion module.}
 \end{figure}
