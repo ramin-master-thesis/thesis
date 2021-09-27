@@ -9,10 +9,8 @@
   publisher = {{ACM}},
   address = {{Shinjuku Tokyo Japan}},
   doi = {10.1145/3077136.3080839},
-  abstract = {A search engine that can return the ideal results for a person's information need, independent of the speci c query that is used to express that need, would be preferable to one that is overly swayed by the individual terms used; search engines should be consistent in the presence of syntactic query variations responding to the same information need. In this paper we examine the retrieval consistency of a set of ve systems responding to syntactic query variations over one hundred topics, working with the UQV100 test collection, and using Rank-Biased Overlap (RBO) relative to a centroid ranking over the query variations per topic as a measure of consistency. We also introduce a new data fusion algorithm, Rank-Biased Centroid (RBC), for constructing a centroid ranking over a set of rankings from query variations for a topic. RBC is compared with alternative data fusion algorithms.},
   isbn = {978-1-4503-5022-8},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/4NQG4R7S/Bailey et al. - 2017 - Retrieval Consistency in the Presence of Query Var.pdf}
+  language = {en}
 }
 
 @article{balakrishnamaLINEARDISCRIMINANTANALYSIS,
@@ -23,14 +21,18 @@
   file = {/home/ramin/Zotero/storage/QIJ36G5K/Balakrishnama and Ganapathiraju - LINEAR DISCRIMINANT ANALYSIS - A BRIEF TUTORIAL.pdf}
 }
 
-@article{balujaVideoSuggestionDiscovery2008,
-  title = {Video {{Suggestion}} and {{Discovery}} for {{YouTube}}: {{Taking Random Walks Through}} the {{View Graph}}},
-  author = {Baluja, Shumeet and Seth, Rohan and Sivakumar, D and Jing, Yushi and Yagnik, Jay and Kumar, Shankar and Ravichandran, Deepak and Aly, Mohamed},
+@inproceedings{balujaVideoSuggestionDiscovery2008,
+  title = {Video Suggestion and Discovery for Youtube: Taking Random Walks through the View Graph},
+  shorttitle = {Video Suggestion and Discovery for Youtube},
+  booktitle = {Proceeding of the 17th International Conference on {{World Wide Web}}  - {{WWW}} '08},
+  author = {Baluja, Shumeet and Seth, Rohan and Sivakumar, D. and Jing, Yushi and Yagnik, Jay and Kumar, Shankar and Ravichandran, Deepak and Aly, Mohamed},
   year = {2008},
-  pages = {10},
-  abstract = {The rapid growth of the number of videos in YouTube provides enormous potential for users to find content of interest to them. Unfortunately, given the difficulty of searching videos, the size of the video repository also makes the discovery of new content a daunting task. In this paper, we present a novel method based upon the analysis of the entire user\textendash video graph to provide personalized video suggestions for users. The resulting algorithm, termed Adsorption, provides a simple method to efficiently propagate preference information through a variety of graphs. We extensively test the results of the recommendations on a three month snapshot of live data from YouTube.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/DXK72SHD/Baluja et al. - 2008 - Video Suggestion and Discovery for YouTube Taking.pdf}
+  pages = {895},
+  publisher = {{ACM Press}},
+  address = {{Beijing, China}},
+  doi = {10.1145/1367497.1367618},
+  isbn = {978-1-60558-085-2},
+  language = {en}
 }
 
 @article{bengioNeuralProbabilisticLanguage2003,
@@ -44,25 +46,30 @@
   pages = {1137--1155},
   issn = {1532-4435},
   abstract = {A goal of statistical language modeling is to learn the joint probability function of sequences of words in a language. This is intrinsically difficult because of the curse of dimensionality: a word sequence on which the model will be tested is likely to be different from all the word sequences seen during training. Traditional but very successful approaches based on n-grams obtain generalization by concatenating very short overlapping sequences seen in the training set. We propose to fight the curse of dimensionality by learning a distributed representation for words which allows each training sentence to inform the model about an exponential number of semantically neighboring sentences. The model learns simultaneously (1) a distributed representation for each word along with (2) the probability function for word sequences, expressed in terms of these representations. Generalization is obtained because a sequence of words that has never been seen before gets high probability if it is made of words that are similar (in the sense of having a nearby representation) to words forming an already seen sentence. Training such large models (with millions of parameters) within a reasonable time is itself a significant challenge. We report on experiments using neural networks for the probability function, showing on two text corpora that the proposed approach significantly improves on state-of-the-art n-gram models, and that the proposed approach allows to take advantage of longer contexts.},
-  file = {/home/ramin/Zotero/storage/KTKDEPRD/Bengio et al. - 2003 - A neural probabilistic language model.pdf}
+  file = {/home/ramin/Zotero/storage/4EU4UVL6/Bengio et al. - 2003 - A neural probabilistic language model.pdf}
 }
 
-@article{buckleyTopicPredictionBased,
-  title = {Topic {{Prediction Based}} on {{Comparative Retrieval Rankings}}},
-  author = {Buckley, Chris and Research, Sabir},
-  pages = {2},
-  abstract = {A new measure, AnchorMap, is introduced to evaluate how close two document retrieval rankings are to each other. It is shown that AnchorMap scores, when run on a set of initial ranked document lists from 8 different systems, are very highly correlated with categorization of topics as easy or hard, and separately, are highly correlated with those topics on which blind feedback works. In another experiment, AnchorMap is used to compare the initial ranked document list from a single system against the ranked document list from that system after blind feedback. Again, high AnchorMap values are highly correlated with both topic difficulty and successful application of blind feedback. Both experiments are examples of using properties of a topic which are independent of relevance information to predict the actual performance of IR systems on the topic. Initial experiments to attempt to improve retrieval performance based upon AnchorMap failed; the causes for failure are discussed.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/JDUF5UR4/Buckley and Research - Topic Prediction Based on Comparative Retrieval Ra.pdf}
+@inproceedings{buckleyTopicPredictionBased2004,
+  title = {Topic Prediction Based on Comparative Retrieval Rankings},
+  booktitle = {Proceedings of the 27th Annual International Conference on {{Research}} and Development in Information Retrieval  - {{SIGIR}} '04},
+  author = {Buckley, Chris},
+  year = {2004},
+  pages = {506},
+  publisher = {{ACM Press}},
+  address = {{Sheffield, United Kingdom}},
+  doi = {10.1145/1008992.1009093},
+  isbn = {978-1-58113-881-8},
+  language = {en}
 }
 
-@article{chenRankingMeasuresLoss,
-  title = {Ranking {{Measures}} and {{Loss Functions}} in {{Learning}} to {{Rank}}},
+@inproceedings{chenRankingMeasuresLoss,
+  title = {Ranking Measures and Loss Functions in Learning to Rank},
+  booktitle = {Advances in Neural Information Processing Systems},
   author = {Chen, Wei and Liu, Tie-yan and Lan, Yanyan and Ma, Zhi-ming and Li, Hang},
-  pages = {9},
-  abstract = {Learning to rank has become an important research topic in machine learning. While most learning-to-rank methods learn the ranking functions by minimizing loss functions, it is the ranking measures (such as NDCG and MAP) that are used to evaluate the performance of the learned ranking functions. In this work, we reveal the relationship between ranking measures and loss functions in learningto-rank methods, such as Ranking SVM, RankBoost, RankNet, and ListMLE. We show that the loss functions of these methods are upper bounds of the measurebased ranking errors. As a result, the minimization of these loss functions will lead to the maximization of the ranking measures. The key to obtaining this result is to model ranking as a sequence of classification tasks, and define a so-called essential loss for ranking as the weighted sum of the classification errors of individual tasks in the sequence. We have proved that the essential loss is both an upper bound of the measure-based ranking errors, and a lower bound of the loss functions in the aforementioned methods. Our proof technique also suggests a way to modify existing loss functions to make them tighter bounds of the measure-based ranking errors. Experimental results on benchmark datasets show that the modifications can lead to better ranking performances, demonstrating the correctness of our theoretical analysis.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/J7U5N3QY/Chen et al. - Ranking Measures and Loss Functions in Learning to.pdf}
+  editor = {Bengio, Y. and Schuurmans, D. and Lafferty, J. and Williams, C. and Culotta, A.},
+  year = {2009},
+  volume = {22},
+  publisher = {{Curran Associates, Inc.}}
 }
 
 @article{collobertNaturalLanguageProcessing2011,
@@ -77,25 +84,37 @@
   abstract = {We propose a unified neural network architecture and learning algorithm that can be applied to various natural language processing tasks including: part-of-speech tagging, chunking, named entity recognition, and semantic role labeling. This versatility is achieved by trying to avoid task-specific engineering and therefore disregarding a lot of prior knowledge. Instead of exploiting man-made input features carefully optimized for each task, our system learns internal representations on the basis of vast amounts of mostly unlabeled training data. This work is then used as a basis for building a freely available tagging system with good performance and minimal computational requirements.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Computation and Language,Computer Science - Machine Learning},
-  file = {/home/ramin/Zotero/storage/LCUW8TWE/Collobert et al. - 2011 - Natural Language Processing (almost) from Scratch.pdf;/home/ramin/Zotero/storage/GXRVAAV2/1103.html}
+  file = {/home/ramin/Zotero/storage/43AAW44D/Collobert et al. - 2011 - Natural Language Processing (almost) from Scratch.pdf;/home/ramin/Zotero/storage/4TN3WHPQ/1103.html}
 }
 
-@misc{cormodeImprovedDataStream2005,
+@article{cormodeImprovedDataStream2005,
   title = {An Improved Data Stream Summary: The Count-Min Sketch and Its Applications},
   shorttitle = {An Improved Data Stream Summary},
   author = {Cormode, Graham and Muthukrishnan, S.},
   year = {2005},
-  file = {/home/ramin/Zotero/storage/2HXQHVWN/Cormode and Muthukrishnan - 2005 - An improved data stream summary the count-min ske.pdf;/home/ramin/Zotero/storage/U2FIIZW4/download.html}
+  month = apr,
+  journal = {Journal of Algorithms},
+  volume = {55},
+  number = {1},
+  pages = {58--75},
+  issn = {01966774},
+  doi = {10.1016/j.jalgor.2003.12.001},
+  language = {en},
+  file = {/home/ramin/Zotero/storage/Y9Z3XKA6/Cormode and Muthukrishnan - 2005 - An improved data stream summary the count-min ske.pdf}
 }
 
-@article{dasGoogleNewsPersonalization2007,
-  title = {Google {{News Personalization}}: {{Scalable Online Collaborative Filtering}}},
-  author = {Das, Abhinandan and Datar, Mayur and Garg, Ashutosh},
+@inproceedings{dasGoogleNewsPersonalization2007,
+  title = {Google News Personalization: Scalable Online Collaborative Filtering},
+  shorttitle = {Google News Personalization},
+  booktitle = {Proceedings of the 16th International Conference on {{World Wide Web}}  - {{WWW}} '07},
+  author = {Das, Abhinandan S. and Datar, Mayur and Garg, Ashutosh and Rajaram, Shyam},
   year = {2007},
-  pages = {10},
-  abstract = {Several approaches to collaborative filtering have been studied but seldom have studies been reported for large (several million users and items) and dynamic (the underlying item set is continually changing) settings. In this paper we describe our approach to collaborative filtering for generating personalized recommendations for users of Google News. We generate recommendations using three approaches: collaborative filtering using MinHash clustering, Probabilistic Latent Semantic Indexing (PLSI), and covisitation counts. We combine recommendations from different algorithms using a linear model. Our approach is content agnostic and consequently domain independent, making it easily adaptable for other applications and languages with minimal effort. This paper will describe our algorithms and system setup in detail, and report results of running the recommendations engine on Google News.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/JHVVW6RQ/Das et al. - 2007 - Google News Personalization Scalable Online Colla.pdf}
+  pages = {271},
+  publisher = {{ACM Press}},
+  address = {{Banff, Alberta, Canada}},
+  doi = {10.1145/1242572.1242610},
+  isbn = {978-1-59593-654-7},
+  language = {en}
 }
 
 @article{devlinBERTPretrainingDeep2019,
@@ -111,16 +130,34 @@
   abstract = {We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5\% (7.7\% point absolute improvement), MultiNLI accuracy to 86.7\% (4.6\% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute improvement).},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Computation and Language},
-  file = {/home/ramin/Zotero/storage/Y58IG9ZR/Devlin et al. - 2019 - BERT Pre-training of Deep Bidirectional Transform.pdf;/home/ramin/Zotero/storage/CCZ5E5P6/1810.html}
+  file = {/home/ramin/Zotero/storage/LFUFG8X5/Devlin et al. - 2019 - BERT Pre-training of Deep Bidirectional Transform.pdf;/home/ramin/Zotero/storage/X7HHB68V/1810.html}
 }
 
-@book{drakopoulosUnsupervisedDiscoverySemantically2020,
+@inproceedings{drakopoulosUnsupervisedDiscoverySemantically2020,
   title = {Unsupervised {{Discovery Of Semantically Aware Communities With Tensor Kruskal Decomposition}}: {{A Case Study In Twitter}}},
   shorttitle = {Unsupervised {{Discovery Of Semantically Aware Communities With Tensor Kruskal Decomposition}}},
+  booktitle = {2020 15th {{International Workshop}} on {{Semantic}} and {{Social Media Adaptation}} and {{Personalization}} ({{SMA}}},
   author = {Drakopoulos, Georgios and Giotopoulos, Konstantinos and Giannoukou, Ioanna and Sioutas, Spyros},
   year = {2020},
   month = oct,
-  abstract = {Substantial empirical evidence, including the success of synthetic graph generation models as well as of analytical methodologies, suggests that large, real graphs have a recursive community structure. The latter results, in part at least, in other important properties of these graphs such as low diameter, high clustering coefficient values, heavy degree distribution tail, and clustered graph spectrum. Notice that this structure need not be official or moderated like Facebook groups, but it can also take an ad hoc and unofficial form depending on the functionality of the social network under study as for instance the follow relationship on Twitter or the connections between news aggregators on Reddit. Community discovery is paramount in numerous applications such as political campaigns, digital marketing, crowdfunding, and fact checking. Here a tensor representation for Twitter subgraphs is proposed which takes into consideration both the follow-follower relationships but also the coherency in hashtags. Community structure discovery then reduces to the computation of Tucker tensor decomposition, a higher order counterpart of the well-known unsupervised learning method of singular value decomposition (SVD). Tucker decomposition clearly outperforms the SVD in terms of finding a more compact community size distribution in experiments done in Julia on a Twitter subgraph. This can be attributed to the facts that the proposed methodology combines both structural and functional Twitter elements and that hashtags carry an increased semantic weight in comparison to ordinary tweets.}
+  pages = {1--8},
+  publisher = {{IEEE}},
+  address = {{Zakynthos, Greece}},
+  doi = {10.1109/SMAP49528.2020.9248469},
+  isbn = {978-1-72815-919-5}
+}
+
+@techreport{eastlakeUSSecureHash2001,
+  title = {{{US Secure Hash Algorithm}} 1 ({{SHA1}})},
+  author = {Eastlake, D. and Jones, P.},
+  year = {2001},
+  month = sep,
+  number = {RFC3174},
+  pages = {RFC3174},
+  institution = {{RFC Editor}},
+  doi = {10.17487/rfc3174},
+  language = {en},
+  file = {/home/ramin/Zotero/storage/498EANSQ/Eastlake and Jones - 2001 - US Secure Hash Algorithm 1 (SHA1).pdf}
 }
 
 @inproceedings{eksombatchaiPixieSystemRecommending2018,
@@ -144,14 +181,12 @@
   month = feb,
   journal = {Physics Reports},
   volume = {486},
-  number = {3},
+  number = {3-5},
   pages = {75--174},
-  issn = {0370-1573},
+  issn = {03701573},
   doi = {10.1016/j.physrep.2009.11.002},
-  abstract = {The modern science of networks has brought significant advances to our understanding of complex systems. One of the most relevant features of graphs representing real systems is community structure, or clustering, i.e. the organization of vertices in clusters, with many edges joining vertices of the same cluster and comparatively few edges joining vertices of different clusters. Such clusters, or communities, can be considered as fairly independent compartments of a graph, playing a similar role like, e.g., the tissues or the organs in the human body. Detecting communities is of great importance in sociology, biology and computer science, disciplines where systems are often represented as graphs. This problem is very hard and not yet satisfactorily solved, despite the huge effort of a large interdisciplinary community of scientists working on it over the past few years. We will attempt a thorough exposition of the topic, from the definition of the main elements of the problem, to the presentation of most methods developed, with a special focus on techniques designed by statistical physicists, from the discussion of crucial issues like the significance of clustering and how methods should be tested and compared against each other, to the description of applications to real networks.},
   language = {en},
-  keywords = {Clusters,Graphs,Statistical physics},
-  file = {/home/ramin/Zotero/storage/J9S9LGSP/Fortunato - 2010 - Community detection in graphs.pdf;/home/ramin/Zotero/storage/XNX97LMQ/S0370157309002841.html;/home/ramin/Zotero/storage/XQXGHTB3/S0370157309002841.html}
+  file = {/home/ramin/Zotero/storage/SUP4IGMV/Fortunato - 2010 - Community detection in graphs.pdf}
 }
 
 @article{frankhsuComparingRankScore2005,
@@ -165,26 +200,22 @@
   pages = {449--480},
   issn = {1386-4564, 1573-7659},
   doi = {10.1007/s10791-005-6994-4},
-  abstract = {Combination of multiple evidences (multiple query formulations, multiple retrieval schemes or systems) has been shown (mostly experimentally) to be effective in data fusion in information retrieval. However, the question of why and how combination should be done still remains largely unanswered. In this paper, we provide a model for simulation and a framework for analysis in the study of data fusion in the information retrieval domain. A rank/score function is defined and the concept of a Cayley graph is used in the design and analysis of our framework. The model and framework have led us to better understanding of the data fusion phenomena in information retrieval. In particular, by exploiting the graphical properties of the rank/score function, we have shown analytically and by simulation that combination using rank performs better than combination using score under certain conditions. Moreover, we demonstrated that the rank/score function might be used as a predictive variable for the effectiveness of combination of multiple evidences.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/FBPPVNBK/Frank Hsu and Taksa - 2005 - Comparing Rank and Score Combination Methods for D.pdf}
+  language = {en}
 }
 
-@article{goelWhoToFollowSystemTwitter2015,
+@article{goelWhoToFollowSystemTwitter2015a,
   title = {The {{Who}}-{{To}}-{{Follow System}} at {{Twitter}}: {{Strategy}}, {{Algorithms}}, and {{Revenue Impact}}},
   shorttitle = {The {{Who}}-{{To}}-{{Follow System}} at {{Twitter}}},
   author = {Goel, Ashish and Gupta, Pankaj and Sirois, John and Wang, Dong and Sharma, Aneesh and Gurumurthy, Siva},
   year = {2015},
   month = feb,
-  journal = {INFORMS Journal on Applied Analytics},
+  journal = {Interfaces},
   volume = {45},
   number = {1},
   pages = {98--107},
-  publisher = {{INFORMS}},
-  issn = {0092-2102},
+  issn = {0092-2102, 1526-551X},
   doi = {10.1287/inte.2014.0784},
-  abstract = {The who-to-follow system at Twitter is an algorithmic data product that recommends accounts for Twitter users to follow. Building the system involved algorithmic, analytics, operational, and experimental challenges; operations research and analytics techniques played a key role in resolving these challenges. This product has had significant direct impact on Twitter's growth and the quality of its user engagement, and has also been a major driver of revenue. More than one-eighth of all new connections on the Twitter network are a direct result of this system, and a substantial majority of Twitter's revenue comes from its promoted products, for which this system was a foundation. To place this contribution into perspective, Twitter is now a publicly traded company with a market capitalization of more than \$30 billion, projected annual revenue of close to \$1 billion, and more than 240 million active users.},
-  keywords = {computational analysis,data mining,Internet,optimization}
+  language = {en}
 }
 
 @article{goldbergUsingCollaborativeFiltering1992,
@@ -196,10 +227,9 @@
   volume = {35},
   number = {12},
   pages = {61--70},
-  issn = {0001-0782},
+  issn = {0001-0782, 1557-7317},
   doi = {10.1145/138859.138867},
-  keywords = {information filtering,tapestry},
-  file = {/home/ramin/Zotero/storage/7E29VEC4/Goldberg et al. - 1992 - Using collaborative filtering to weave an informat.pdf}
+  language = {en}
 }
 
 @article{goldbergWord2vecExplainedDeriving2014,
@@ -215,7 +245,7 @@
   abstract = {The word2vec software of Tomas Mikolov and colleagues (https://code.google.com/p/word2vec/ ) has gained a lot of traction lately, and provides state-of-the-art word embeddings. The learning models behind the software are described in two research papers. We found the description of the models in these papers to be somewhat cryptic and hard to follow. While the motivations and presentation may be obvious to the neural-networks language-modeling crowd, we had to struggle quite a bit to figure out the rationale behind the equations. This note is an attempt to explain equation (4) (negative sampling) in "Distributed Representations of Words and Phrases and their Compositionality" by Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg Corrado and Jeffrey Dean.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Computation and Language,Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/ramin/Zotero/storage/W48BLTKP/Goldberg and Levy - 2014 - word2vec Explained deriving Mikolov et al.'s nega.pdf;/home/ramin/Zotero/storage/X3F6BTWC/1402.html}
+  file = {/home/ramin/Zotero/storage/RTFF23ED/Goldberg and Levy - 2014 - word2vec Explained deriving Mikolov et al.'s nega.pdf;/home/ramin/Zotero/storage/ADH4ECKJ/1402.html}
 }
 
 @article{goyalGraphEmbeddingTechniques2018,
@@ -235,7 +265,7 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning,Computer Science - Social and Information Networks,Physics - Data Analysis; Statistics and Probability},
   note = {Comment: Submitted to Knowledge Based Systems for review},
-  file = {/home/ramin/Zotero/storage/IN93GUY3/Goyal and Ferrara - 2018 - Graph Embedding Techniques, Applications, and Perf.pdf;/home/ramin/Zotero/storage/HARQ7FVJ/1705.html}
+  file = {/home/ramin/Zotero/storage/334NJDH8/Goyal and Ferrara - 2018 - Graph Embedding Techniques, Applications, and Perf.pdf;/home/ramin/Zotero/storage/36G74472/1705.html}
 }
 
 @inproceedings{grewalEvolutionContentAnalysis2018,
@@ -248,10 +278,8 @@
   publisher = {{ACM}},
   address = {{Ann Arbor MI USA}},
   doi = {10.1145/3209978.3210206},
-  abstract = {We present a broad overview of personalized content recommendations at Twitter, discussing how our approach has evolved over the years, represented by several generations of systems. Historically, content analysis of Tweets has not been a priority, and instead engineering efforts have focused on graph-based recommendation techniques that exploit structural properties of the follow graph and engagement signals from users. These represent ``low hanging fruits'' that have enabled high-quality recommendations using simple algorithms. As deployed systems have grown in maturity and our understanding of the problem space has become more refined, we have begun to look for other opportunities to further improve recommendation quality. We overview recent investments in content analysis, particularly named-entity recognition techniques built around recurrent neural networks, and discuss how they integrate with existing graph-based capabilities to open up the design space of content recommendation algorithms.},
   isbn = {978-1-4503-5657-2},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/Q6NC4F44/Grewal and Lin - 2018 - The Evolution of Content Analysis for Personalized.pdf}
+  language = {en}
 }
 
 @article{grewalRecServiceDistributedRealTime,
@@ -274,10 +302,9 @@
   publisher = {{ACM}},
   address = {{San Francisco California USA}},
   doi = {10.1145/2939672.2939754},
-  abstract = {Prediction tasks over nodes and edges in networks require careful effort in engineering features used by learning algorithms. Recent research in the broader field of representation learning has led to significant progress in automating prediction by learning the features themselves. However, present feature learning approaches are not expressive enough to capture the diversity of connectivity patterns observed in networks.},
   isbn = {978-1-4503-4232-2},
   language = {en},
-  file = {/home/ramin/Zotero/storage/DLR769S6/Grover and Leskovec - 2016 - node2vec Scalable Feature Learning for Networks.pdf}
+  file = {/home/ramin/Zotero/storage/2NFQ8I7X/Grover and Leskovec - 2016 - node2vec Scalable Feature Learning for Networks.pdf}
 }
 
 @article{gunawardanaSurveyAccuracyEvaluation,
@@ -286,16 +313,21 @@
   pages = {28},
   abstract = {Recommender systems are now popular both commercially and in the research community, where many algorithms have been suggested for providing recommendations. These algorithms typically perform differently in various domains and tasks. Therefore, it is important from the research perspective, as well as from a practical view, to be able to decide on an algorithm that matches the domain and the task of interest. The standard way to make such decisions is by comparing a number of algorithms offline using some evaluation metric. Indeed, many evaluation metrics have been suggested for comparing recommendation algorithms. The decision on the proper evaluation metric is often critical, as each metric may favor a different algorithm. In this paper we review the proper construction of offline experiments for deciding on the most appropriate algorithm. We discuss three important tasks of recommender systems, and classify a set of appropriate well known evaluation metrics for each task. We demonstrate how using an improper evaluation metric can lead to the selection of an improper algorithm for the task of interest. We also discuss other important considerations when designing offline experiments.},
   language = {en},
-  file = {/home/ramin/Zotero/storage/GTSRGLHW/Gunawardana and Shani - A Survey of Accuracy Evaluation Metrics of Recomme.pdf}
+  file = {/home/ramin/Zotero/storage/D2M78N6S/Gunawardana and Shani - A Survey of Accuracy Evaluation Metrics of Recomme.pdf}
 }
 
-@article{guptaWTFWhoFollow,
-  title = {{{WTF}}: {{The Who}} to {{Follow Service}} at {{Twitter}}},
+@inproceedings{guptaWTFWhoFollow2013,
+  title = {{{WTF}}: The Who to Follow Service at {{Twitter}}},
+  shorttitle = {{{WTF}}},
+  booktitle = {Proceedings of the 22nd International Conference on {{World Wide Web}} - {{WWW}} '13},
   author = {Gupta, Pankaj and Goel, Ashish and Lin, Jimmy and Sharma, Aneesh and Wang, Dong and Zadeh, Reza},
-  pages = {11},
-  abstract = {Wtf (``Who to Follow'') is Twitter's user recommendation service, which is responsible for creating millions of connections daily between users based on shared interests, common connections, and other related factors. This paper provides an architectural overview and shares lessons we learned in building and running the service over the past few years. Particularly noteworthy was our design decision to process the entire Twitter graph in memory on a single server, which significantly reduced architectural complexity and allowed us to develop and deploy the service in only a few months. At the core of our architecture is Cassovary, an open-source in-memory graph processing engine we built from scratch for Wtf. Besides powering Twitter's user recommendations, Cassovary is also used for search, discovery, promoted products, and other services as well. We describe and evaluate a few graph recommendation algorithms implemented in Cassovary, including a novel approach based on a combination of random walks and SALSA. Looking into the future, we revisit the design of our architecture and comment on its limitations, which are presently being addressed in a secondgeneration system under development.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/8JZ6J7Q9/Gupta et al. - WTF The Who to Follow Service at Twitter.pdf}
+  year = {2013},
+  pages = {505--514},
+  publisher = {{ACM Press}},
+  address = {{Rio de Janeiro, Brazil}},
+  doi = {10.1145/2488388.2488433},
+  isbn = {978-1-4503-2035-1},
+  language = {en}
 }
 
 @article{herlockerEvaluatingCollaborativeFiltering2004,
@@ -310,35 +342,23 @@
   issn = {1046-8188, 1558-2868},
   doi = {10.1145/963770.963772},
   abstract = {Recommender systems have been evaluated in many, often incomparable, ways. In this article, we review the key decisions in evaluating collaborative filtering recommender systems: the user tasks being evaluated, the types of analysis and datasets being used, the ways in which prediction quality is measured, the evaluation of prediction attributes other than quality, and the user-based evaluation of the system as a whole. In addition to reviewing the evaluation strategies used by prior researchers, we present empirical results from the analysis of various accuracy metrics on one content domain where all the tested metrics collapsed roughly into three equivalence classes. Metrics within each equivalency class were strongly correlated, while metrics from different equivalency classes were uncorrelated.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/KZWA4I77/Herlocker et al. - 2004 - Evaluating collaborative filtering recommender sys.pdf}
+  language = {en}
 }
 
-@article{hollocouStreamingAlgorithmGraph,
+@article{hollocouStreamingAlgorithmGraph2017,
   title = {A {{Streaming Algorithm}} for {{Graph Clustering}}},
   author = {Hollocou, Alexandre and Maudet, Julien and Bonald, Thomas and Lelarge, Marc},
-  pages = {13},
+  year = {2017},
+  month = dec,
+  journal = {arXiv:1712.04337 [cs]},
+  eprint = {1712.04337},
+  eprinttype = {arxiv},
+  primaryclass = {cs},
   abstract = {We introduce a novel algorithm to perform graph clustering in the edge streaming setting. In this model, the graph is presented as a sequence of edges that can be processed strictly once. Our streaming algorithm has an extremely low memory footprint as it stores only three integers per node and does not keep any edge in memory. We provide a theoretical justification of the design of the algorithm based on the modularity function, which is a usual metric to evaluate the quality of a graph partition. We perform experiments on massive real-life graphs ranging from one million to more than one billion edges and we show that this new algorithm runs more than ten times faster than existing algorithms and leads to similar or better detection scores on the largest graphs.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/GK4LVGQB/Hollocou et al. - A Streaming Algorithm for Graph Clustering.pdf}
-}
-
-@article{iwendiEfficientUniqueTF2019,
-  title = {An {{Efficient}} and {{Unique TF}}/{{IDF Algorithmic Model}}-{{Based Data Analysis}} for {{Handling Applications}} with {{Big Data Streaming}}},
-  author = {Iwendi, Celestine and Ponnan, Suresh and Munirathinam, Revathi and Srinivasan, Kathiravan and Chang, Chuan-Yu},
-  year = {2019},
-  month = nov,
-  journal = {Electronics},
-  volume = {8},
-  number = {11},
-  pages = {1331},
-  publisher = {{Multidisciplinary Digital Publishing Institute}},
-  doi = {10.3390/electronics8111331},
-  abstract = {As the field of data science grows, document analytics has become a more challenging task for rough classification, response analysis, and text summarization. These tasks are used for the analysis of text data from various intelligent sensing systems. The conventional approach for data analytics and text processing is not useful for big data coming from intelligent systems. This work proposes a novel TF/IDF algorithm with the temporal Louvain approach to solve the above problem. Such an approach is supposed to help the categorization of documents into hierarchical structures showing the relationship between variables, which is a boon to analysts making essential decisions. This paper used public corpora, such as Reuters-21578 and 20 Newsgroups for massive-data analytic experimentation. The result shows the efficacy of the proposed algorithm in terms of accuracy and execution time across six datasets. The proposed approach is validated to bring value to big text data analysis. Big data handling with map-reduce has led to tremendous growth and support for tasks like categorization, sentiment analysis, and higher-quality accuracy from the input data. Outperforming the state-of-the-art approach in terms of accuracy and execution time for six datasets ensures proper validation.},
-  copyright = {http://creativecommons.org/licenses/by/3.0/},
-  language = {en},
-  keywords = {big data analytics,data fusion,document gathering,efficiency,hierarchical structural categories,intelligent systems},
-  file = {/home/ramin/Zotero/storage/JG5F4L3W/Iwendi et al. - 2019 - An Efficient and Unique TFIDF Algorithmic Model-B.pdf}
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Machine Learning,Computer Science - Social and Information Networks},
+  note = {Comment: NIPS Wokshop on Advances in Modeling and Learning Interactions from Complex Data, 2017. arXiv admin note: substantial text overlap with arXiv:1703.02955},
+  file = {/home/ramin/Zotero/storage/TVEKLRWP/Hollocou et al. - 2017 - A Streaming Algorithm for Graph Clustering.pdf;/home/ramin/Zotero/storage/JXJ49WVE/1712.html}
 }
 
 @article{jarvelinCumulatedGainbasedEvaluation2002,
@@ -353,37 +373,7 @@
   issn = {1046-8188, 1558-2868},
   doi = {10.1145/582415.582418},
   abstract = {Modern large retrieval environments tend to overwhelm their users by their large output. Since all documents are not of equal relevance to their users, highly relevant documents should be identified and ranked first for presentation. In order to develop IR techniques in this direction, it is necessary to develop evaluation approaches and methods that credit IR methods for their ability to retrieve highly relevant documents. This can be done by extending traditional evaluation methods, that is, recall and precision based on binary relevance judgments, to graded relevance judgments. Alternatively, novel measures based on graded relevance judgments may be developed. This article proposes several novel measures that compute the cumulative gain the user obtains by examining the retrieval result up to a given ranked position. The first one accumulates the relevance scores of retrieved documents along the ranked result list. The second one is similar but applies a discount factor to the relevance scores in order to devaluate late-retrieved documents. The third one computes the relative-to-the-ideal performance of IR techniques, based on the cumulative gain they are able to yield. These novel measures are defined and discussed and their use is demonstrated in a case study using TREC data: sample system run results for 20 queries in TREC-7. As a relevance base we used novel graded relevance judgments on a four-point scale. The test results indicate that the proposed measures credit IR methods for their ability to retrieve highly relevant documents and allow testing of statistical significance of effectiveness differences. The graphs based on the measures also provide insight into the performance IR techniques and allow interpretation, for example, from the user point of view.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/U4MSHG4H/Järvelin and Kekäläinen - 2002 - Cumulated gain-based evaluation of IR techniques.pdf}
-}
-
-@article{jarvelinCumulatedGainbasedEvaluation2002a,
-  title = {Cumulated Gain-Based Evaluation of {{IR}} Techniques},
-  author = {J{\"a}rvelin, Kalervo and Kek{\"a}l{\"a}inen, Jaana},
-  year = {2002},
-  month = oct,
-  journal = {ACM Transactions on Information Systems},
-  volume = {20},
-  number = {4},
-  pages = {422--446},
-  issn = {1046-8188},
-  doi = {10.1145/582415.582418},
-  abstract = {Modern large retrieval environments tend to overwhelm their users by their large output. Since all documents are not of equal relevance to their users, highly relevant documents should be identified and ranked first for presentation. In order to develop IR techniques in this direction, it is necessary to develop evaluation approaches and methods that credit IR methods for their ability to retrieve highly relevant documents. This can be done by extending traditional evaluation methods, that is, recall and precision based on binary relevance judgments, to graded relevance judgments. Alternatively, novel measures based on graded relevance judgments may be developed. This article proposes several novel measures that compute the cumulative gain the user obtains by examining the retrieval result up to a given ranked position. The first one accumulates the relevance scores of retrieved documents along the ranked result list. The second one is similar but applies a discount factor to the relevance scores in order to devaluate late-retrieved documents. The third one computes the relative-to-the-ideal performance of IR techniques, based on the cumulative gain they are able to yield. These novel measures are defined and discussed and their use is demonstrated in a case study using TREC data: sample system run results for 20 queries in TREC-7. As a relevance base we used novel graded relevance judgments on a four-point scale. The test results indicate that the proposed measures credit IR methods for their ability to retrieve highly relevant documents and allow testing of statistical significance of effectiveness differences. The graphs based on the measures also provide insight into the performance IR techniques and allow interpretation, for example, from the user point of view.},
-  keywords = {cumulated gain,Graded relevance judgments},
-  file = {/home/ramin/Zotero/storage/K72PNT7L/Järvelin and Kekäläinen - 2002 - Cumulated gain-based evaluation of IR techniques.pdf}
-}
-
-@article{jirvelinIREvaluationMethods2017,
-  title = {{{IR}} Evaluation Methods for Retrieving Highly Relevant Documents},
-  author = {Jirvelin, Kalervo and Kekiiliinen, Jaana},
-  year = {2017},
-  journal = {ACM SIGIR Forum},
-  volume = {51},
-  number = {2},
-  pages = {8},
-  abstract = {This paper proposes evaluation methods based on the use of non-dichotomous relevance judgements in IR experiments. It is argued that evaluation methods should credit IR methods for their ability to retrieve highly relevant documents. This is desirable from the user point of view in modem large IR environments. The proposed methods are (1) a novel application of P-R curves and average precision computations based on separate recall bases for documents of different degrees of relevance, and (2) two novel measures computing the cumulative gain the user obtains by examining the retrieval result up to a given ranked position. We then demonstrate the use of these evaluation methods in a case study on the effectiveness of query types, based on combinations of query structures and expansion, in retrieving documents of various degrees of relevance. The test was run with a best match retrieval system (InQuery I) in a text database consisting of newspaper articles. The results indicate that the tested strong query structures are most effective in retrieving highly relevant documents. The differences between the query types are practically essential and statistically significant. More generally, the novel evaluation methods and the case demonstrate that non-dichotomous relevance assessments are applicable in IR experiments, may reveal interesting phenomena, and allow harder testing of IR methods.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/KH88Z4V2/Jirvelin and Kekiiliinen - 2017 - IR evaluation methods for retrieving highly releva.pdf}
+  language = {en}
 }
 
 @article{jolliffePrincipalComponentAnalysis2016,
@@ -400,7 +390,7 @@
   doi = {10.1098/rsta.2015.0202},
   abstract = {Large datasets are increasingly common and are often difficult to interpret. Principal component analysis (PCA) is a technique for reducing the dimensionality of such datasets, increasing interpretability but at the same time minimizing information loss. It does so by creating new uncorrelated variables that successively maximize variance. Finding such new variables, the principal components, reduces to solving an eigenvalue/eigenvector problem, and the new variables are defined by the dataset at hand, not               a priori               , hence making PCA an adaptive data analysis technique. It is adaptive in another sense too, since variants of the technique have been developed that are tailored to various different data types and structures. This article will begin by introducing the basic ideas of PCA, discussing what it can and cannot do. It will then describe some variants of PCA and their application.},
   language = {en},
-  file = {/home/ramin/Zotero/storage/PR8ZK2D5/Jolliffe and Cadima - 2016 - Principal component analysis a review and recent .pdf}
+  file = {/home/ramin/Zotero/storage/25IN26DC/Jolliffe and Cadima - 2016 - Principal component analysis a review and recent .pdf}
 }
 
 @article{joulinFastTextZipCompressing2016,
@@ -417,33 +407,32 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Computation and Language,Computer Science - Machine Learning},
   note = {Comment: Submitted to ICLR 2017},
-  file = {/home/ramin/Zotero/storage/GV8L4LS4/Joulin et al. - 2016 - FastText.zip Compressing text classification mode.pdf;/home/ramin/Zotero/storage/PVNQIXRJ/1612.html}
+  file = {/home/ramin/Zotero/storage/94I54EDM/Joulin et al. - 2016 - FastText.zip Compressing text classification mode.pdf;/home/ramin/Zotero/storage/4942CHPM/1612.html}
 }
 
-@book{jugelFightingSpamDating2019,
-  title = {Fighting {{Spam}} in {{Dating Apps}}},
-  author = {Jugel, Uwe and De Dios Santos, Juan and Trautmann, Evelyn and Behrens, Diogo},
-  year = {2019},
-  publisher = {{Gesellschaft f\"ur Informatik, Bonn}},
-  issn = {1617-5468},
-  doi = {10.18420/btw2019-22},
-  abstract = {Online dating allows for interactions between users with a high degree of connectivity. This digital form of interaction attracts spammers and scammers, who try to trick users to visit low-class competitors' websites or steal the users' money. Fortunately, each attacker leaves a footprint of its actions in the network. It is the task of an Anti-Spam system to detect these and punish the culprit. In this paper, we demonstrate how LOVOO fights such illegal activities using a system of modular, scalable, and fault-tolerant Anti-Spam components. We describe our stream-processing architecture and how it ensures flexibility and facilitates resource-efficient processing of the millions of events produced by hundreds of thousands of users.},
-  isbn = {978-3-88579-683-1},
-  language = {en},
-  annotation = {Accepted: 2019-04-11T07:21:23Z},
-  file = {/home/ramin/Zotero/storage/VFN7ATDF/Jugel et al. - 2019 - Fighting Spam in Dating Apps.pdf;/home/ramin/Zotero/storage/QU5UB9G5/21707.html}
+@inproceedings{jrvelinIREvaluationMethods2000,
+  title = {{{IR}} Evaluation Methods for Retrieving Highly Relevant Documents},
+  booktitle = {Proceedings of the 23rd Annual International {{ACM SIGIR}} Conference on {{Research}} and Development in Information Retrieval  - {{SIGIR}} '00},
+  author = {J?rvelin, Kalervo and Kek{\"a}l{\"a}inen, Jaana},
+  year = {2000},
+  pages = {41--48},
+  publisher = {{ACM Press}},
+  address = {{Athens, Greece}},
+  doi = {10.1145/345508.345545},
+  isbn = {978-1-58113-226-7},
+  language = {en}
 }
 
 @article{kendallNewMeasureRank1938,
   title = {A {{New Measure}} of {{Rank Correlation}}},
   author = {Kendall, M. G.},
   year = {1938},
+  month = jun,
   journal = {Biometrika},
   volume = {30},
   number = {1/2},
-  pages = {81--93},
-  publisher = {{[Oxford University Press, Biometrika Trust]}},
-  issn = {0006-3444},
+  pages = {81},
+  issn = {00063444},
   doi = {10.2307/2332226}
 }
 
@@ -458,26 +447,23 @@
   primaryclass = {cs, stat},
   abstract = {We present a scalable approach for semi-supervised learning on graph-structured data that is based on an efficient variant of convolutional neural networks which operate directly on graphs. We motivate the choice of our convolutional architecture via a localized first-order approximation of spectral graph convolutions. Our model scales linearly in the number of graph edges and learns hidden layer representations that encode both local graph structure and features of nodes. In a number of experiments on citation networks and on a knowledge graph dataset we demonstrate that our approach outperforms related methods by a significant margin.},
   archiveprefix = {arXiv},
-  language = {en},
   keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
   note = {Comment: Published as a conference paper at ICLR 2017},
-  file = {/home/ramin/Zotero/storage/WB2RJQ34/Kipf and Welling - 2017 - Semi-Supervised Classification with Graph Convolut.pdf}
+  file = {/home/ramin/Zotero/storage/TBGVT3PC/Kipf and Welling - 2017 - Semi-Supervised Classification with Graph Convolut.pdf;/home/ramin/Zotero/storage/2TY4QNXB/1609.html}
 }
 
 @article{kramerNonlinearPrincipalComponent1991,
   title = {Nonlinear Principal Component Analysis Using Autoassociative Neural Networks},
   author = {Kramer, Mark A.},
   year = {1991},
+  month = feb,
   journal = {AIChE Journal},
   volume = {37},
   number = {2},
   pages = {233--243},
-  issn = {1547-5905},
+  issn = {0001-1541, 1547-5905},
   doi = {10.1002/aic.690370209},
-  abstract = {Nonlinear principal component analysis is a novel technique for multivariate data analysis, similar to the well-known method of principal component analysis. NLPCA, like PCA, is used to identify and remove correlations among problem variables as an aid to dimensionality reduction, visualization, and exploratory data analysis. While PCA identifies only linear correlations between variables, NLPCA uncovers both linear and nonlinear correlations, without restriction on the character of the nonlinearities present in the data. NLPCA operates by training a feedforward neural network to perform the identity mapping, where the network inputs are reproduced at the output layer. The network contains an internal ``bottleneck'' layer (containing fewer nodes than input or output layers), which forces the network to develop a compact representation of the input data, and two additional hidden layers. The NLPCA method is demonstrated using time-dependent, simulated batch reaction data. Results show that NLPCA successfully reduces dimensionality and produces a feature space map resembling the actual distribution of the underlying system parameters.},
-  language = {en},
-  annotation = {\_eprint: https://aiche.onlinelibrary.wiley.com/doi/pdf/10.1002/aic.690370209},
-  file = {/home/ramin/Zotero/storage/HXJLEAHF/Kramer - 1991 - Nonlinear principal component analysis using autoa.pdf;/home/ramin/Zotero/storage/KXPGC3SS/aic.html}
+  language = {en}
 }
 
 @inproceedings{kutzkovWeightedSimilarityEstimation2015,
@@ -490,10 +476,8 @@
   publisher = {{ACM}},
   address = {{Melbourne Australia}},
   doi = {10.1145/2806416.2806515},
-  abstract = {Similarity computation between pairs of objects is often a bottleneck in many applications that have to deal with massive volumes of data. Motivated by applications such as collaborative filtering in large-scale recommender systems, and influence probabilities learning in social networks, we present new randomized algorithms for the estimation of weighted similarity in data streams.},
   isbn = {978-1-4503-3794-6},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/R2WI42JB/Kutzkov et al. - 2015 - Weighted Similarity Estimation in Data Streams.pdf}
+  language = {en}
 }
 
 @inproceedings{kwakWhatTwitterSocial2010,
@@ -505,10 +489,8 @@
   publisher = {{ACM Press}},
   address = {{Raleigh, North Carolina, USA}},
   doi = {10.1145/1772690.1772751},
-  abstract = {Twitter, a microblogging service less than three years old, commands more than 41 million users as of July 2009 and is growing fast. Twitter users tweet about any topic within the 140-character limit and follow others to receive their tweets. The goal of this paper is to study the topological characteristics of Twitter and its power as a new medium of information sharing.},
   isbn = {978-1-60558-799-8},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/GGW6U977/Kwak et al. - 2010 - What is Twitter, a social network or a news media.pdf}
+  language = {en}
 }
 
 @article{lempelSALSAStochasticApproach2001,
@@ -524,19 +506,17 @@
   issn = {1046-8188, 1558-2868},
   doi = {10.1145/382979.383041},
   abstract = {Today, when searching for information on the WWW, one usually performs a query through a term-based search engine. These engines return, as the query's result, a list of Web pages whose contents matches the query. For broad-topic queries, such searches often result in a huge set of retrieved documents, many of which are irrelevant to the user. However, much information is contained in the link-structure of the WWW. Information such as which pages are linked to others can be used to augment search algorithms. In this context, Jon Kleinberg introduced the notion of two distinct types of Web pages:               hubs               and               authorities               . Kleinberg argued that hubs and authorities exhibit a               mutually reinforcing relationship               : a good hub will point to many  authorities, and a good authority will be pointed at by many hubs. In light of this, he dervised an algoirthm aimed at finding authoritative pages. We present SALSA, a new stochastic approach for link-structure analysis, which examines random walks on graphs derived from the link-structure. We show that both SALSA and Kleinberg's Mutual Reinforcement approach employ the same metaalgorithm.  We then prove that SALSA is quivalent to a weighted in degree analysis of the link-sturcutre of WWW subgraphs, making it computationally more efficient than the Mutual reinforcement approach. We compare that results of applying SALSA to the results derived through Kleinberg's approach. These comparisions reveal a topological Phenomenon called the TKC               effect               which, in certain cases,  prevents the Mutual reinforcement approach from identifying meaningful authorities.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/82T7N9YD/Lempel and Moran - 2001 - SALSA the stochastic approach for link-structure .pdf}
+  language = {en}
 }
 
 @article{liakosRapidDetectionLocal2020,
   title = {Rapid {{Detection}} of {{Local Communities}} in {{Graph Streams}}},
   author = {Liakos, Panagiotis and Papakonstantinopoulou, Katia and Ntoulas, Alexandros and Delis, Alex},
   year = {2020},
-  month = jul,
   journal = {IEEE Transactions on Knowledge and Data Engineering},
-  doi = {10.1109/TKDE.2020.3012608},
-  abstract = {We examine the problem of uncovering communities in complex real-world networks whose elements and their respective associations manifest as streams of data. Community detection is applied in emerging computational environments and concerns critical applications in diverse areas including social computing, web analysis, IoT and biology. Despite the already expended related research efforts, the task of revealing the community structure of massive and rapidly-evolving networks remains very challenging. More specifically, there is an emerging need for online approaches that ingest graph data as a stream. In this paper, we propose a streaming-graph community-detection algorithm that expands seed-sets of nodes to communities. We consider an online setting and process a stream of edges while aiming to form communities on-the-fly using partial knowledge of the graph structure. We use space-efficient structures to maintain very limited information regarding the nodes of the graph and the sought communities, so as to effectively process large scale networks. In addition to our novel streaming approach, we develop a technique that increases the accuracy of our algorithm considerably and additionally propose a new clustering algorithm that allows for automatically deriving the size of the communities we seek to detect. Using ground-truth communities for a wide range of large real-word and synthetic networks, our experimental evaluation shows that our approach does achieve accuracy comparable, and oftentimes better, to the state-of-the-art non-streaming community detection algorithms. More importantly, we attain significant improvements in both execution time and memory requirements.},
-  file = {/home/ramin/Zotero/storage/V4RTM45Z/Liakos et al. - 2020 - Rapid Detection of Local Communities in Graph Stre.pdf}
+  pages = {1--1},
+  issn = {1041-4347, 1558-2191, 2326-3865},
+  doi = {10.1109/TKDE.2020.3012608}
 }
 
 @article{lindenAmazonComRecommendations2003,
@@ -551,8 +531,7 @@
   pages = {76--80},
   issn = {1089-7801},
   doi = {10.1109/MIC.2003.1167344},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/HYH7BNFW/Linden et al. - 2003 - Amazon.com recommendations item-to-item collabora.pdf}
+  language = {en}
 }
 
 @inproceedings{liuFilmTVActors2018,
@@ -568,6 +547,18 @@
   isbn = {978-1-5386-5892-5}
 }
 
+@book{manningIntroductionInformationRetrieval2008,
+  title = {Introduction to Information Retrieval},
+  author = {Manning, Christopher D. and Raghavan, Prabhakar and Sch{\"u}tze, Hinrich},
+  year = {2008},
+  publisher = {{Cambridge University Press}},
+  address = {{New York}},
+  isbn = {978-0-521-86571-5},
+  lccn = {QA76.9.T48 M26 2008},
+  keywords = {Document clustering,Information retrieval,Semantic Web,Text processing (Computer science)},
+  annotation = {OCLC: ocn190786122}
+}
+
 @inproceedings{mclaughlinCollaborativeFilteringAlgorithm2004,
   title = {A Collaborative Filtering Algorithm and Evaluation Metric That Accurately Model the User Experience},
   booktitle = {Proceedings of the 27th Annual International Conference on {{Research}} and Development in Information Retrieval  - {{SIGIR}} '04},
@@ -577,27 +568,22 @@
   publisher = {{ACM Press}},
   address = {{Sheffield, United Kingdom}},
   doi = {10.1145/1008992.1009050},
-  abstract = {Collaborative Filtering (CF) systems have been researched for over a decade as a tool to deal with information overload. At the heart of these systems are the algorithms which generate the predictions and recommendations.},
   isbn = {978-1-58113-881-8},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/JJJM7378/McLaughlin and Herlocker - 2004 - A collaborative filtering algorithm and evaluation.pdf}
+  language = {en}
 }
 
 @inproceedings{miettinenModelOrderSelection2011,
   title = {Model Order Selection for Boolean Matrix Factorization},
-  booktitle = {Proceedings of the 17th {{ACM SIGKDD}} International Conference on {{Knowledge}} Discovery and Data Mining},
+  booktitle = {Proceedings of the 17th {{ACM SIGKDD}} International Conference on {{Knowledge}} Discovery and Data Mining - {{KDD}} '11},
   author = {Miettinen, Pauli and Vreeken, Jilles},
   year = {2011},
-  month = aug,
-  series = {{{KDD}} '11},
-  pages = {51--59},
-  publisher = {{Association for Computing Machinery}},
-  address = {{New York, NY, USA}},
+  pages = {51},
+  publisher = {{ACM Press}},
+  address = {{San Diego, California, USA}},
   doi = {10.1145/2020408.2020424},
-  abstract = {Matrix factorizations---where a given data matrix is approximated by a product of two or more factor matrices---are powerful data mining tools. Among other tasks, matrix factorizations are often used to separate global structure from noise. This, however, requires solving the `model order selection problem' of determining where fine-grained structure stops, and noise starts, i.e., what is the proper size of the factor matrices. Boolean matrix factorization (BMF)---where data, factors, and matrix product are Boolean---has received increased attention from the data mining community in recent years. The technique has desirable properties, such as high interpretability and natural sparsity. But so far no method for selecting the correct model order for BMF has been available. In this paper we propose to use the Minimum Description Length (MDL) principle for this task. Besides solving the problem, this well-founded approach has numerous benefits, e.g., it is automatic, does not require a likelihood function, is fast, and, as experiments show, is highly accurate. We formulate the description length function for BMF in general---making it applicable for any BMF algorithm. We extend an existing algorithm for BMF to use MDL to identify the best Boolean matrix factorization, analyze the complexity of the problem, and perform an extensive experimental evaluation to study its behavior.},
   isbn = {978-1-4503-0813-7},
-  keywords = {boolean matrix factorizations,matrix decompositions,matrix factorizations,minimum description length principle,model order selection,model selection},
-  file = {/home/ramin/Zotero/storage/UKD9P4S3/Miettinen and Vreeken - 2011 - Model order selection for boolean matrix factoriza.pdf}
+  language = {en},
+  file = {/home/ramin/Zotero/storage/9FVL5VUL/Miettinen and Vreeken - 2011 - Model order selection for boolean matrix factoriza.pdf}
 }
 
 @article{mikolovEfficientEstimationWord2013,
@@ -612,7 +598,7 @@
   abstract = {We propose two novel model architectures for computing continuous vector representations of words from very large data sets. The quality of these representations is measured in a word similarity task, and the results are compared to the previously best performing techniques based on different types of neural networks. We observe large improvements in accuracy at much lower computational cost, i.e. it takes less than a day to learn high quality word vectors from a 1.6 billion words data set. Furthermore, we show that these vectors provide state-of-the-art performance on our test set for measuring syntactic and semantic word similarities.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Computation and Language},
-  file = {/home/ramin/Zotero/storage/E8QLWKMP/Mikolov et al. - 2013 - Efficient Estimation of Word Representations in Ve.pdf;/home/ramin/Zotero/storage/GMDVIDIK/1301.html}
+  file = {/home/ramin/Zotero/storage/UEKR7AFH/Mikolov et al. - 2013 - Efficient Estimation of Word Representations in Ve.pdf;/home/ramin/Zotero/storage/BWNRR4IM/1301.html}
 }
 
 @article{neumannBiclusteringBooleanMatrix2020,
@@ -628,7 +614,7 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Data Structures and Algorithms,Computer Science - Machine Learning},
   note = {Comment: This technical report is the slightly extended version of a paper [34] which appeared at VLDB'20},
-  file = {/home/ramin/Zotero/storage/64UYNS6C/Neumann and Miettinen - 2020 - Biclustering and Boolean Matrix Factorization in D.pdf;/home/ramin/Zotero/storage/ETY6E77B/2012.html}
+  file = {/home/ramin/Zotero/storage/EWI6IZ57/Neumann and Miettinen - 2020 - Biclustering and Boolean Matrix Factorization in D.pdf;/home/ramin/Zotero/storage/L2LKRXV9/2012.html}
 }
 
 @inproceedings{ouAsymmetricTransitivityPreserving2016b,
@@ -641,28 +627,24 @@
   publisher = {{ACM}},
   address = {{San Francisco California USA}},
   doi = {10.1145/2939672.2939751},
-  abstract = {Graph embedding algorithms embed a graph into a vector space where the structure and the inherent properties of the graph are preserved. The existing graph embedding methods cannot preserve the asymmetric transitivity well, which is a critical property of directed graphs. Asymmetric transitivity depicts the correlation among directed edges, that is, if there is a directed path from u to v, then there is likely a directed edge from u to v. Asymmetric transitivity can help in capturing structures of graphs and recovering from partially observed graphs. To tackle this challenge, we propose the idea of preserving asymmetric transitivity by approximating high-order proximity which are based on asymmetric transitivity. In particular, we develop a novel graph embedding algorithm, High-Order Proximity preserved Embedding (HOPE for short), which is scalable to preserve high-order proximities of large scale graphs and capable of capturing the asymmetric transitivity. More specifically, we first derive a general formulation that cover multiple popular highorder proximity measurements, then propose a scalable embedding algorithm to approximate the high-order proximity measurements based on their general formulation. Moreover, we provide a theoretical upper bound on the RMSE (Root Mean Squared Error) of the approximation. Our empirical experiments on a synthetic dataset and three realworld datasets demonstrate that HOPE can approximate the high-order proximities significantly better than the state-ofart algorithms and outperform the state-of-art algorithms in tasks of reconstruction, link prediction and vertex recommendation.},
   isbn = {978-1-4503-4232-2},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/YNE774B2/Ou et al. - 2016 - Asymmetric Transitivity Preserving Graph Embedding.pdf}
+  language = {en}
 }
 
-@article{perozziDeepWalkOnlineLearning2014,
-  title = {{{DeepWalk}}: {{Online Learning}} of {{Social Representations}}},
+@inproceedings{perozziDeepWalkOnlineLearning2014,
+  title = {{{DeepWalk}}: Online Learning of Social Representations},
   shorttitle = {{{DeepWalk}}},
+  booktitle = {Proceedings of the 20th {{ACM SIGKDD}} International Conference on {{Knowledge}} Discovery and Data Mining},
   author = {Perozzi, Bryan and {Al-Rfou}, Rami and Skiena, Steven},
   year = {2014},
   month = aug,
-  journal = {Proceedings of the 20th ACM SIGKDD international conference on Knowledge discovery and data mining},
-  eprint = {1403.6652},
-  eprinttype = {arxiv},
   pages = {701--710},
+  publisher = {{ACM}},
+  address = {{New York New York USA}},
   doi = {10.1145/2623330.2623732},
-  abstract = {We present DeepWalk, a novel approach for learning latent representations of vertices in a network. These latent representations encode social relations in a continuous vector space, which is easily exploited by statistical models. DeepWalk generalizes recent advancements in language modeling and unsupervised feature learning (or deep learning) from sequences of words to graphs. DeepWalk uses local information obtained from truncated random walks to learn latent representations by treating walks as the equivalent of sentences. We demonstrate DeepWalk's latent representations on several multi-label network classification tasks for social networks such as BlogCatalog, Flickr, and YouTube. Our results show that DeepWalk outperforms challenging baselines which are allowed a global view of the network, especially in the presence of missing information. DeepWalk's representations can provide \$F\_1\$ scores up to 10\% higher than competing methods when labeled data is sparse. In some experiments, DeepWalk's representations are able to outperform all baseline methods while using 60\% less training data. DeepWalk is also scalable. It is an online learning algorithm which builds useful incremental results, and is trivially parallelizable. These qualities make it suitable for a broad class of real world applications such as network classification, and anomaly detection.},
-  archiveprefix = {arXiv},
-  keywords = {Computer Science - Machine Learning,Computer Science - Social and Information Networks,H.2.8,I.2.6,I.5.1},
-  note = {Comment: 10 pages, 5 figures, 4 tables},
-  file = {/home/ramin/Zotero/storage/8PSFIEUI/Perozzi et al. - 2014 - DeepWalk Online Learning of Social Representation.pdf;/home/ramin/Zotero/storage/5X57P6WG/1403.html}
+  isbn = {978-1-4503-2956-9},
+  language = {en},
+  file = {/home/ramin/Zotero/storage/R68N68YT/Perozzi et al. - 2014 - DeepWalk online learning of social representation.pdf}
 }
 
 @article{resnickRecommenderSystems1997a,
@@ -676,42 +658,32 @@
   pages = {56--58},
   issn = {0001-0782, 1557-7317},
   doi = {10.1145/245108.245121},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/W2PYGW3B/Resnick and Varian - 1997 - Recommender systems.pdf}
+  language = {en}
 }
 
-@misc{RFC3174USSecure,
-  title = {{{RFC3174}}: {{US Secure Hash Algorithm}} 1 ({{SHA1}}) | {{Guide}} Books},
-  doi = {10.17487/RFC3174},
-  file = {/home/ramin/Zotero/storage/QEYET4K2/RFC3174.html}
-}
-
-@book{rijsbergenRetrievalEffectiveness,
-  title = {3 {{Retrieval}} Effectiveness},
-  author = {Rijsbergen, Cornells J. Van},
-  abstract = {Information storage and retrieval systems have been with us for many years now. Attempts to evaluate or measure their performance have been going on almost as long. This is not an entirely unrelated development since in designing and building any new system the question of its desirability,},
-  file = {/home/ramin/Zotero/storage/ESUBQ9PE/Rijsbergen - 3 Retrieval effectiveness.pdf;/home/ramin/Zotero/storage/BKXSXTL9/summary.html}
-}
-
-@book{rivestRFC1321MD5MessageDigest1992,
-  title = {{{RFC1321}}: {{The MD5 Message}}-{{Digest Algorithm}}},
-  shorttitle = {{{RFC1321}}},
+@techreport{rivestMD5MessageDigestAlgorithm1992,
+  title = {The {{MD5 Message}}-{{Digest Algorithm}}},
   author = {Rivest, R.},
   year = {1992},
-  publisher = {{RFC Editor}},
-  address = {{USA}},
-  file = {/home/ramin/Zotero/storage/FZECFD2J/Rivest - 1992 - RFC1321 The MD5 Message-Digest Algorithm.pdf}
+  month = apr,
+  number = {RFC1321},
+  pages = {RFC1321},
+  institution = {{RFC Editor}},
+  doi = {10.17487/rfc1321},
+  language = {en},
+  file = {/home/ramin/Zotero/storage/YF7E7P5L/Rivest - 1992 - The MD5 Message-Digest Algorithm.pdf}
 }
 
 @book{sammutEncyclopediaMachineLearning2010,
-  title = {Encyclopedia of {{Machine Learning}}},
+  title = {Encyclopedia of Machine Learning},
   editor = {Sammut, Claude and Webb, Geoffrey I.},
   year = {2010},
-  publisher = {{Springer US}},
-  address = {{Boston, MA}},
-  doi = {10.1007/978-0-387-30164-8},
-  isbn = {978-0-387-30768-8 978-0-387-30164-8},
-  language = {en}
+  publisher = {{Springer}},
+  address = {{New York ; London}},
+  isbn = {978-0-387-30768-8 978-0-387-34558-1 978-0-387-30164-8},
+  lccn = {Q325.5 .E53 2010},
+  keywords = {Encyclopedias,Machine learning},
+  annotation = {OCLC: ocn651073009}
 }
 
 @incollection{sandersDistributedEvolutionaryGraph2012,
@@ -731,7 +703,7 @@
   file = {/home/ramin/Zotero/storage/HQ485YA3/Sanders and Schulz - 2012 - Distributed Evolutionary Graph Partitioning.pdf}
 }
 
-@inproceedings{satuluriSimClustersCommunityBasedRepresentations2020a,
+@inproceedings{satuluriSimClustersCommunityBasedRepresentations2020,
   title = {{{SimClusters}}: {{Community}}-{{Based Representations}} for {{Heterogeneous Recommendations}} at {{Twitter}}},
   shorttitle = {{{SimClusters}}},
   booktitle = {Proceedings of the 26th {{ACM SIGKDD International Conference}} on {{Knowledge Discovery}} \& {{Data Mining}}},
@@ -742,19 +714,22 @@
   publisher = {{ACM}},
   address = {{Virtual Event CA USA}},
   doi = {10.1145/3394486.3403370},
-  abstract = {Personalized recommendation products at Twitter target a multitude of heterogeneous items: Tweets, Events, Topics, Hashtags, and users. Each of these targets varies in their cardinality (which affects the scale of the problem) and their ``shelf life'' (which constrains the latency of generating the recommendations). Although Twitter has built a variety of recommendation systems before dating back a decade, solutions to the broader problem were mostly tackled piecemeal. In this paper, we present SimClusters, a general-purpose representation layer based on overlapping communities into which users as well as heterogeneous content can be captured as sparse, interpretable vectors to support a multitude of recommendation tasks. We propose a novel algorithm for community discovery based on Metropolis-Hastings sampling, which is both more accurate and significantly faster than off-the-shelf alternatives. SimClusters scales to networks with billions of users and has been effective across a variety of deployed applications at Twitter.},
   isbn = {978-1-4503-7998-4},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/X94BQZ4D/Satuluri et al. - 2020 - SimClusters Community-Based Representations for H.pdf}
+  language = {en}
 }
 
-@article{schaferMetarecommendationSystemsUsercontrolled,
-  title = {Meta-Recommendation {{Systems}}: {{User}}-Controlled {{Integration}} of {{Diverse Recommendations}}},
-  author = {Schafer, J Ben and Konstan, Joseph A and Riedl, John},
-  pages = {9},
-  abstract = {In a world where the number of choices can be overwhelming, recommender systems help users find and evaluate items of interest. They do so by connecting users with information regarding the content of recommended items or the opinions of other individuals. Such systems have become powerful tools in domains such as electronic commerce, digital libraries, and knowledge management. In this paper, we address such systems and introduce a new class of recommender system called metarecommenders. Meta-recommenders provide users with personalized control over the generation of a single recommendation list formed from a combination of rich data using multiple information sources and recommendation techniques. We discuss experiments conducted to aid in the design of interfaces for a meta-recommender in the domain of movies. We demonstrate that meta-recommendations fill a gap in the current design of recommender systems. Finally, we consider the challenges of building real-world, usable meta-recommenders across a variety of domains.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/CMHWGBMG/Schafer et al. - Meta-recommendation Systems User-controlled Integ.pdf}
+@inproceedings{schaferMetarecommendationSystemsUsercontrolled2002,
+  title = {Meta-Recommendation Systems: User-Controlled Integration of Diverse Recommendations},
+  shorttitle = {Meta-Recommendation Systems},
+  booktitle = {Proceedings of the Eleventh International Conference on {{Information}} and Knowledge Management - {{CIKM}} '02},
+  author = {Schafer, J. Ben and Konstan, Joseph A. and Riedl, John},
+  year = {2002},
+  pages = {43--51},
+  publisher = {{ACM Press}},
+  address = {{McLean, Virginia, USA}},
+  doi = {10.1145/584792.584803},
+  isbn = {978-1-58113-492-6},
+  language = {en}
 }
 
 @article{sharmaGraphJetRealtimeContent2016,
@@ -769,19 +744,20 @@
   pages = {1281--1292},
   issn = {2150-8097},
   doi = {10.14778/3007263.3007267},
-  abstract = {This paper presents GraphJet, a new graph-based system for generating content recommendations at Twitter. As motivation, we trace the evolution of our formulation and approach to the graph recommendation problem, embodied in successive generations of systems. Two trends can be identified: supplementing batch with real-time processing and a broadening of the scope of recommendations from users to content. Both of these trends come together in GraphJet, an in-memory graph processing engine that maintains a real-time bipartite interaction graph between users and tweets. The storage engine implements a simple API, but one that is sufficiently expressive to support a range of recommendation algorithms based on random walks that we have refined over the years. Similar to Cassovary, a previous graph recommendation engine developed at Twitter, GraphJet assumes that the entire graph can be held in memory on a single server. The system organizes the interaction graph into temporally-partitioned index segments that hold adjacency lists. GraphJet is able to support rapid ingestion of edges while concurrently serving lookup queries through a combination of compact edge encoding and a dynamic memory allocation scheme that exploits power-law characteristics of the graph. Each GraphJet server ingests up to one million graph edges per second, and in steady state, computes up to 500 recommendations per second, which translates into several million edge read operations per second.},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/VNZ6XAKY/Sharma et al. - 2016 - GraphJet real-time content recommendations at twi.pdf}
+  abstract = {This paper presents GraphJet, a new graph-based system for generating content recommendations at Twitter. As motivation, we trace the evolution of our formulation and approach to the graph recommendation problem, embodied in successive generations of systems. Two trends can be identified: supplementing batch with real-time processing and a broadening of the scope of recommendations from users to content. Both of these trends come together in Graph-Jet, an in-memory graph processing engine that maintains a real-time bipartite interaction graph between users and tweets. The storage engine implements a simple API, but one that is sufficiently expressive to support a range of recommendation algorithms based on random walks that we have refined over the years. Similar to Cassovary, a previous graph recommendation engine developed at Twitter, GraphJet assumes that the entire graph can be held in memory on a single server. The system organizes the interaction graph into temporally-partitioned index segments that hold adjacency lists. GraphJet is able to support rapid ingestion of edges while concurrently serving lookup queries through a combination of compact edge encoding and a dynamic memory allocation scheme that exploits power-law characteristics of the graph. Each GraphJet server ingests up to one million graph edges per second, and in steady state, computes up to 500 recommendations per second, which translates into several million edge read operations per second.},
+  language = {en}
 }
 
-@book{skienaImplementingDiscreteMathematics1991,
+@book{skienaImplementingDiscreteMathematics1990,
   title = {Implementing Discrete Mathematics: Combinatorics and Graph Theory with {{Mathematica}}},
   shorttitle = {Implementing Discrete Mathematics},
-  author = {Skiena, Steven},
-  year = {1991},
-  publisher = {{Addison-Wesley Longman Publishing Co., Inc.}},
-  address = {{USA}},
-  isbn = {978-0-201-50943-4}
+  author = {Skiena, Steven S.},
+  year = {1990},
+  publisher = {{Addison-Wesley}},
+  address = {{Redwood City, Calif}},
+  isbn = {978-0-201-50943-4},
+  lccn = {QA164 .S56 1990},
+  keywords = {Combinatorial analysis,Data processing,Graph theory,Mathematica (Computer file)}
 }
 
 @article{slotaPartitioningTrillionedgeGraphs2016,
@@ -796,31 +772,35 @@
   abstract = {We introduce XtraPuLP, a new distributed-memory graph partitioner designed to process trillion-edge graphs. XtraPuLP is based on the scalable label propagation community detection technique, which has been demonstrated as a viable means to produce high quality partitions with minimal computation time. On a collection of large sparse graphs, we show that XtraPuLP partitioning quality is comparable to state-of-the-art partitioning methods. We also demonstrate that XtraPuLP can produce partitions of real-world graphs with billion+ vertices in minutes. Further, we show that using XtraPuLP partitions for distributed-memory graph analytics leads to significant end-to-end execution time reduction.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Distributed; Parallel; and Cluster Computing},
-  file = {/home/ramin/Zotero/storage/9SASI7CH/Slota et al. - 2016 - Partitioning Trillion-edge Graphs in Minutes.pdf;/home/ramin/Zotero/storage/5K4T7FCN/1610.html}
+  file = {/home/ramin/Zotero/storage/MNYA52S5/Slota et al. - 2016 - Partitioning Trillion-edge Graphs in Minutes.pdf;/home/ramin/Zotero/storage/BWULYDE4/1610.html}
 }
 
-@inproceedings{stantonStreamingGraphPartitioning2012,
-  title = {Streaming Graph Partitioning for Large Distributed Graphs},
-  booktitle = {Proceedings of the 18th {{ACM SIGKDD}} International Conference on {{Knowledge}} Discovery and Data Mining - {{KDD}} '12},
-  author = {Stanton, Isabelle and Kliot, Gabriel},
-  year = {2012},
-  pages = {1222},
-  publisher = {{ACM Press}},
-  address = {{Beijing, China}},
-  doi = {10.1145/2339530.2339722},
-  abstract = {Extracting knowledge by performing computations on graphs is becoming increasingly challenging as graphs grow in size. A standard approach distributes the graph over a cluster of nodes, but performing computations on a distributed graph is expensive if large amount of data have to be moved. Without partitioning the graph, communication quickly becomes a limiting factor in scaling the system up. Existing graph partitioning heuristics incur high computation and communication cost on large graphs, sometimes as high as the future computation itself. Observing that the graph has to be loaded into the cluster, we ask if the partitioning can be done at the same time with a lightweight streaming algorithm.},
-  isbn = {978-1-4503-1462-6},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/FG7MRFEC/Stanton and Kliot - 2012 - Streaming graph partitioning for large distributed.pdf}
-}
-
-@article{suSurveyCollaborativeFiltering,
+@article{suSurveyCollaborativeFiltering2009,
   title = {A {{Survey}} of {{Collaborative Filtering Techniques}}},
-  author = {Su, Xiaoyuan and Khoshgoftaar, Taghi M},
+  author = {Su, Xiaoyuan and Khoshgoftaar, Taghi M.},
+  year = {2009},
+  month = oct,
   journal = {Advances in Artificial Intelligence},
-  pages = {20},
+  volume = {2009},
+  pages = {1--19},
+  issn = {1687-7470, 1687-7489},
+  doi = {10.1155/2009/421425},
+  abstract = {As one of the most successful approaches to building recommender systems, collaborative filtering (               CF               ) uses the known preferences of a group of users to make recommendations or predictions of the unknown preferences for other users. In this paper, we first introduce CF tasks and their main challenges, such as data sparsity, scalability, synonymy, gray sheep, shilling attacks, privacy protection, etc., and their possible solutions. We then present three main categories of CF techniques: memory-based, model-based, and hybrid CF algorithms (that combine CF with other recommendation techniques), with examples for representative algorithms of each category, and analysis of their predictive performance and their ability to address the challenges. From basic techniques to the state-of-the-art, we attempt to present a comprehensive survey for CF techniques, which can be served as a roadmap for research and practice in this area.},
   language = {en},
-  file = {/home/ramin/Zotero/storage/I8BDP63A/Su and Khoshgoftaar - A Survey of Collaborative Filtering Techniques.pdf}
+  file = {/home/ramin/Zotero/storage/JLMXEAIR/Su and Khoshgoftaar - 2009 - A Survey of Collaborative Filtering Techniques.pdf}
+}
+
+@article{takacsScalableCollaborativeFiltering2009,
+  title = {Scalable {{Collaborative Filtering Approaches}} for {{Large Recommender Systems}}},
+  author = {Tak{\'a}cs, G{\'a}bor and Pil{\'a}szy, Istv{\'a}n and N{\'e}meth, Botty{\'a}n and Tikk, Domonkos},
+  year = {2009},
+  month = jun,
+  journal = {The Journal of Machine Learning Research},
+  volume = {10},
+  pages = {623--656},
+  issn = {1532-4435},
+  abstract = {The collaborative filtering (CF) using known user ratings of items has proved to be effective for predicting user preferences in item selection. This thriving subfield of machine learning became popular in the late 1990s with the spread of online services that use recommender systems, such as Amazon, Yahoo! Music, and Netflix. CF approaches are usually designed to work on very large data sets. Therefore the scalability of the methods is crucial. In this work, we propose various scalable solutions that are validated against the Netflix Prize data set, currently the largest publicly available collection. First, we propose various matrix factorization (MF) based techniques. Second, a neighbor correction method for MF is outlined, which alloys the global perspective of MF and the localized property of neighbor based approaches efficiently. In the experimentation section, we first report on some implementation issues, and we suggest on how parameter optimization can be performed efficiently for MFs. We then show that the proposed scalable approaches compare favorably with existing ones in terms of prediction accuracy and/or required training time. Finally, we report on some experiments performed on MovieLens and Jester data sets.},
+  file = {/home/ramin/Zotero/storage/T34JDKLK/Takács et al. - 2009 - Scalable Collaborative Filtering Approaches for La.pdf}
 }
 
 @article{tianLearningDeepRepresentations2014,
@@ -838,7 +818,7 @@
   file = {/home/ramin/Zotero/storage/JS84VDCD/Tian et al. - 2014 - Learning Deep Representations for Graph Clustering.pdf}
 }
 
-@article{vandermaaten08a,
+@article{vandermaaten08,
   title = {Visualizing Data Using T-{{SNE}}},
   author = {{van der Maaten}, Laurens and Hinton, Geoffrey},
   year = {2008},
@@ -857,11 +837,9 @@
   volume = {13},
   number = {1},
   pages = {76--83},
-  publisher = {{Society for Industrial and Applied Mathematics}},
-  issn = {0036-1429},
+  issn = {0036-1429, 1095-7170},
   doi = {10.1137/0713009},
-  abstract = {Two generalizations of the singular value decomposition are given. These generalizations provided a unified way of regarding certain matrix problems and the numerical techniques which are used to solve them.},
-  file = {/home/ramin/Zotero/storage/3CTW7JBC/Van Loan - 1976 - Generalizing the Singular Value Decomposition.pdf}
+  language = {en}
 }
 
 @inproceedings{wangStructuralDeepNetwork2016,
@@ -874,10 +852,8 @@
   publisher = {{ACM}},
   address = {{San Francisco California USA}},
   doi = {10.1145/2939672.2939753},
-  abstract = {Network embedding is an important method to learn low-dimensional representations of vertexes in networks, aiming to capture and preserve the network structure. Almost all the existing network embedding methods adopt shallow models. However, since the underlying network structure is complex, shallow models cannot capture the highly non-linear network structure, resulting in sub-optimal network representations. Therefore, how to find a method that is able to effectively capture the highly non-linear network structure and preserve the global and local structure is an open yet important problem. To solve this problem, in this paper we propose a Structural Deep Network Embedding method, namely SDNE. More specifically, we first propose a semi-supervised deep model, which has multiple layers of non-linear functions, thereby being able to capture the highly non-linear network structure. Then we propose to exploit the first-order and second-order proximity jointly to preserve the network structure. The second-order proximity is used by the unsupervised component to capture the global network structure. While the first-order proximity is used as the supervised information in the supervised component to preserve the local network structure. By jointly optimizing them in the semi-supervised deep model, our method can preserve both the local and global network structure and is robust to sparse networks. Empirically, we conduct the experiments on five real-world networks, including a language network, a citation network and three social networks. The results show that compared to the baselines, our method can reconstruct the original network significantly better and achieves substantial gains in three applications, i.e. multi-label classification, link prediction and visualization.},
   isbn = {978-1-4503-4232-2},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/WSCT3J7W/Wang et al. - 2016 - Structural Deep Network Embedding.pdf}
+  language = {en}
 }
 
 @article{webberSimilarityMeasureIndefinite2010,
@@ -891,16 +867,22 @@
   pages = {1--38},
   issn = {1046-8188, 1558-2868},
   doi = {10.1145/1852102.1852106},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/VI5J4MWZ/Webber et al. - 2010 - A similarity measure for indefinite rankings.pdf}
+  abstract = {Ranked lists are encountered in research and daily life and it is often of interest to compare these lists even when they are incomplete or have only some members in common. An example is document rankings returned for the same query by different search engines. A measure of the similarity between incomplete rankings should handle nonconjointness, weight high ranks more heavily than low, and be monotonic with increasing depth of evaluation; but no measure satisfying all these criteria currently exists. In this article, we propose a new measure having these qualities, namely rank-biased overlap (RBO). The RBO measure is based on a simple probabilistic user model. It provides monotonicity by calculating, at a given depth of evaluation, a base score that is non-decreasing with additional evaluation, and a maximum score that is nonincreasing. An extrapolated score can be calculated between these bounds if a point estimate is required. RBO has a parameter which determines the strength of the weighting to top ranks. We extend RBO to handle tied ranks and rankings of different lengths. Finally, we give examples of the use of the measure in comparing the results produced by public search engines and in assessing retrieval systems in the laboratory.},
+  language = {en}
 }
 
-@article{woldPrincipalComponentAnalysis,
-  title = {Principal {{Component Analysis}}},
+@article{woldPrincipalComponentAnalysis1987,
+  title = {Principal Component Analysis},
   author = {Wold, Svante and Esbensen, Kim and Geladi, Paul},
-  pages = {16},
-  language = {en},
-  file = {/home/ramin/Zotero/storage/TUVM3AJK/Wold et al. - Principal Component Analysis.pdf}
+  year = {1987},
+  month = aug,
+  journal = {Chemometrics and Intelligent Laboratory Systems},
+  volume = {2},
+  number = {1-3},
+  pages = {37--52},
+  issn = {01697439},
+  doi = {10.1016/0169-7439(87)80084-9},
+  language = {en}
 }
 
 @article{wuPerformancePredictionData2006,
@@ -912,15 +894,12 @@
   volume = {42},
   number = {4},
   pages = {899--915},
-  issn = {0306-4573},
+  issn = {03064573},
   doi = {10.1016/j.ipm.2005.08.004},
-  abstract = {The data fusion technique has been investigated by many researchers and has been used in implementing several information retrieval systems. However, the results from data fusion vary in different situations. To find out under which condition data fusion may lead to performance improvement is an important issue. In this paper, we present an analysis of the behaviour of several well-known methods such as CombSum and CombMNZ for fusion of multiple information retrieval results. Based on this analysis, we predict the performance of the data fusion methods. Experiments are conducted with three groups of results submitted to TREC 6, TREC 2001, and TREC 2004. The experiments show that the prediction of the performance of data fusion is quite accurate, and it can be used in situations very different from the training examples. Compared with previous work, our result is more accurate and in a better position for applications since various number of component systems can be supported while only two was used previously.},
-  language = {en},
-  keywords = {Data fusion,Multiple linear regression,Performance prediction},
-  file = {/home/ramin/Zotero/storage/35H2VQ7I/S0306457305001135.html}
+  language = {en}
 }
 
-@article{wuStarSpaceEmbedAll2017a,
+@article{wuStarSpaceEmbedAll2017,
   title = {{{StarSpace}}: {{Embed All The Things}}!},
   shorttitle = {{{StarSpace}}},
   author = {Wu, Ledell and Fisch, Adam and Chopra, Sumit and Adams, Keith and Bordes, Antoine and Weston, Jason},
@@ -933,7 +912,7 @@
   abstract = {We present StarSpace, a general-purpose neural embedding model that can solve a wide variety of problems: labeling tasks such as text classification, ranking tasks such as information retrieval/web search, collaborative filtering-based or content-based recommendation, embedding of multi-relational graphs, and learning word, sentence or document level embeddings. In each case the model works by embedding those entities comprised of discrete features and comparing them against each other -- learning similarities dependent on the task. Empirical results on a number of tasks show that StarSpace is highly competitive with existing methods, whilst also being generally applicable to new cases where those methods are not.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Computation and Language},
-  file = {/home/ramin/Zotero/storage/SCXD9ZT2/Wu et al. - 2017 - StarSpace Embed All The Things!.pdf;/home/ramin/Zotero/storage/P5GDX7FA/1709.html}
+  file = {/home/ramin/Zotero/storage/XAPUW7SY/Wu et al. - 2017 - StarSpace Embed All The Things!.pdf;/home/ramin/Zotero/storage/3TF2RGTT/1709.html}
 }
 
 @article{xu10701MachineLearning,
@@ -954,11 +933,9 @@
   volume = {29},
   number = {1},
   pages = {40--51},
-  issn = {1939-3539},
+  issn = {0162-8828, 2160-9292},
   doi = {10.1109/TPAMI.2007.250598},
-  abstract = {A large family of algorithms - supervised or unsupervised; stemming from statistics or geometry theory - has been designed to provide different solutions to the problem of dimensionality reduction. Despite the different motivations of these algorithms, we present in this paper a general formulation known as graph embedding to unify them within a common framework. In graph embedding, each algorithm can be considered as the direct graph embedding or its linear/kernel/tensor extension of a specific intrinsic graph that describes certain desired statistical or geometric properties of a data set, with constraints from scale normalization or a penalty graph that characterizes a statistical or geometric property that should be avoided. Furthermore, the graph embedding framework can be used as a general platform for developing new dimensionality reduction algorithms. By utilizing this framework as a tool, we propose a new supervised dimensionality reduction algorithm called marginal Fisher analysis in which the intrinsic graph characterizes the intraclass compactness and connects each data point with its neighboring points of the same class, while the penalty graph connects the marginal points and characterizes the interclass separability. We show that MFA effectively overcomes the limitations of the traditional linear discriminant analysis algorithm due to data distribution assumptions and available projection directions. Real face recognition experiments show the superiority of our proposed MFA in comparison to LDA, also for corresponding kernel and tensor extensions},
-  keywords = {Algorithm design and analysis,Dimensionality reduction,Face recognition,Geometry,graph embedding framework.,Kernel,Laplace equations,Linear discriminant analysis,manifold learning,Principal component analysis,Statistics,subspace learning,Tensile stress,Vectors},
-  file = {/home/ramin/Zotero/storage/I5R6SNRR/Yan et al. - 2007 - Graph Embedding and Extensions A General Framewor.pdf;/home/ramin/Zotero/storage/35QEX5AP/4016549.html;/home/ramin/Zotero/storage/XXEPQAW4/4016549.html}
+  file = {/home/ramin/Zotero/storage/Q8ZUTMSL/Yan et al. - 2007 - Graph Embedding and Extensions A General Framewor.pdf}
 }
 
 @inproceedings{yingGraphConvolutionalNeural2018,

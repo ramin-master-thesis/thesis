@@ -47,7 +47,7 @@ The deployment of GraphJet is shown in figure \ref{fig:graphJet-deployment}. Eac
 
 \subsection{Related work}
 \label{subsec:graphjet-related-work}
-GraphJet's predecessor, the "Who To Follow" (WTF) system \cite{goelWhoToFollowSystemTwitter2015, guptaWTFWhoFollow}, is the first recommender system that proposes to store an entire production-scale follower graph in memory on a single machine and run a personalized SALSA algorithm to compute recommendations. Contrary to GraphJet, WTF is not used in a real-time environment as recommendations are precomputed and stored in a DBMS daily. Systems like \cite{balujaVideoSuggestionDiscovery2008} use a novel random walk approach, called \emph{Adsorption}, on a user-video bipartite graph to generate personal video recommendations.
+GraphJet's predecessor, the "Who To Follow" (WTF) system \cite{guptaWTFWhoFollow2013}, is the first recommender system that proposes to store an entire production-scale follower graph in memory on a single machine and run a personalized SALSA algorithm to compute recommendations. Contrary to GraphJet, WTF is not used in a real-time environment as recommendations are precomputed and stored in a DBMS daily. Systems like \cite{balujaVideoSuggestionDiscovery2008} use a novel random walk approach, called \emph{Adsorption}, on a user-video bipartite graph to generate personal video recommendations.
 
 
 Pinterest's recommendation system Pixie \cite{eksombatchaiPixieSystemRecommending2018} is the closest project to GraphJet, also storing a bipartite graph in memory on a single instance. Unlike GraphJet and WTF, which use a personalized SALSA, they present a Pixie Random Walk algorithm that terminates early once the results start converging.

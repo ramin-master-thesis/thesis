@@ -3,11 +3,11 @@
 Latent text representations, or embeddings, are representations of words or documents as vectors, traditionally learned in an unsupervised way over large corpora. It is possible to use these embedding tools to convert the document data of this work into verctors. 
 
 Research on neural embeddings in this domain includes \cite{bengioNeuralProbabilisticLanguage2003}, 
-\cite{collobertNaturalLanguageProcessing2011}, \emph{word2vec} \cite{goldbergWord2vecExplainedDeriving2014}, \emph{fastText} \cite{joulinFastTextZipCompressing2016}, and \emph{BERT} \cite{devlinBERTPretrainingDeep2019}. Compared to the other researchs, StarSpace embedding model represents the document vectors by their similarites to the documents it was trained with. It also out performs its predecessor \emph{fastText} \cite{wuStarSpaceEmbedAll2017a}. In the following this embedding model is explained in more details.
+\cite{collobertNaturalLanguageProcessing2011}, \emph{word2vec} \cite{goldbergWord2vecExplainedDeriving2014}, \emph{fastText} \cite{joulinFastTextZipCompressing2016}, and \emph{BERT} \cite{devlinBERTPretrainingDeep2019}. Compared to the other researchs, StarSpace embedding model represents the document vectors by their similarites to the documents it was trained with. It also out performs its predecessor \emph{fastText} \cite{wuStarSpaceEmbedAll2017}. In the following this embedding model is explained in more details.
 
 \subsection{StarSpace}
 \label{subsec:StarSpace}
-StarSpace \cite{wuStarSpaceEmbedAll2017a} is a general-purpose neural model for efficient learning of learning word, sentence, or document level embeddings.
+StarSpace \cite{wuStarSpaceEmbedAll2017} is a general-purpose neural model for efficient learning of learning word, sentence, or document level embeddings.
 
 
 StarSpace needs to be trained to generate the embedding vectors. This particular model learns the mapping between sentences and documents. Given the embedding of one sentence, one can find the most relevant documents. The output of the StarSpace model is a multi-dimensional vector in a so-called "Embedding-Space." Depending on the parameters that the model was trained with, the dimensionality of the output vector varies. 
@@ -47,4 +47,4 @@ Principal component analysis (PCA), in essence, is a linear projection operator 
 
 \subsubsection{Related work}
 \label{subsubsec:dimension-reduction-related-work}
-Other methods exist to reduce the dimensions and visualize datasets. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{vandermaaten08a}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnamaLINEARDISCRIMINANTANALYSIS} can reduce the dimension of datasets with multi classes. In \cite{yanGraphEmbeddingExtensions2007} study and compare dimension reduction methods like PCA, LDE, and other methods, namely Locality Preserving Projections (LPP) on graphs.
+Other methods exist to reduce the dimensions and visualize datasets. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{vandermaaten08}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnamaLINEARDISCRIMINANTANALYSIS} can reduce the dimension of datasets with multi classes. In \cite{yanGraphEmbeddingExtensions2007} study and compare dimension reduction methods like PCA, LDE, and other methods, namely Locality Preserving Projections (LPP) on graphs.
