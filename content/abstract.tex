@@ -5,12 +5,24 @@
 \begin{otherlanguage}{english}
 \begin{center}\textsf{\textbf{\abstractname}}\end{center}
 
-\noindent This work offers a novel approach in text data partitioning, based on data contents using StarSpace - a general-purpose embedding model. The approach permits similar text documents to be classified together and land on the same partition. GraphJet, a graph-based system developed by Twitter, has been chosen as a case study to demonstrate and test the proposed approach; The chosen system maintains a bipartite user-tweet graph on a single machine and runs a random-walk algorithm called SALSA to generate real-time user recommendations. This research also shed light on implementing an evaluation suite and an assessment pipeline to compare the recommendation results of a single instance against the multi-partition model of GraphJet.
+\noindent
+%Topic
+The distribution of a system that runs on a single instance can be parallelized in two ways: First, parallelizing its algorithm and dividing the tasks into multiple map operations on and reducing the results. However, this approach needs adjustment of the algorithm, and sometimes it is even impossible. The second method distributes the (document) data on the instance without changing the main algorithm. Although, randomly spreading the data on the instances might cause a drop in the output results of the system. Since the output of the algorithm relies on the dependency, these data have with each other.
+
+%Purpose
+Therefore, this work aims to partition the data with respect to their dependency on each other to deliver "good enough" results. This work proposes a partitioning module that classifies document data based on their topic relevancy and sends them to a worker. Each worker runs the algorithm in complete isolation, and the gathered results are integrated into a single representation. The ultimate goal is to produce a single representation that does not deviate from the single instance result.
+
+%usecase
+GraphJet, a graph-based recommendation system developed by Twitter, has been chosen as a case study to demonstrate and test the proposed approach; The chosen system maintains a bipartite user-tweet graph on a single machine and runs a random-walk algorithm called SALSA to generate real-time user recommendations. This research also shed light on implementing an evaluation suite and an assessment pipeline to compare the recommendation results of a single instance against the multi-partition model of GraphJet.
+
+
+%resutls
+The experiments results indicate that the proposed approach addresses better results compared to a random partitioning method. Still, comparing the results with single instance results shows a drop in the recommendation quality. Even though, from the results of the experiments, we have not found enough facts and evidence to conclude that partitioning the system with this approach is performing worst.
+
 
 \end{otherlanguage}
 \vfil\null
-
-
+\newpage
 % => Wenn die Arbeit auf Englisch verfasst wurde, verlangt das Studienreferat einen englischen UND deutschen Abstract (der dt. Abstract kann dann ggf. auch ans Ende der Arbeit)
 
 % deutsche Zusammenfassung
@@ -18,8 +30,19 @@
 \begin{otherlanguage}{ngerman}
 \begin{center}\textsf{\textbf{\abstractname}}\end{center}
 
-\noindent Diese Arbeit bietet einen neuartigen Ansatz für die Partitionierung von Textdaten, der auf Dateninhalten unter Verwendung von StarSpace - einem universellen Einbettungsmodell - basiert. Der Ansatz ermöglicht es, ähnliche Textdokumente gemeinsam zu klassifizieren und in dieselbe Partition einzuteilen. GraphJet, ein von Twitter entwickeltes graphenbasiertes System, wurde als Fallstudie ausgewählt, um den vorgeschlagenen Ansatz zu demonstrieren und zu testen. Das gewählte System verwaltet einen bipartiten Nutzer-Tweet-Graphen auf einer einzigen Maschine und führt einen Random-Walk-Algorithmus namens SALSA aus, um Nutzerempfehlungen in Echtzeit zu generieren. Diese Forschung beleuchtet auch die Implementierung einer Evaluierungssuite und einer Bewertungspipeline, um die Empfehlungsergebnisse einer einzelnen Instanz mit dem Multi-Partition-Modell von GraphJet zu vergleichen.
+\noindent 
+%Thema
+Die Verteilung eines Systems, das auf einer einzigen Instanz läuft, kann auf zwei Arten parallelisiert werden: Erstens durch Parallelisierung seines Algorithmus und Aufteilung der Aufgaben in mehrere Abbildungsoperationen und Reduzierung der Ergebnisse. Dieser Ansatz erfordert jedoch eine Anpassung des Algorithmus, und manchmal ist er sogar unmöglich. Bei der zweiten Methode werden die (Dokumenten-)Daten auf die Instanz verteilt, ohne dass der Hauptalgorithmus geändert wird. Allerdings kann die zufällige Verteilung der Daten auf die Instanzen zu einem Rückgang der Ergebnisse des Systems führen. Da die Ausgabe des Algorithmus von der Abhängigkeit abhängt, die diese Daten zueinander haben.
 
+%Zweck
+Daher zielt diese Arbeit darauf ab, die Daten im Hinblick auf ihre Abhängigkeit voneinander zu partitionieren, um "ausreichend gute" Ergebnisse zu liefern. In dieser Arbeit wird ein Partitionierungsmodul vorgeschlagen, das Dokumentdaten auf der Grundlage ihrer Themenrelevanz klassifiziert und an einen Worker sendet. Jeder Worker führt den Algorithmus völlig isoliert aus, und die gesammelten Ergebnisse werden in eine einzige Darstellung integriert. Das ultimative Ziel ist es, eine einzige Darstellung zu erzeugen, die nicht vom Ergebnis der einzelnen Instanz abweicht.
+
+%Anwendungsfall
+GraphJet, ein von Twitter entwickeltes graphenbasiertes Empfehlungssystem, wurde als Fallstudie ausgewählt, um den vorgeschlagenen Ansatz zu demonstrieren und zu testen. Das gewählte System verwaltet einen bipartiten Nutzer-Tweet-Graphen auf einer einzigen Maschine und führt einen Random-Walk-Algorithmus namens SALSA aus, um Nutzerempfehlungen in Echtzeit zu generieren. Diese Forschung beleuchtet auch die Implementierung einer Evaluierungssuite und einer Bewertungspipeline, um die Empfehlungsergebnisse einer einzelnen Instanz mit dem Multi-Partition-Modell von GraphJet zu vergleichen.
+
+
+%ERGEBNISSE
+Die Ergebnisse der Experimente zeigen, dass der vorgeschlagene Ansatz im Vergleich zu einer zufälligen Partitionierungsmethode bessere Ergebnisse liefert. Dennoch zeigt der Vergleich der Ergebnisse mit den Ergebnissen einer einzelnen Instanz einen Rückgang der Empfehlungsqualität. Obwohl wir anhand der Ergebnisse der Experimente nicht genügend Fakten und Beweise gefunden haben, um zu sagen, dass die Partitionierung des Systems mit diesem Ansatz am schlechtesten abschneidet.
 
 \end{otherlanguage}
 \vfil\null
