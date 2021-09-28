@@ -48,13 +48,13 @@ The last approach is based on user interactions and their interests. After segme
 Figure \ref{fig:data-fusion-highest-ineterest} explains this partitioning technique clearly. The user interacted with five documents. The first four documents the user interacted with have similar topics, colored in yellow, and one (colored in red) has a completely different subject. The four documents land on the first partition and the other document in the other partition. After computing the recommendations for the given user on each partition, the data fusion module retrieves the node degree of the user on each partition. The partition where the user has the most interactions (i.e., the partition holding the biggest node degree) is the chosen candidate. For this particular example, partition zero's recommendations are picked.
 
 
-Another aspect that \ref{fig:data-fusion-highest-ineterest} denotes is that if a user interacts with documents that are similar to each other, the possibility that this user might like documents in the same topic arises. With this technique, we select recommendations that the user is the most interested in. 
+Another aspect that \ref{fig:data-fusion-highest-ineterest} denotes is that if a user interacts with documents that are relevant to each other, the possibility that this user might like documents in the same topic arises. With this technique, we select recommendations that the user is the most interested in. 
 
 
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=0.85\textwidth]{images/data-fusion-highest-interest}
-    \caption{Visualization of StarSpace partitioning technique. This approach distributes the documents based on their topic. In this particular example, the user interacted with five documents. The StarSpace model detects that four of them are similar to each other. Therefore, these four documents land on the same partition. The \emph{Most Interactions} data fusion approach chooses the generated recommendations of partition zero.}
+    \caption{Visualization of StarSpace partitioning technique. This approach distributes the documents based on their topic. In this particular example, the user interacted with five documents. The StarSpace model detects that four of them are relevant to each other. Therefore, these four documents land on the same partition. The \emph{Most Interactions} data fusion approach chooses the generated recommendations of partition zero.}
     \label{fig:data-fusion-highest-ineterest}
 \end{figure}
 
