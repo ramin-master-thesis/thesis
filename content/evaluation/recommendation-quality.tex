@@ -3,7 +3,7 @@
 This section will go through the experiments that evaluate the impact of the partitioning over the recommendation quality. As explained in section \ref{sec:evaluation-pipeline} they are parameters that can be injected into the pipeline to create different experiment scenarios like choosing partitioning methods, amount of partitions, data fusion methods, evaluation metrics, number of sampled users, and the frequency of repeated recommendation for the baseline.
 
 
-The experiments are done on the same machine with a hardware specification described in section \ref{subsec:hardware-spec}. Most of the tests are done with 500 sampled users. Some experiments are done with 2000 randomly sampled users to investigate the impact of sampled users on the consistency of the results.
+The experiments are done on the same machine with a hardware specification described in section \ref{subsec:hardware-spec}. Most of the tests are done with 500 sampled users. Some experiments are done with 2000 randomly sampled users to investigate the impact of sampled users on the consistency of the results. The quality of the output is then measured with the MAP@K and RBO metrics. The results measured by the RBO can be found in \ref{fig:RBO-horizontal-scaling}.
 
 
 In the first section, the experiments compare a single instance with the baseline to check the reproducibility of the results. Next, the experiments determine which data fusion approach works best with a partitioning technique. Afterwards, different StarSpace models are trained and assessed. The last section scales the system horizontally and shows the recommendation quality results on four, eight, and sixteen partitions. 

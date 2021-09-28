@@ -1,4 +1,4 @@
-\section{Evaluation Pipeline to assess recommendations quality}
+\section{Evaluation Pipeline to Assess Recommendations Quality}
 \label{sec:evaluation-pipeline}
 This work presents an evaluation pipeline to measure the impact of partitioning with different approaches on the recommendation quality. To build the pipeline each component in the section \ref{sec:eval-suite-architecture-components} is used. 
 
@@ -18,7 +18,7 @@ The main goal of the evaluation is to measure how far the observed ranking devia
 
 The following sections will describe the evaluation metrics used to compute the recommendation quality and then go through the strategy to create a baseline and the observed ranking lists.
 
-\subsection{Evaluation metrics for recommendation quality}
+\subsection{Evaluation Metrics}
 \label{subsec:evaluation-metrics-for-recommendation-quality}
 The two main metrics used to evaluate the recommendations quality after partitioning the data are the \emph{Mean Average Precision at K (MAP@K)} (see section \ref{subsubsec:ap@k-map@k})  and \emph{Ranked-Biased Overlap (RBO)} (see section \ref{subsubsec:rbo}). 
 
@@ -29,7 +29,7 @@ With the mean average precision, it is possible to compare the objective ranking
 In the ranked-biased overlap, the results at the top of the list have a higher value than the one at the bottom, so the comparison is much more strict, and differences in the top ranks are more penalized than differences at the bottom. RBO is an ideal metric to investigate the order of the returned results in different scenarios.
 
 
-\subsection{Baseline generation strategy}
+\subsection{Baseline Generation Strategy}
 \label{subsec:baseline-generation}
 Having a baseline to compare the generated recommendations of multiple partitions with was challenging to generate. There are two main issues in creating a baseline:
 \begin{enumerate}
@@ -38,7 +38,7 @@ Having a baseline to compare the generated recommendations of multiple partition
     \item The other issue is the non-deterministic behavior of random-walk-based recommender engines. Results can generally differ between random walks, meaning two engines operating on the same graph can return different recommendations, and even the same engine can yield different results for two consecutive requests for the same user.
 \end{enumerate}
 
-Assumptions were made to overcome these problems. For the first issue, this work assumes that all the returned values from the single partition are relevant. In practice, however, the recommendation engine produces relevant and non-relevant results. This assumption comes with its price, making the evaluation strict, especially when the algorithm is non-deterministic. In other words, when calculating the metrics (MAP@K or RBO), all the items in the baseline list are supposed to be in the observed ranking list for a perfect result.
+Assumptions were made to help overcome these problems. For the first issue, this work assumes that all the returned values from the single partition are relevant, and all other items in the corpus will be irrelevant. In practice, however, the recommendation engine produces relevant and non-relevant results. This assumption comes with its price, making the evaluation strict, especially when the algorithm is non-deterministic. Through the partitioning and classification of the data, new recommendations might appear for a given user. But these results will be assumed irrelevant, and evaluation matrics will yield low results, although the new recommendations could be of interest to the user.
 
 
 Another solution to solve the first problem is to use \emph{Weak Supervision} approaches to employ labels on the dataset. Generate a labeling function using frameworks like \emph{Snorkel}\footnote{\url{https://snorkel.org/}} to classify the data as relevant or not relevant for a user. Thus, labeling the dataset was beyond the scope of this thesis.
@@ -47,7 +47,7 @@ Another solution to solve the first problem is to use \emph{Weak Supervision} ap
 For the second issue, this research proposes a novel idea: run the random walk for each user \emph{N} times and then take the most frequent recommendations that appeared. The intuition here is that gathering the most frequent recommendation will filter the items picked few times by the random walk. Moreover, with this technique, we collect recommendations that appear even \emph{N} times, ensuring that these recommendations are important for a user. This approach will help to overcome the non-deterministic nature of the random-walk algorithm and crate a baseline top \emph{N} frequent results.
 
 
-\subsection{Observed rankings generation strategy}
+\subsection{Observed Rankings Generation Strategy}
 \label{subsec:comparing-recommendtions}
 The observed ranking is a list of recommendations that we compare against the baseline to evaluate the recommendation quality. The observed ranking list can be categorized into two groups:
 
