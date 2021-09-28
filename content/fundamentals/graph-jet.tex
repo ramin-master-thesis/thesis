@@ -33,7 +33,6 @@ GraphJet uses the idea behind an algorithm called \emph{SALSA} and optimizes it 
 
 Imagine the following scenario: For a given user \textit{u} we are going to compute the \textit{k} recommendations using SALSA. The random walk starts on the user \textit{u}. From user \textit{u} a random edge (interaction) to a tweet is chosen. Each time SALSA visits a tweet, it increments and keeps the count of the visited tweet. After seeing the tweet and incrementing the visit counter of that tweet, SALSA randomly chooses a user who interacted with that tweet and walks back to the chosen user. This process continues until a specific threshold (number of walks) is reached. SALSA then filters the \textit{k} most visited tweets and sends them as the recommendation to the user \textit{u}. To generalize, SALSA outputs a  single ranked list of vertices on the right-hand side of the bipartite interaction graph.
 
-The authors of GraphJet argue that GraphJet can not be distributed due to costly network calls when the random walk needs to walk between two nodes located on different instances. On the other hand, this research aims to distribute the data on instances in a way that each instance in isolation can generate \emph{good enough} recommendations for a given user.
 
 \subsection{GraphJet Deployment}
 \label{subsec:GraphJet-Deployment}
@@ -44,6 +43,8 @@ The deployment of GraphJet is shown in figure \ref{fig:graphJet-deployment}. Eac
     \caption{GraphJet deployment \cite{sharmaGraphJetRealtimeContent2016}}
     \label{fig:graphJet-deployment}
 \end{figure}
+
+The authors of GraphJet argue that GraphJet can not be distributed due to costly network calls when the random walk needs to walk between on nodes that are located on different instances. Therefore, instead of distributing the random walk algorithm, this research aims for a parallel data distribution approach. Where the data gets spreaded accross multiple instances and each instance, in isolation, generates the recommendations for a given user. At the end, the results are gathered together using the \emph{Data Fusion} (see section \ref{subsec:data-fusion} methods.
 
 \subsection{Related work}
 \label{subsec:graphjet-related-work}
