@@ -28,6 +28,17 @@ This thesis implements a prototype of GraphJet simulating the simplified indexin
 The SALSA algorithm is used to find the relevant documents for training the StarSpace model. Later in the process, a projection matrix is calculated for the trained model to reduce the dimensionality of the predicted embedding vectors. The train data generation and the projection matrix calculation are the building blocks of a hyperparameter tuning pipeline to train future StarSpace models.
 
 
+Figure \ref{fig:introduction} demonstrates the research idea for a recommendation system. The user interacts with the system, for example, by writing or liking documents (i.e., tweets). This interaction tunes the recommendation engine. The recommender suggests similar data to each other and digests them to the partitioner model. The model learns the dependency between the suggested data and can partition upcoming documents based on their topic similarity.
+
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.50\textwidth]{images/introduction}
+    \caption{A layered model describing the overall idea of the proposed approach in this thesis. The user interacts with the system, which tunes the recommendation engine. The partitioner uses the output of the recommendation engine to learn the similarity between the data.}
+    \label{fig:introduction}
+\end{figure}
+
+
 In a multi-partition environment, each worker produces a list of recommendations for an incoming query. These results need to get merged into a single ranked list of recommendations to get benchmarked against the results of the single-instance output. Therefore, three novel \emph{Data Fusion} strategies are presented to combine or choose between the generated recommendation lists.
 
 
@@ -35,3 +46,5 @@ Finally, the evaluation suite implemented in this research aims to measure how f
 
 
 This thesis is organized as follows. Chapter \ref{chap:fundamentals} aims to look into and classify the relevant technologies, introduce essential concepts, and define terminology, setting the scene for the following sections. In chapter \ref{chap:concept} the research idea is formally structured by an in-depth exploration of the research problem. In chapter \ref{chap:evaluation} the evaluation suite, which is a crucial part of evaluating the system's performance, is closely studied. Finally, in chapter \ref{chap:conclusion} the paper is concluded by mentioning the observations made from analyses of results, plus the future outlook of the research directions and critical developments are discussed.
+
+
