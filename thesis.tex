@@ -2,13 +2,11 @@
 \usepackage[english,bibtex]{osm-thesis} % <= Sprache der Arbeit ("ngerman"/"english"), Biblatex-Backend ("bibtex"/"biber")
 
 
-
-
 % ABOUT
 \newcommand{\hpitype}{Masterarbeit}
 \newcommand{\hpiauthor}{Ramin Gharib}
-\newcommand{\hpititle}{An Adaptive Workload Partitioner for Scalable Document Processing}
-\newcommand{\hpititleother}{Ein adaptiver Workload Partitioner für skalierbare Dokumentenverarbeitung} % <= das Studienreferat verlangt einen deutschen UND englischen Titel
+\newcommand{\hpititle}{Learning a content-based partitioning function for scalable document stream processing}
+\newcommand{\hpititleother}{Lernen einer inhaltsbasierten Partitionierungsfunktion für die skalierbare Verarbeitung von Dokumentenströmen} % <= das Studienreferat verlangt einen deutschen UND englischen Titel
 \newcommand{\hpisupervisor}{Prof.\,Dr.\,Andreas Polze, Robert Schmid}
 \newcommand{\hpichair}{Professur für Betriebssysteme und Middleware}
 \newcommand{\hpiexternalsupervisor}{Alexander Albrecht}
@@ -16,17 +14,6 @@
 \newcommand{\hpidate}{\today}
 \newcommand\atsign{@}
 
-\definecolor{clr1}{RGB}{254, 168, 50}
-\definecolor{clr2}{RGB}{230, 99, 39}
-\definecolor{clr3}{RGB}{184, 17, 62}
-\definecolor{clr4}{RGB}{31,182,83}
-
-\pgfplotscreateplotcyclelist{default-colors}{
-	{clr1},
-	{clr2},
-	{clr3},
-	{clr4}
-}
 
 \usetikzlibrary{pgfplots.statistics}
 
@@ -60,7 +47,7 @@
 
 	% Fundamentals
 	\input{content/fundamentals/fundamentals}
-	
+	\input{content/fundamentals/data-partitioning-in-distributed-systems}
 	\input{content/fundamentals/recommender-systems}
 	\input{content/fundamentals/graph-jet}
 	\input{content/fundamentals/embeddings}
