@@ -1,7 +1,7 @@
 \section{Data Crawling Strategy}
 \label{sec:data-crawling-strategy}
 
-GraphJet is developed at Tweeter to create real-time recommendations for a given user. GraphJet maintains a (user-tweet) bipartite graph in memory and traverses this graph to produce the recommendations. This study reaches the partitioning of the bipartite graph on multiple instances. Therefore, the single instances graph needs to be so massive that it can be sharded into multiple subgraphs. An enormous dataset is required in order to create such a dense graph.
+GraphJet is developed at Tweeter to create real-time recommendations for a given user. GraphJet maintains a (user-tweet) bipartite graph in memory and traverses this graph to produce the recommendations. This thesis reaches the partitioning of the bipartite graph on multiple instances. Therefore, the single instances graph needs to be so massive that it can be sharded into multiple subgraphs. An enormous dataset is required in order to create such a dense graph.
 
 
 Twitter is a massive document data source where users write and post tweets. In works like \cite{kwakWhatTwitterSocial2010} the authors study a massive dataset of tweets that they crawled. Twitter offers an Application Programming Interface (API) that is easy to crawl and collect data. However, the Twitter API comes with its limitations. Twitter allows only sending 900 requests over any 15-minute interval\footnote{\url{https://developer.twitter.com/en/docs/twitter-api/rate-limits}}. 

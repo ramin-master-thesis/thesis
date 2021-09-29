@@ -22,7 +22,7 @@ Figure \ref{fig:partitioner-uml} indicates the UML diagram of the partitioning m
 
 \subsection{Murmur2 Partitioner}
 \label{subsec:partitioning-murmur2}
-This component implements the Murmur2 hash function. The functionality of ths hash function is explained in \ref{sec:hash-functions}. This study uses the Kafka python implementation of Murmur2 \footnote{\url{https://github.com/dpkp/kafka-python/blob/master/kafka/partitioner/default.py}} to implement the \emph{calculate\_partition} function from the partitioner base class.
+This component implements the Murmur2 hash function. The functionality of ths hash function is explained in \ref{sec:hash-functions}. This thesis uses the Kafka python implementation of Murmur2 \footnote{\url{https://github.com/dpkp/kafka-python/blob/master/kafka/partitioner/default.py}} to implement the \emph{calculate\_partition} function from the partitioner base class.
 
 The \emph{Murmur2Partition} class takes the document-ID as an input and computes the hash value. In the end, it calculates the modulo between the \emph{partition\_count} value and the hash value to produce the partition-ID. 
 
@@ -36,7 +36,7 @@ During the initialization of the \emph{StarSpacePartition} class, the pre-traine
 
 To illustrate the partitioning method, consider the following scenario: Four partitions are runnings and the StarSpace model is loaded with its pre calculated projection matrix. Figure \ref{fig:star-space-partitioning-process} visualizes this scenrio. 
 
-Each of the partitions can be projected on a two-dimensional space. Figure \ref{fig:embedding-space} illustrates a Cartesian coordinate plane. Each dot illustrates a document on a partition. This study assumes that each quadrant, represents a partition in this space. Therefore, when document vector representation contains two positive number it will land on partition zero. It is possible to spread a quadrant into two sub partitions as well. Each sub partition will then contain documents within a specific range of vector values.
+Each of the partitions can be projected on a two-dimensional space. Figure \ref{fig:embedding-space} illustrates a Cartesian coordinate plane. Each dot illustrates a document on a partition. This work assumes that each quadrant, represents a partition in this space. Therefore, when document vector representation contains two positive number it will land on partition zero. It is possible to spread a quadrant into two sub partitions as well. Each sub partition will then contain documents within a specific range of vector values.
 
 
 Four partitions mean that the dimension of the embedding vector produced by StarSpace needs to be reduced to at least two dimensions. Since with two dimensions (i.e., bit), we are able to represent four partition-IDs. Respectively, for two partitions, the embedding vector needs at least one dimension. After the high dimensional embedding vector got reduced to two dimensions, the system converts the numbers depending on if they are positive or negative into bits. For example, if the dimensionally reduced vector of a document is [-3.75, 2.14], this will be converted to [0, 1], which represents the number one, and the following document will land on partition number one.

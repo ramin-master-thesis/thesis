@@ -6,7 +6,7 @@ GraphJet is a graph storage system for generating content recommendations in rea
 GraphJet is a suitable use case for the proposed approach in this research: First of all, GraphJet deals with text document data. It generates content recommendations for users through their interactions with documents (i.e., tweets). Second, GraphJet introduces an indexing system assuming that the entire bipartite graph can be held in memory on a single server.
 
 
-This study prototypes a simplified indexing system of GraphJet. The dataset is gathered from Tweeter to create a user-tweet bipartite graph. The main goal is to partition the user-tweet bipartite graph and distribute the GraphJet recommendation system over several machines while obtaining the recommendation of the single instance.
+This work prototypes a simplified indexing system of GraphJet. The dataset is gathered from Tweeter to create a user-tweet bipartite graph. The main goal is to partition the user-tweet bipartite graph and distribute the GraphJet recommendation system over several machines while obtaining the recommendation of the single instance.
 
 
 Figure \ref{fig:graphJet-architecture} shows the overall architecture of GraphJet, which is divided into three main modules: a storage engine, a recommendation engine, and an API endpoint. The API endpoint receives the requests and forwards them to the recommendation engine. Afterwards, the recommendation engine runs an algorithm called SALSA \cite{lempelSALSAStochasticApproach2001} on the bipartite graph, which the storage engine maintains. Finally, the resulting recommendations are sent back to the requesting user. In the following, we describe each module in more depth. 
