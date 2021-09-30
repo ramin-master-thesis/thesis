@@ -11,7 +11,7 @@ In the first section, the experiments compare a single instance with the baselin
 
 \subsection{Single Machine}
 \label{subsec:eval-single-machine}
-The non-deterministic behavior of the random walk algorithm in generating results makes it hard to create an excellent baseline to assess the results with. To inspect the reproducibility of the results, the single partition results are compared with the generated golden standard (see section \ref{subsec:baseline-generation}). The experiments sample 500 random users and generate the objective, observed rankings on the single partition machine. The recommendation quality is measured using the Mean Average Precision at K (MAP@K), with K starting from 1 to 10. The experiments are done ten times each time using the same sampled users. 
+The non-deterministic behavior of the random walk algorithm in generating results makes it hard to create an excellent baseline to assess the results with. To inspect the reproducibility of the results, the single partition results are compared with the generated gold standard (see section \ref{subsec:baseline-generation}). The experiments sample 500 random users and generate the objective, observed rankings on the single partition machine. The recommendation quality is measured using the Mean Average Precision at K (MAP@K), with K starting from 1 to 10. The experiments are done ten times each time using the same sampled users. 
 
 The results of the experiments are plotted on the boxplot in figure \ref{plot:single-partition-boxplot}. Only the K values of eight, nine, and ten are shown to keep the diagram small and clear to read. As the chart denotes, the variation in each cut-off (i.e., K) is not significant. Although the non-deterministic random walk generates different recommendations each time for users, it does not impact the overall MAP@K value. So the possibility that the random walk generates the same results each time is still considered as high.
 
@@ -19,13 +19,13 @@ The results of the experiments are plotted on the boxplot in figure \ref{plot:si
 \begin{figure}[!htb]
     \centering
     \input{plots/recommendation/single-partition-boxplot}
-    \caption{Different MAP values over ten interations of generating recommendation with 500 users. In the experiment the single partition results is assessed with the golden standard.}
+    \caption{Different MAP values over ten interations of generating recommendation with 500 users. In the experiment the single partition results is assessed with the gold standard.}
     \label{plot:single-partition-boxplot}
 \end{figure}
 
 
 
-The line diagram in figure \ref{plot:single-partition} shows the recommendation quality in one of the runs over the rising value of Ks for the 500 randomly sampled users. The MAP value at a cut-off of one is 90\%, indicating that the first ranked value of the 500 users is similar to the first value of the golden standard. As K increases, the ranked list gets longer, and the MAP value decreases. Indicating that the items with lower ranks in the observed ranking list differ from the golden standard values. The MAP@10 value reaches 63\%. 
+The line diagram in figure \ref{plot:single-partition} shows the recommendation quality in one of the runs over the rising value of Ks for the 500 randomly sampled users. The MAP value at a cut-off of one is 90\%, indicating that the first ranked value of the 500 users is similar to the first value of the gold standard. As K increases, the ranked list gets longer, and the MAP value decreases, where at \emph{K=10} the MAP value reaches 63\%. The results highlight that the items with lower ranks in the observed ranking list differ from the gold standard values.
 
 
 One may consider this result a low MAP value when comparing the results of the same machine. It is important to note that the experiments criteria are strict, assuming that all the items in the baseline are considered relevant. If an observed ranked list is assessed with a user's baseline and does not contain the same items, it will lead to low average precision and mean average precision, respectively.
@@ -87,7 +87,7 @@ The \emph{Most Interactions} approach works well on the StarSpace partitioning m
 On the other hand, the \emph{Most Interactions} method does not work well for the Murmur2 hash partitioning since the data is sharded randomly and not based on the user interests. \emph{Union Results} delivers the best results for the Murmur2 hash partitioning due to its balanced distribution of data shown in the diagram \ref{plot:edge-distribution-2-partitions-murmur2}. 
 
 
-The results confirm that this is a good choice to use the \emph{Most Interactions} approach with the StarSpace partitioner and \emph{Union Results} method for the Murmur2 hash partitioning method. Therefore, in the upcoming experiments for further evaluations, the combination StarSpace partitioning with \emph{Most Interactions} data fusion method is assessed against the Murmur2 hash partitioning combined with \emph{Union Results} data fusion technique is chosen.
+The results confirm that this is a good choice to use the \emph{Most Interactions} approach with the StarSpace partitioner and \emph{Union Results} method for the Murmur2 hash partitioning method. Therefore, in the upcoming experiments for further evaluations, the combination of StarSpace partitioning with \emph{Most Interactions} data fusion method is assessed against the Murmur2 hash partitioning combined with \emph{Union Results} data fusion technique is chosen.
 
 
 \subsubsection{Hyperparameter Evaluation Results}
@@ -101,7 +101,7 @@ The hyperparameter tuning benchmark was done on a two-partition setting to keep 
     \item Train the StarSpace model with the generated training dataset (see section \ref{subsec:generating-training-data}) and the parameters listed in each row of the table \ref{tab:models}.
     \item Calculate the projection matrix of the model (see section \ref{subsec:projection-matrix-calculation}).
     \item Load the model in memory and partition the test dataset on two partitions.
-    \item Load sampled users (500, 2000) and generated the recommendations for each of them.
+    \item Load sampled users (500, 2000) and generat the recommendations for each of them.
     \item Use the \emph{Most Interactions} data fusion approach to generate a single ranked list of recommendations for each user.
     \item Assess the observed ranking list with the baseline list and calculate the MAP@10.
 \end{enumerate}
@@ -175,14 +175,14 @@ As explained in the begining of this section the hyperparameter tests were also 
 The results of the experiments with the StarSpace model number 7 (refer to table \ref{tab:models}, and the diagrams \ref{plot:hyperparameter-recommendation-quality}, \ref{plot:star-space-edge-distribution-2-partitions}) combined with the \emph{Most Interactions} data fusion approach point out two important findings: First, this combination delivers the most similar recommendations to the baseline. Second, compared to the other trained models, this model keeps the two partition balance.
 
 
-One might say that the data fusion module might only choose the recommendations list from a partition containing more data. Since the possibility that the users on a partition with more data have a significant degree number is higher. Although this hypothesis is logical, the measurements in the diagram \ref{subsubsec:partition-request-load} that the load is almost equally balanced. Approximately 43\% of the generated recommendations list is chosen from partition zero and 57\% from partition one.
+One might say that the data fusion module might only choose the recommendations list from a partition containing more data. Since the possibility that the users on a partition with more data have a significant degree number is higher. Although this hypothesis is intuitive, the measurements in the diagram \ref{subsubsec:partition-request-load} highlight that the load is almost equally balanced. Approximately 43\% of the generated recommendations list is chosen from partition zero and 57\% from partition one.
 
 The results confirm that this is a good choice for applying the load balancer idea (see section \ref{sec:load-balancing}). The load balancer can forward the load almost equally between the two partitions.
 
 \begin{figure}[!htb]
     \centering
     \input{plots/recommendation/request-distribution.tex}
-    \caption{Propotion of requests on each partition the data fusion module (with the \emph{Most Interactions} approach) makes to unify the results.}
+    \caption{propotion of requests on each partition the data fusion module (with the \emph{Most Interactions} approach) makes to unify the results.}
     \label{plot:request-distribution}
 \end{figure}
 

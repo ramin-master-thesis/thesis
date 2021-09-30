@@ -1,6 +1,6 @@
 \section{Latency}
 \label{sec:eval-latency}
-The evaluation of the system focuses on how partitioning affects the recommendation quality. It is worth discussing these exciting facts revealed by the results of the recommendation computation time. Observing the results denote that the recommendation computation latency on smaller partitions sinks notably. Therefore, it was worth investigating, measuring, and discuss the latency improvements.
+The evaluation of the system focuses on how partitioning affects the recommendation quality. It is worth discussing these exciting facts revealed by the results of the recommendation computation time. The results indicate that a node, which maintains fewer data through partitioning, can generate recommendations faster than a single instance. Therefore, it was worth investigating, measuring, and discuss the latency improvements.
 
 
 The experiments here are designed to measure the time of each instance when computing the recommendations using the SALSA algorithm. The intuition here is that by partitioning the data on multiple machines, the amount of data on each machine reduces respectively, leading to a faster random walk on the bipartite graph. 
@@ -30,7 +30,7 @@ It is crucial to notice that the code used to simulate GraphJet is not a product
 This section discusses how the amount of data impacts the random walk computation time. The experiments assess the recommendation generation latency of a single instance with the multi-partitioned instance.
 
 
-The experiments investigate the random walk latency in a scenario with two partitions and once in an four partition enviroment. The diagrams \ref{plot:edge-distribution-2-partitions-murmur2} and \ref{plot:edge-distribution-4-partitions-murmur2} show the data distribution with respect to the mentioned partitioning strategy. At first glance, the diagrams denote that partitioning the data with the Murmur2 hash method distributes the edges almost equally. 
+The experiments investigate the random walk latency in a scenario with two partitions and once in a four partition enviroment. The diagrams \ref{plot:edge-distribution-2-partitions-murmur2} and \ref{plot:edge-distribution-4-partitions-murmur2} show the data distribution with respect to the mentioned partitioning strategy. At first glance, the diagrams denote that partitioning the data with the Murmur2 hash method distributes the edges almost equally. 
 
 \begin{figure}[!htb]
     \centering
