@@ -37,7 +37,7 @@ In \cite{suSurveyCollaborativeFiltering2009} the different techniques used to im
 
 
 
-\subsection{Evaluation metrics}
+\subsection{Evaluation Metrics}
 \label{subsec:evaluation-metrics}
 One of the key challenges when developing or enhancing a recommendation engine is evaluating its impact on the quality of the recommendations. After applying the changes to a recommendation engine, the researchers need to assess the ranked lists of the main recommendation engine and the results of the newly changed recommendation engine to find out if the changes indicate an improvement or not. 
 
@@ -206,7 +206,7 @@ Where \emph{$REL_p$} indicates the ordered relevant documents by their relevance
 Although NDCG is a good metric for comparing weighted ranked lists, it fails to determine the ranking quality of disjoint lists. For example, consider two result lists with the score of 3,2,1 and 3,2,1,0 respectively. Both of these lists will have the same score. Another issue with disjoint ranked lists arises when different items appear in both lists. Consider the two lists with the score of 3,2,1 and 3,2,1,1 respectively. Both of these lists are denoted as perfectly equal.
 
 
-\subsubsection{Kendall rank correlation coefficient}
+\subsubsection{Kendall Rank Correlation Coefficient}
 The \emph{Kendall Tau} \cite{kendallNewMeasureRank1938} metric, also known as Kendall's Correlation, measures the similarities in the ordering of quantitative ranked data. Kendall's Correlation can be computed by first counting the number of concordant pairs (C) and discordant pairs (D). A pair is said to be concordant if they appear in the same order in their ranking lists. We define M = C - D as our basic statistic. The $\tau$ is calculated with the equation below: 
 
 \begin{equation}
@@ -239,7 +239,7 @@ RBO between the two lists \emph{S} and \emph{T} can be calculated using:
 The result is in the range of [0, 1], where zero means disjoint, and one means identical. \emph{d} is the depth of the rankings being examined, falls in the range of [1, $\infty$]. The tunable parameter \emph{p} determines how steep the decline in weights is. If \emph{p} reaches zero, the more top-weighted the metric gets. When p = 0, only the top-ranked item is considered, and the RBO score is either zero or one. The weights get flattened when \emph{p} approaches 1.
 
 
-\subsubsection{A/B testing}
+\subsubsection{A/B Testing}
 \label{subsubsec:ab-testing}
 \emph{A/B testing} also known as \emph{split testing} is a user experience methodology of comparing two versions of a single variable, A and B. Statical analysis is used to ascertain which variation is performing better for a conventional goal.
 

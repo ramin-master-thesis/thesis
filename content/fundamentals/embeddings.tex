@@ -10,7 +10,7 @@ Research on neural embeddings in this domain includes \cite{bengioNeuralProbabil
 StarSpace \cite{wuStarSpaceEmbedAll2017} is a general-purpose neural model for efficient learning of learning word, sentence, or document level embeddings.
 
 
-StarSpace needs to be trained to generate the embedding vectors. This particular model learns the mapping between sentences and documents. Given the embedding of one sentence, one can find the most relevant documents. The output of the StarSpace model is a multi-dimensional vector in a so-called "Embedding-Space." Depending on the parameters that the model was trained with, the dimensionality of the output vector varies. For more information about the implementation and other use-cases of StarSpace, please refer to the main repository\footnote{\url{https://github.com/facebookresearch/StarSpace}}.
+StarSpace needs to be trained to generate the embedding vectors. This particular model learns the mapping between sentences and documents. Given the embedding of one sentence, one can find the most relevant documents. The output of the StarSpace model is a multi-dimensional vector in a so-called "Embedding-Space." Depending on the parameters that the model was trained with, the dimensionality of the output vector varies. For more information about the implementation and other use cases of StarSpace, please refer to the main repository\footnote{\url{https://github.com/facebookresearch/StarSpace}}.
 
 
 This work observes StarSpace as a black box. This research aims to train StarSpace with respect to the relationship and dependency the document data has with each other. By observing the input and output of the system, these dependencies can be found. The trained StarSpace model then learns which documents are relevant and dependant on each other and can calculate the embedding vector for a newly arrived document. Afterwards, we can use these embedding vectors to classify relevant documents together on the same partition.
@@ -28,7 +28,7 @@ The text normalization process categorizes long strings into the following bucke
     \item Mixed letters and numbers (e.g., product ID): All the letters get case-flattened, and numbers are not changed.
 \end{enumerate}
 
-\subsection{Dimensionality reduction}
+\subsection{Dimensionality Reduction}
 \label{subsec:dimension-reduction}
 The output vector of the embedding model has enormous dimensions. The dimensions can go up to 300. They are different approaches to reduce the dimension and at the same time minimize the information loss. The dimension reduction in this thesis relies on a dimensionality reduction method called \emph{Prenciple Component Analysis (PCA)} \cite{woldPrincipalComponentAnalysis1987}.
 
@@ -43,6 +43,6 @@ Principal component analysis (PCA), in essence, is a linear projection operator 
 \noindent Each column of the projection matrix P is called a principal component (PC) \cite{xu10701MachineLearning}. 
 
 
-\subsubsection{Related work}
+\subsubsection{Related Work}
 \label{subsubsec:dimension-reduction-related-work}
 Other methods exist to reduce the dimensions and visualize datasets. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{vandermaaten08}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnamaLINEARDISCRIMINANTANALYSIS} can reduce the dimension of datasets with multi classes. In \cite{yanGraphEmbeddingExtensions2007} study and compare dimension reduction methods like PCA, LDE, and other methods, namely Locality Preserving Projections (LPP) on graphs.

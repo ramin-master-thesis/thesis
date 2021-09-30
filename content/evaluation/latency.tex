@@ -5,14 +5,14 @@ The evaluation of the system focuses on how partitioning affects the recommendat
 
 The experiments here are designed to measure the time of each instance when computing the recommendations using the SALSA algorithm. The intuition here is that by partitioning the data on multiple machines, the amount of data on each machine reduces respectively, leading to a faster random walk on the bipartite graph. 
 
-\subsection{Hardware specification}
+\subsection{Hardware Specification}
 \label{subsec:hardware-spec}
 The experiments and tests were run on a machine with the following hardware specifications:
 
 The instance is a VM-Host-Server with 2x AMD EPYC 7282 (Zen-Rome) 16-Core CPU. The CPU clock speed is 2.80GHz and can reach up to 3.20GHz. The machine has 256GB (16x 16GB) DDR4-3200 RAM. The storage is a Samsung PM1725b SSD 1.6TB. The virtualization is running on QEMU-KVM/libvirt version 4.2.1.
 
 
-\subsection{Experiment strategy}
+\subsection{Experiment Strategy}
 \label{subsec:latency-experiment-strategy}
 The benchmarks are done over one, two, and four partitions. The experiments are repeated ten times. On each run, 500 new users are sampled, and the recommendations are computed. The partitioning method used to distribute the test dataset is \emph{Murmur2 Hash} (see section \ref{subsec:partitioning-murmur2}). 
 

@@ -40,7 +40,7 @@ One may consider this result a low MAP value when comparing the results of the s
 \subsection{Multiple Machines}
 \label{subsec:eval-multiple-machines}
 
-\subsubsection{Data fusion evaluation results}
+\subsubsection{Data Fusion Evaluation Results}
 \label{subsubsec:eval-data-fusion}
 The following section will compare the recommendation quality of three data fusion methods introduced in the section \ref{sec:data-fusion-approaches} for the Murmur2 and StarSpace partitioning approaches. The main purpose of these experiments is to identify which data fusion approach produces the best single ranked list for a given partitioning method. The results are shown in the diagrams of figure \ref{plot:murmur2-data-fusion} for the Murmur2 hash partitioning method and \ref{plot:star-space-data-fusion} for the StarSpace partitioning method.
 
@@ -90,7 +90,7 @@ On the other hand, the \emph{Most Interactions} method does not work well for th
 The results confirm that this is a good choice to use the \emph{Most Interactions} approach with the StarSpace partitioner and \emph{Union Results} method for the Murmur2 hash partitioning method. Therefore, in the upcoming experiments for further evaluations, the combination StarSpace partitioning with \emph{Most Interactions} data fusion method is assessed against the Murmur2 hash partitioning combined with \emph{Union Results} data fusion technique is chosen.
 
 
-\subsubsection{Hyperparameter evaluation results}
+\subsubsection{Hyperparameter Evaluation Results}
 \label{subsubsec:eval-hyperparameter}
 As explained in section \ref{subsec:hyperparameter-tuning}, this thesis also investigates how different trained StarSpace models affect the partitioning of the data and, finally, the recommendation quality. Four parameters were tuned during the training. These parameters can be found in the table \ref{tab:hyperparameter}. In the following table \ref{tab:models} you will find 16 models and the parameters with which they got trained.
 

@@ -46,7 +46,7 @@ The deployment of GraphJet is shown in figure \ref{fig:graphJet-deployment}. Eac
 
 The authors of GraphJet argue that GraphJet can not be distributed due to costly network calls when the random walk needs to walk between on nodes that are located on different instances. Therefore, instead of distributing the random walk algorithm, this research aims for a parallel data distribution approach. Where the data gets spreaded accross multiple instances and each instance, in isolation, generates the recommendations for a given user. At the end, the results are gathered together using the \emph{Data Fusion} (see section \ref{subsec:data-fusion} methods.
 
-\subsection{Related work}
+\subsection{Related Work}
 \label{subsec:graphjet-related-work}
 GraphJet's predecessor, the "Who To Follow" (WTF) system \cite{guptaWTFWhoFollow2013}, is the first recommender system that proposes to store an entire production-scale follower graph in memory on a single machine and run a personalized SALSA algorithm to compute recommendations. Contrary to GraphJet, WTF is not used in a real-time environment as recommendations are precomputed and stored in a DBMS daily. Systems like \cite{balujaVideoSuggestionDiscovery2008} use a novel random walk approach, called \emph{Adsorption}, on a user-video bipartite graph to generate personal video recommendations.
 

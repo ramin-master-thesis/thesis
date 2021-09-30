@@ -1,5 +1,17 @@
-\section{Second use-case: Tag Recommendation for Stack Overflow Questions}
-\label{sec:second-usecase}
+\section{Other Use Cases}
+\label{sec:other-use-cases}
+This thesis introduces an adaptive model-based partitioning module. This module learns the dependency between the data through the algorithm's output and delivers a more optimal partitioning of the data. Moreover, the system, which is distributed with the partitioner, is considered a "black box." So the main algorithm of the system is not changed at all. To investigate the proposed partitioning method, this work employs GraphJet, a real-time recommendation system. This section introduces two other use cases for further reach, where the partitioning idea of this thesis can be applied to.
+
+\subsection{Telemed5000 Distributed Patients Recommendation System}
+\label{subsec:telemed5000}
+Telemed5000 intends to create an intelligent system for telemedical co-management of thousands of patients with cardiac risk, which the Charité studies. This study proves that telemedical care can prolong cardiac patients' lives and spend fewer days in the hospital. The researchers in \cite{gontarskaPredictingMedicalInterventions2021} propose a decision system that employs a machine learning model to determine the risk score of a patient based on their vital parameters. Estimating a risk score allows medical practitioners to sort all cases every day and focus their limited resources on the most severe cases. 
+
+
+An idea of a patient recommendation system can be applied whenever a doctor is examining a cardiac patient. The doctor gets a list of a suggested patients with the same medical situation. Although the recommendation algorithm is a field of further study, the output of this algorithm can be employed to train the partitioner's model. The recommendation algorithm and the distribution of the system are an issue for future research to explore.
+
+
+\subsection{Tag Recommendation for Stack Overflow Questions}
+\label{subsec:stackoverflow-tag-recommendation}
 The approach introduced in this thesis can be generalized and used in other use cases as well. In the following we will present a use case where the partitioner and the StarSpace model are used to distribute document data on multiple workers.
 
 

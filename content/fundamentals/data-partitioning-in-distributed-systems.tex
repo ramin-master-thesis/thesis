@@ -1,4 +1,4 @@
-\section{Data partitioning in distributed systems}
+\section{Data Partitioning in Distributed Systems}
 \label{sec:data-partitioning}
 In data stream processing and distributed systems, data partitioning is inevitable. Data partitioning reduces the workload on a worker and enables higher throughput and better resource management through horizontal scaling. This is especially crucial for stream processing systems. The partitioning can be done by applying a hash function on the data and calculate a hash (i.e., partition-ID) for each data entity, which addresses this data entity to the desired worker. The researchers in \cite{abdelhamidPartLyLearningData2020} criticize hash partitioning by discussing that if the data stream is skewed, the hash functions fail to create balanced partitions. The authors propose a novel data partition technique based on reinforcement learning called \emph{PartLy}. A built-in agent in the partitioner continuously learns using neural networks and partitions the data more efficiently.
 
@@ -6,5 +6,5 @@ In data stream processing and distributed systems, data partitioning is inevitab
 Another research in data partitioning belongs to the work of \cite{mahmudSurveyDataPartitioning2020}. Data partitioning techniques were first employed for centralized databases and query processing, according to the researchers. Furthermore, they divide data partitioning techniques into three categories: horizontal, vertical, and functional. For more detailed definitions, please refer to the main paper.
 
 
-This thesis uses a hash partitioning method for random partitioning of the data and a machine learning partitioning technique that employes an embedding model for the data distribution. The research investigates the partitioning technique on recommendations systems that ingest incoming data one by one (i.e., streaming systems). The upcoming section explains these systems in detail.
+This thesis uses a hash partitioning method for random partitioning of the data and a machine learning partitioning technique that employs an embedding model for the data distribution. The research investigates the partitioning technique on recommendations systems that ingest incoming data one by one (i.e., streaming systems). The upcoming section explains these systems in detail.
 
