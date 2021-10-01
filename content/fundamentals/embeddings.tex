@@ -3,7 +3,7 @@
 Latent text representations, or embeddings, are representations of words or documents as vectors, traditionally learned in an unsupervised way over large corpora. It is possible to use these embedding tools to convert the document data of this work into verctors. 
 
 Research on neural embeddings in this domain includes \cite{bengioNeuralProbabilisticLanguage2003}, 
-\cite{collobertNaturalLanguageProcessing2011}, \emph{word2vec} \cite{goldbergWord2vecExplainedDeriving2014}, \emph{fastText} \cite{joulinFastTextZipCompressing2016}, and \emph{BERT} \cite{devlinBERTPretrainingDeep2019}. Compared to the other researchs, StarSpace embedding model represents the document vectors by their similarites to the documents it was trained with. It also outperforms its predecessor \emph{fastText} \cite{wuStarSpaceEmbedAll2017}. In the following this embedding model is explained in more details.
+\cite{collobertNaturalLanguageProcessing2011}, \emph{word2vec} \cite{mikolovEfficientEstimationWord2013}, \emph{fastText} \cite{joulinFastTextZipCompressing2016}, and \emph{BERT} \cite{devlinBERTPretrainingDeep2019}. Compared to the other researchs, StarSpace embedding model represents the document vectors by their similarites to the documents it was trained with. It also outperforms its predecessor \emph{fastText} \cite{wuStarSpaceEmbedAll2017}. In the following this embedding model is explained in more details.
 
 \subsection{StarSpace}
 \label{subsec:StarSpace}
@@ -40,9 +40,10 @@ Principal component analysis (PCA), in essence, is a linear projection operator 
         Y = XP
     \end{equation}
 
-\noindent Each column of the projection matrix P is called a principal component (PC) \cite{xu10701MachineLearning}. 
+\noindent Each column of the projection matrix P is called a principal component (PC). 
 
 
 \subsubsection{Related Work}
 \label{subsubsec:dimension-reduction-related-work}
-Other methods exist to reduce the dimensions and visualize datasets. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{vandermaaten08}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{balakrishnamaLINEARDISCRIMINANTANALYSIS} can reduce the dimension of datasets with multi classes. In \cite{yanGraphEmbeddingExtensions2007} study and compare dimension reduction methods like PCA, LDE, and other methods, namely Locality Preserving Projections (LPP) on graphs.
+Other methods exist to reduce the dimensions and visualize datasets. \emph{t-distributed Stochastic Neighbor Embedding (t-SNE)} visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map \cite{vandermaaten08}. Unlike PCA, other methods like \emph{Linear Discriminant Analysis (LDA)} \cite{martinezPCALDA2001} can reduce the dimension of datasets with multi classes. In \cite{yanGraphEmbeddingExtensions2007} study and compare dimension reduction methods like PCA, LDE, and other methods, namely Locality Preserving Projections (LPP) on graphs.
+
