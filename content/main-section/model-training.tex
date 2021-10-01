@@ -20,59 +20,15 @@ In the beginning, related documents are generated in a format that the StarSpace
 
 \subsection{Generating Training Data}
 \label{subsec:generating-training-data}
-The training data needs to be generated so that "similar" documents (i.e., tweets) to each other would land next to each other in the training file that the StarSpace model consumes. The following will describe the process of how the training data is generated.
+The training data needs to be generated so that semantically related documents (i.e., tweets) would land next to each other in the training file that the StarSpace model consumes. The following will describe the process of how the training data is generated.
 
-The SALSA algorithm can produce relevant recommendations for a given user. Perciecly, for a given node on the left index side, a list of related nodes on the right side index gets produced. The idea of finding relevant documents for a user can be applied to documents as well. In other words, the SALSA algorithm initiates the random walk from the right index side (tweet side) and returns the right side nodes (tweets). Finally, putting these tweets together will create a group (entity) of "similar" tweets related to each other. This group of similar tweets can then be used to train the StarSpace model.
+The SALSA algorithm can produce relevant recommendations for a given user. Perciecly, for a given node on the left index side, a list of relevant nodes on the right side index is suggested. The idea of finding relevant documents for a user can be applied to documents as well. In other words, the SALSA algorithm initiates the random walk from the right index side (tweet side) and returns the right side nodes (tweets). Finally, putting these tweets together will create a group (entity) of semantically similar tweets to each other. This group of similar tweets can then be used to train the StarSpace model.
 
 
-The algorithm \ref{alg:star-space-train-data} explains how the data generation process works. In the beginning, all the identifiers from the right side index (tweet-IDs) are loaded. Then for each id, the \emph{startRandomWalkFromRightIndex} function runs the SALSA random walk and returns a list (during the data generation, the length of the list was set to 10) of relevant node-IDs (i.e., tweets-IDs) for the given identifier. The input identifier is also added to the result list. Next, the content of each identifier is retrieved from the identifier-content index and joined together into a tab-separated string format. The algorithm continues until all the identifiers in the list extend and saves the results in a text file.
-
+The training data algorithm initially loads all the identifiers from the right side index (tweet-IDs). Then for each tweet-ID, the SALSA random walk is executed. The algorithm outputs ten relevant documents for a given tweet-ID. Afterwards, from the identifier-content index (see section \ref{subsub:storage-index-layer}), the content of the suggested tweet-IDs along with queried tweet-ID are retrieved and joined together into a tab-separated string format. The algorithm continues until all the identifiers in the list extend and saves the results in a text file.
+semantical
 
 To speed up the computation time, we can argue that the training data generation is a map operation and can be run in parallel for each document separately.
-
-
-\begin{algorithm}[!htb]
-    \caption{StarSpace train data generation algorithm}
-    \label{alg:star-space-train-data}
-    \SetKwData{allIDs}{allIDs}
-    \SetKwData{id}{id}
-    \SetKwData{listRecommendations}{listRecommendations}
-    \SetKwData{listContent}{listContent}
-    \SetKwData{document}{document}
-
-
-    \SetKwFunction{getAllRightIndexKeys}{getAllRightIndexKeys}
-    \SetKwFunction{startRandomWalkFromRightIndex}{startRandomWalkFromRightIndex}
-    \SetKwFunction{getContentOf}{getContentOf}
-    \SetKwFunction{joinWithTab}{joinWithTab}
-    \SetKwFunction{appendToTextFile}{appendToTextFile}
-
-    \SetKwInOut{Input}{input}
-    \SetKwInOut{Output}{output}
-
-    \Output{Train data in a text file }
-    \SetAlgoLined
-
-    \BlankLine\emph{// Initialization}\BlankLine
-    \allIDs $\leftarrow$ \getAllRightIndexKeys{}\;
-
-    \BlankLine
-
-    \ForEach{identifier $\id$ in $\allIDs$}
-    {
-        \emph{// Start the random walk from the right index side with node-ID id}\;
-        \listRecommendations $\leftarrow$ \startRandomWalkFromRightIndex{\id}\;
-        \BlankLine
-        \emph{// Append the initial id to the results at the beginning of the results}\;
-        \listRecommendations.insert(0, \id)\;
-        \BlankLine
-        \listContent $\leftarrow$ \getContentOf{\listRecommendations}\;
-        \document $\leftarrow$ \joinWithTab{listContent}\;
-        \appendToTextFile{document}\;
-    }
-
-    \BlankLine
-\end{algorithm}
 
 
 To illustrate how well the SALSA algorithm generates relevant tweets, consider the following example:
@@ -80,7 +36,7 @@ The tweet \texttt{"Live views of Starship SN8’s flight test -> https://t.co/Hs
 
 \begin{table}[!htb]
     \centering
-    \caption{Example output of similar tweets for train data generation}
+    \caption{Example output of similar tweets for training data generation}
     \label{tab:example-train-data}
     \begin{tabular}{|m{0.95\textwidth}|}
         \hline
@@ -118,7 +74,7 @@ Following the flowchart in figure \ref{fig:star-space-training}, after the train
 This computation is done by predicting the embedding vector of each sentence in the training dataset using the trained StarSpace model. Then calculating the eigenvector and eigenvalues and sort these pairs in descending order in a matrix. For more details on how mathematically the projection matrix is calculated, please refer to the main paper of PCA \cite{woldPrincipalComponentAnalysis1987}.
 
 
-The instance running the calculation needs to have enough memory to simultaneously load the training dataset and the StarSpace model. The training dataset used in this work is almost 3GB, and the StarSpace model can reach a size up to 13GB. So the projection matrix computation needs at least 16GB of memory to get initialized. Besides, the calculation itself is also memory-consuming since, for all the values in the training dataset, the eigenpairs (eigenvalue and eigenvector) need to be kept in memory.
+The instance running the calculation needs to have enough memory to simultaneously load the training dataset and the StarSpace model. The training dataset used in this work is almost 3~GB, and the StarSpace model can reach a size up to 13~GB. So the projection matrix computation needs at least 16~GB of memory to get initialized. Besides, the calculation itself is also memory-consuming since, for all the values in the training dataset, the eigenpairs (eigenvalue and eigenvector) need to be kept in memory.
 
 
 Key findings emerge from the massive StarSpace model size: The model's size depends on the dataset it was trained with. The model creates a mapping for each unique word it sees during train time. The dataset used in this work is directly crawled from Twitter without going through any data cleansing process. The dataset contains Twitter-ID, emojis, and URLs, which enlarge the model mapping that the model creates for the words. Besides, the tweets are in multiple languages, which adds even more words to the model mapping.

@@ -1,7 +1,7 @@
 \section{System Architecture}
 \label{sec:system-architecture}
 
-This research implements and simulates the GraphJet architecture to evaluate and test the proposed approach of data partitioning. As explained in section \ref{sec:GraphJet}, GraphJet architecture consists of three main layers: storage, recommendation, and an API endpoint layer. The same layer system inspires this work's architecture. 
+This research implements and simulates the GraphJet architecture to evaluate and test the proposed approach of data partitioning. As explained in section \ref{sec:GraphJet}, GraphJet architecture consists of three main layers: a storage engine, a recommendation engine, and an API endpoint layer. The same layer system inspires this work's architecture. 
 
 
 This section goes through the prototyped system architecture and the design decisions taken. The first subsection explains the single instance architecture and the functionality of each layer. Afterwards, the next subsection describes the distributed architecture of the system. The implemented prototype can be found in the repository\footnote{\url{https://github.com/ramin-master-thesis/D-Salsa}}.
@@ -25,7 +25,7 @@ The high-level architecture of a single instance can be seen in figure \ref{fig:
        \label{fig:single-machine-architecture-detailed}
     \end{subfigure}
     
-    \caption {The architecture of a single worker, (a) Receives a query when new recommendations are requested. It also ingests incoming documents. (b) More detailed view of each layer of a single worker. The layers consist of: Indexer, Recommender, and API Endpoint. The index layer receives the incoming document and creates the left, right indices. The API endpoint layer receives the read queries.}
+    \caption {The architecture of a single worker, (a) Receives a query when new recommendations are requested. It also ingests incoming documents. (b) More detailed view of each layer of a single worker. The layers consist of a Storage (i.e., Indexer) engine, a recommendation engine, and an API endpoint. The storage layer receives the incoming document and creates the left and right indices. The API endpoint layer receives the read queries and forwards them to the recommendation layer.}
 \end{figure}
 
 
@@ -89,7 +89,7 @@ The recommendation layer implements the SALSA \cite{lempelSALSAStochasticApproac
 The recommendation layer interacts with both the indexer and the API endpoint. The API endpoint layer calls the recommender layer and injects the necessary parameters to start the random walk. As explained before, the indexer builds two indices: left side index and right side index. The algorithm needs to ask each index side to perform the walk on the bipartite graph. The recommender calls the left side index from the indexer to receive the adjacency list and then chooses one ID randomly. After selecting the node-ID, a visit count of that node-ID is incremented and stored. The walk continues by asking the right side index for the next adjacency list. This process continues until the number of walks reaches its limit. Finally, the recommender sorts the visited nodes by their visit count and cut-offs the returned with respect to the cut-off limit set in the configuration file.
 
 
-According to the main paper of GraphJet, the random walk always starts from a vertex located on the left index \cite{sharmaGraphJetRealtimeContent2016}. In other words, for the GraphJet use case, the SALSA algorithm starts from the requested user-ID node on the left index and then walks to the tweet-ID on the right index. This thesis extends the SALSA algorithm. Instead of starting from the left side, the algorithm initiates from a vertex on the right side. The output is a ranked list of right-side vertices (i.e., tweet-IDs). With this approach, the random walk produces relevant items to the initial vertex. This method is used to create train data for the StarSpace model (see section \ref{subsec:generating-training-data}).
+According to the main paper of GraphJet, the random walk always starts from a vertex located on the left index \cite{sharmaGraphJetRealtimeContent2016}. In other words, for the GraphJet use case, the SALSA algorithm starts from the requested user-ID node on the left index and then walks to the tweet-ID on the right index. This thesis extends the SALSA algorithm. Instead of starting from the left side, the algorithm initiates from a vertex on the right side. The output is a ranked list of right-side vertices (i.e., tweet-IDs). With this approach, the random walk produces relevant items to the initial vertex. This method is used to create training data for the StarSpace model (see section \ref{subsec:generating-training-data}).
 
 \subsubsection{API Endpoint Layer}
 \label{subsubsec:api-endpoint-layer}
@@ -127,5 +127,5 @@ Figure \ref{fig:multiple-machine-architecture-read} shows what happens when a re
         \label{fig:multiple-machine-architecture-read}
     \end{subfigure}
     
-    \caption {The multi-instance environment with three workers. (a) visualizes the partitioning process. Whenever a new document is received, the partitioner will compute its partition-ID and send it to a worker. The shape between the partitioner and the workers indicates an exclusive gateway (XOR) that the partitioner will choose only one worker. (b) Showing the multi-instance environment after the data partitioning has finished and the system is ready to receive read queries. Each worker runs the SALSA algorithm in complete isolation and forwards its results to the data fusion module.}
+    \caption {The shared-nothing multiple instance environment with three workers. (a) visualizes the partitioning process. Whenever a new document is received, the partitioner will compute its partition-ID and send it to a worker. The shape between the partitioner and the workers indicates an exclusive gateway (XOR) that the partitioner will choose only one worker. (b) Showing the multiple instance environment after the data partitioning has finished and the system is ready to receive read queries. Each worker runs the SALSA algorithm in complete isolation and forwards its results to the data fusion module. Based on the method chosen, the data fusion module yields a single ranked list of recommendations.}
 \end{figure}

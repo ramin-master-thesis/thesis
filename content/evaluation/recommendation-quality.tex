@@ -28,7 +28,7 @@ The results of the experiments are plotted on the boxplot in figure \ref{plot:si
 The line diagram in figure \ref{plot:single-partition} shows the recommendation quality in one of the runs over the rising value of Ks for the 500 randomly sampled users. The MAP value at a cut-off of one is 90\%, indicating that the first ranked value of the 500 users is similar to the first value of the gold standard. As K increases, the ranked list gets longer, and the MAP value decreases, where at \emph{K=10} the MAP value reaches 63\%. The results highlight that the items with lower ranks in the observed ranking list differ from the gold standard values.
 
 
-One may consider this result a low MAP value when comparing the results of the same machine. It is important to note that the experiments criteria are strict, assuming that all the items in the baseline are considered relevant. If an observed ranked list is assessed with a user's baseline and does not contain the same items, it will lead to low average precision and mean average precision, respectively.
+One may consider this as a small MAP value when comparing the results of the same machine. It is important to note that the experiment's assumption is strict, which determines that only the items in the baseline are considered relevant, and any other item beyond this baseline is irrelevant. Hypothetically, for a user, the other recommended items (i.e., items not in the baseline) could be relevant and even a better suggestion compared to the items in the baseline list. However, this can be assessed only using the user's feedback on the generated recommendations. Moreover, the applied evaluation metrics cannot measure such observation. For example, the Average Precision metric only assesses the observed ranked list with the user's baseline, and if these two lists contain different items, the computed result will be close to zero, indicating low retrieval effectiveness.
 
 \begin{figure}[!htb]
     \centering
@@ -182,7 +182,7 @@ The results confirm that this is a good choice for applying the load balancer id
 \begin{figure}[!htb]
     \centering
     \input{plots/recommendation/request-distribution.tex}
-    \caption{propotion of requests on each partition the data fusion module (with the \emph{Most Interactions} approach) makes to unify the results.}
+    \caption{Proportion of requests on each partition the data fusion module (with the \emph{Most Interactions} approach) makes to unify the results.}
     \label{plot:request-distribution}
 \end{figure}
 
@@ -195,7 +195,7 @@ The previous experiments were done on two partitions to compare different partit
 The results of the evaluations are illustrated on the plots in figure \ref{fig:horizontal-scaling}. As the plots denote, the overall MAP value decreases whenever the number of partitions grows. This decrease is because the amount of data declines on each partition, creating a sparse bipartite graph. The random walk fails to produce sound recommendations due to fewer items on each partition for the users. By increasing the amount of data, the partitions can generate better recommendations. 
 
 
-In the original paper of GraphJet, the authors keep a bipartite graph with $10^9$ edges on a machine with 30GB memory \cite{sharmaGraphJetRealtimeContent2016}. Distributing this amount of interactions among their edges on 16 devices or more can help reduce the memory needed for maintaining the bipartite graph on a single machine and help to improve the computation speed of the random walk algorithm. These improvements are penalized by the recommendation quality, but with the current measuremnts it is hard to justify such conclusion.
+In the original paper of GraphJet, the authors keep a bipartite graph with $10^9$ edges on a machine with 30~GB memory \cite{sharmaGraphJetRealtimeContent2016}. Distributing this amount of interactions among their edges on 16 devices or more can help reduce the memory needed for maintaining the bipartite graph on a single machine and help to improve the computation speed of the random walk algorithm. These improvements are penalized by the recommendation quality, but with the current measuremnts it is hard to justify such conclusion.
 
 
 \begin{figure}[!htb]
