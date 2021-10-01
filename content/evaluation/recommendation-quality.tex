@@ -19,7 +19,7 @@ The results of the experiments are plotted on the boxplot in figure \ref{plot:si
 \begin{figure}[!htb]
     \centering
     \input{plots/recommendation/single-partition-boxplot}
-    \caption{Different MAP values over ten interations of generating recommendation with 500 users. In the experiment the single partition results is assessed with the gold standard.}
+    \caption{Different MAP values over ten interactions of generating recommendation with 500 users. In the experiment, the single partition results are assessed with the gold standard multiple times to investigate how far the MAP value variances.}
     \label{plot:single-partition-boxplot}
 \end{figure}
 
@@ -33,7 +33,7 @@ One may consider this as a small MAP value when comparing the results of the sam
 \begin{figure}[!htb]
     \centering
     \input{plots/recommendation/single-partition}
-    \caption{Evaluation of the MAP value for increasing K for 500 users}
+    \caption{Evaluate the MAP value for increasing K for 500 users on a single instance to investigate how different the Recommendations of a single instance from the baseline items  (also generated from a single instance) are.}
     \label{plot:single-partition}
 \end{figure}
 
@@ -92,10 +92,10 @@ The results confirm that this is a good choice to use the \emph{Most Interaction
 
 \subsubsection{Hyperparameter Evaluation Results}
 \label{subsubsec:eval-hyperparameter}
-As explained in section \ref{subsec:hyperparameter-tuning}, this thesis also investigates how different trained StarSpace models affect the partitioning of the data and, finally, the recommendation quality. Four parameters were tuned during the training. These parameters can be found in the table \ref{tab:hyperparameter}. In the following table \ref{tab:models} you will find 16 models and the parameters with which they got trained.
+As explained in section \ref{subsec:hyperparameter-tuning}, this thesis also investigates how different trained StarSpace models affect the partitioning of the data and, finally, the recommendation quality. Four parameters are tuned during the training. These parameters can be found in the table \ref{tab:hyperparameter}. In the following table \ref{tab:models} you will find 16 models and the parameters with which they got trained.
 
 
-The hyperparameter tuning benchmark was done on a two-partition setting to keep the evaluation simple. The hyperparameter tuning experiments were structured in the following steps:
+The hyperparameter tuning benchmark is done on a two-partition setting to keep the evaluation simple. The hyperparameter tuning experiments are structured in the following steps:
 
 \begin{enumerate}
     \item Train the StarSpace model with the generated training dataset (see section \ref{subsec:generating-training-data}) and the parameters listed in each row of the table \ref{tab:models}.
@@ -131,7 +131,7 @@ The hyperparameter tuning benchmark was done on a two-partition setting to keep 
 \end{table}
 
 
-The experiments use only the \emph{Most Interactions} data fusion approach. This decision is taken with the respect to the experiments results in section \ref{subsubsec:eval-data-fusion}. This method was resulting in a better recommendation quality compared to the other two approaches when partitioning the data with the StarSpace model. The experiments were also done once with 500 and 2000 sampled users to investigate the impact of the number of sampled users on the overall MAP@10 value.
+The experiments use only the \emph{Most Interactions} data fusion approach. This decision is taken with the respect to the experiments results in section \ref{subsubsec:eval-data-fusion}. This method results in a better recommendation quality compared to the other two approaches when partitioning the data with the StarSpace model. The experiments are also done once with 500 and 2000 sampled users to investigate the impact of the number of sampled users on the overall MAP@10 value.
 
 Before diving into the recommendation quality benchmark of each model, we investigate how the different trained models impact the data (i.e., edge) distribution. The diagram \ref{plot:edge-distribution} visualizes how each model spreads the edges across two partitions. Compared to the data distribution of the Murmur2 hash partitioning method in the diagram \ref{plot:edge-distribution-2-partitions-murmur2} the partitions are uneven.
 
@@ -154,13 +154,13 @@ Diagram \ref{plot:hyperparameter-recommendation-quality} shows the computed mean
 \end{figure}
 
 
-Another promising finding was that the text normalization does not impact the overall recommendation quality. On the other hand, it influences the data distribution on each partition. When comparing the edge distribution of models 7 and 8 in the diagram \ref{plot:star-space-edge-distribution-2-partitions}, which only differ in the text normalization parameter, we can determine that model 7 is delivering an equal distribution on two partitions. Thus, the text normalization is set to false. 
+Another promising finding is that the text normalization does not impact the overall recommendation quality. On the other hand, it influences the data distribution on each partition. When comparing the edge distribution of models 7 and 8 in the diagram \ref{plot:star-space-edge-distribution-2-partitions}, which only differ in the text normalization parameter, we can determine that model 7 is delivering an equal distribution on two partitions. Thus, the text normalization is set to false. 
 
 
 The tweets data set explains why trained models with no text normalization are delivering a better performance than those with text normalization enabled. The tweets are noisy and contain emojis and special characters that do not land in any of the text normalization buckets (see section \ref{subsubsec:star-space-text-normalization}). Therefore, the text normalization delivers a bad performance on this specific dataset.
 
 
-As explained in the begining of this section the hyperparameter tests were also done over 2000 users to see if the number of sampled users affects the MAP value. The experiments do not significantly increase or decrease in the overall MAP value in each model and partitioning method. This can be seen in the chart \ref{plot:hyperparameter-recommendation-quality-2000-users}. Therefore all other experiments are done over 500 sampled users.
+As explained in the begining of this section the hyperparameter tests are also done over 2000 users to see if the number of sampled users affects the MAP value. The experiments do not significantly increase or decrease in the overall MAP value in each model and partitioning method. This can be seen in the chart \ref{plot:hyperparameter-recommendation-quality-2000-users}. Therefore all other experiments are done over 500 sampled users.
 
 \begin{figure}[!htb]
     \centering

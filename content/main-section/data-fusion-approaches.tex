@@ -22,7 +22,7 @@ In this approach, the results of each partition get merged first and then based 
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=0.8\textwidth]{images/data-fusion-union-results}
-    \caption{Data fusion using the union results}
+    \caption{Data fusion using the \emph{Union Results} approach. The results of each partition are combined and sorted in descending order by their hit numbers, and then the top \emph{K} results are picked.}
     \label{fig:data-fusion-union-results}
 \end{figure}
 
@@ -36,7 +36,7 @@ Figure \ref{fig:data-fusion-highest-hit} visualizes this process clearly. The fi
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=0.8\textwidth]{images/data-fusion-highest-hit}
-    \caption{Data fusion using the highest hit that a partition contains}
+    \caption{Data fusion using the \emph{Highest Hit} approach. The first hit count (being the biggest hit count) of each partition's results are compared with each other. The results of the partition owning the most significant hit count among others are selected.}
     \label{fig:data-fusion-highest-hit}
 \end{figure}
 
@@ -54,7 +54,7 @@ Another aspect that \ref{fig:data-fusion-highest-ineterest} denotes is that if a
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=0.85\textwidth]{images/data-fusion-highest-interest}
-    \caption{Visualization of StarSpace partitioning technique. This approach distributes the documents based on their topic. In this particular example, the user interacted with five documents. The StarSpace model detects that four of them are relevant to each other. Therefore, these four documents land on the same partition. The \emph{Most Interactions} data fusion approach chooses the generated recommendations of partition zero.}
+    \caption{Visualization of StarSpace partitioning technique. This approach distributes the documents based on their semantic similarity. In this particular example, the user interacted with five documents. The StarSpace model detects that four of them are relevant to each other. Therefore, these four documents land on the same partition (worker). Whenever a query is sent to the workers, the \emph{Most Interactions} data fusion approach chooses the generated recommendations of partition zero.}
     \label{fig:data-fusion-highest-ineterest}
 \end{figure}
 

@@ -12,7 +12,7 @@ The main goal of the evaluation is to measure how far the observed ranking devia
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=0.75\textwidth]{images/evaluation-flow-chart}
-    \caption{Flowchart of the evaluation pipeline}
+    \caption{Flowchart of the evaluation pipeline. First, an arbitrary number of users are randomly sampled. The left side of the flow chart highlights the baseline generation. The recommendations for the sampled users on the single partition instance are fetched \emph{N} times (for these experiments ten times), and the most appeared ones are stored. Then for observed rankings, the system requests the single and multiple partitions. Finally, the results are assessed against the baseline, and the MAP@K is calculated.}
     \label{fig:flowchart-evaluation-pipeline}
 \end{figure}
 
@@ -39,13 +39,13 @@ The baseline serves as a crucial reference point for analyzing the changes and e
     \item The other issue is the non-deterministic behavior of random-walk-based recommender engines. Results can generally differ between random walks, meaning two engines operating on the same graph can return different recommendations, and even the same engine can yield different results for two consecutive requests for the same user.
 \end{enumerate}
 
-Assumptions were made to help overcome these problems. For the first issue, this work assumes that all the returned values from the single partition are relevant, and all other items in the corpus will be irrelevant. In practice, however, the recommendation engine produces relevant and non-relevant results. This assumption comes with its price, making the evaluation strict, especially when the algorithm is non-deterministic. Through the partitioning and classification of the data, new recommendations might appear for a given user. But these results will be assumed irrelevant, and evaluation matrics will yield low results, although the new recommendations could be of interest to the user.
+Assumptions are made to help overcome these problems. For the first issue, this work assumes that all the returned values from the single partition are relevant, and all other items in the corpus will be irrelevant. In practice, however, the recommendation engine produces relevant and non-relevant results. This assumption comes with its price, making the evaluation strict, especially when the algorithm is non-deterministic. Through the partitioning and classification of the data, new recommendations might appear for a given user. But these results will be assumed irrelevant, and evaluation matrics will yield low results, although the new recommendations could be of interest to the user.
 
 
-Another solution to solve the first problem is to use \emph{Weak Supervision} approaches to employ labels on the dataset. Generate a labeling function using frameworks like \emph{Snorkel}\footnote{\url{https://snorkel.org/}} to classify the data as relevant or not relevant for a user. Thus, labeling the dataset was beyond the scope of this thesis.
+Another solution to solve the first problem is to use \emph{Weak Supervision} approaches to employ labels on the dataset. Generate a labeling function using frameworks like \emph{Snorkel}\footnote{\url{https://snorkel.org/}} to classify the data as relevant or not relevant for a user. Thus, labeling the dataset is beyond the scope of this thesis.
 
 
-For the second issue, this research proposes a novel idea: run the random walk for each user \emph{N} times and then take the most frequent recommendations that appeared. The intuition here is that gathering the most frequent recommendation will filter the items picked few times by the random walk. Moreover, with this technique, we collect recommendations that appear even \emph{N} times, ensuring that these recommendations are important for a user. This approach will help to overcome the non-deterministic nature of the random-walk algorithm and crate a baseline top \emph{N} frequent results.
+For the second issue, this research proposes a novel idea: run the random walk for each user \emph{N} times and then take the most appeared recommendations. The intuition here is that gathering the most frequently suggested recommendation will filter the items picked few times by the random walk. Moreover, with this technique, we collect recommendations that appear even \emph{N} times, ensuring that these recommendations are important for a user. This approach will help to overcome the non-deterministic nature of the random-walk algorithm and crate a baseline top \emph{N} frequent results.
 
 
 \subsection{Observed Rankings Generation Strategy}
