@@ -17,7 +17,7 @@ GraphJet, a graph-based recommendation system, is chosen as a case study to demo
 
 
 %Resutls
-The experiments results indicate that the introduced method yields better results compared to a random partitioning method. Still, when comparing the multi-partition output with the output of a single instance, the metrics show differences between the users ' generated recommendations. However, the findings of the experiments do not provide enough evidence to conclude that these different recommended items necessarily mean that the system's partitioning with the introduced method will deliver poor results.
+The experiments results indicate that the introduced method yields better results compared to a random partitioning method. Still, when comparing the multi-partition output with the output of a single instance, the metrics show differences between the users' generated recommendations. However, the findings of the experiments do not provide enough evidence to conclude that these differences between the recommendations necessarily mean that the multi-instance is delivering irrelevant items.
 
 
 \end{otherlanguage}
@@ -30,8 +30,8 @@ The experiments results indicate that the introduced method yields better result
 \begin{otherlanguage}{ngerman}
 \begin{center}\textsf{\textbf{\abstractname}}\end{center}
 
-\noindent 
-%Thema
+\noindent
+%Topic
 Die Verteilung eines Systems in einer Streaming-Umgebung, das auf einer einzigen Instanz läuft, kann auf zwei Arten parallelisiert werden: Erstens durch die Verteilung seines Algorithmus und die Aufteilung der Aufgaben in mehrere Map-Operationen und anschließende Reduktion der Ergebnisse. Dieser Ansatz erfordert jedoch eine Anpassung des Algorithmus und ist aufgrund der häufigen Netzwerkanrufe zwischen den Knoten kostenineffizient. Bei der zweiten Methode wird der eingehende Strom von (Dokumenten-)Daten auf mehrere Instanzen verteilt, ohne den Hauptalgorithmus zu ändern. Da diese Daten stark miteinander verbunden und voneinander abhängig sind, führt eine willkürliche Verteilung der Daten auf die Instanzen zu schlechten Ergebnissen.
 
 %Zweck
@@ -42,7 +42,7 @@ GraphJet, ein graphbasiertes Empfehlungssystem, wurde als Fallstudie ausgewählt
 
 
 %ERGEBNISSE
-Die Ergebnisse der Experimente zeigen, dass die vorgestellte Methode im Vergleich zu einer zufälligen Partitionierungsmethode bessere Ergebnisse liefert. Dennoch zeigen die Metriken beim Vergleich der Multi-Partition-Ausgabe mit der Ausgabe einer einzelnen Instanz Unterschiede zwischen den von den Benutzern generierten Empfehlungen. Die Ergebnisse der Experimente lassen jedoch nicht den Schluss zu, dass diese unterschiedlichen Empfehlungen zwangsläufig bedeuten, dass die Partitionierung des Systems mit der vorgestellten Methode schlechte Ergebnisse liefert.
+Die Ergebnisse der Experimente zeigen, dass die vorgestellte Methode im Vergleich zu einer zufälligen Partitionierungsmethode bessere Ergebnisse liefert. Dennoch zeigen die Metriken beim Vergleich der Multi-Partition-Ausgabe mit der Ausgabe einer einzelnen Instanz Unterschiede zwischen den von den Nutzern generierten Empfehlungen. Die Ergebnisse der Experimente lassen jedoch nicht den Schluss zu, dass diese Unterschiede zwischen den Empfehlungen zwangsläufig bedeuten, dass die Multi-Instanz irrelevante Elemente liefert.
 
 \end{otherlanguage}
 \vfil\null
