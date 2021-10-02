@@ -2,17 +2,17 @@
 \label{sec:evaluation-pipeline}
 This work presents an evaluation pipeline to measure the impact of partitioning with different approaches on the recommendation quality. To build the pipeline each component in the section \ref{sec:eval-suite-architecture-components} is used. 
 
-Figure \ref{fig:flowchart-evaluation-pipeline} indicates the flow of the pipeline from the start till the end. In the beginning, the users are sampled randomly. Next, the pipeline generates the baseline (also called Objective Ranking or Gold Standard). The step in the middle of the flowchart describes querying recommendations from the single partition instance to check the results' reproducibility; this evaluation is discussed in \ref{subsec:eval-single-machine}. 
+Figure \ref{fig:flowchart-evaluation-pipeline} indicates the flow of the pipeline from the start till the end. In the beginning, an arbitrary number of users are sampled randomly. Next, the pipeline generates the baseline (also called Objective Ranking or Gold Standard). The baseline generation is discussed in more detail in the section \ref{subsec:baseline-generation}.
 
 
-The right side of the flowchart denotes the step where the recommendations of the multi-partition instances are queried. After that, an arbitrary data fusion approach reduces the result of the partitions to one list. In the last step, the pipeline starts comparing the results by calculating the evaluation metric configured. 
+The right side of the flowchart denotes the step where the recommendations of the tested system (depending on the configuration, this can be a single partition or multi-partition instance) are queried. After that, depending on if the system under evaluation is a single partition or multi-partition, an arbitrary data fusion approach unifies the partition's result into one ranked list. In the last step, the pipeline starts comparing the results by calculating the evaluation metric configured. 
 
 The main goal of the evaluation is to measure how far the observed ranking deviates from the objective ranking and keep the difference as small as possible. Moreover, this pipeline assesses how good or bad a trained StarSpace model performs during hyperparameter tuning (see section \ref{subsec:hyperparameter-tuning}).
 
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=0.75\textwidth]{images/evaluation-flow-chart}
-    \caption{Flowchart of the evaluation pipeline. First, an arbitrary number of users are randomly sampled. The left side of the flow chart highlights the baseline generation. The recommendations for the sampled users on the single partition instance are fetched \emph{N} times (for these experiments ten times), and the most appeared ones are stored. Then for observed rankings, the system requests the single and multiple partitions. Finally, the results are assessed against the baseline, and the MAP@K is calculated.}
+    \caption{Flowchart of the evaluation pipeline. First, an arbitrary number of users are randomly sampled. The left side of the flow chart highlights the baseline generation. The recommendations for the sampled users on the single partition instance are fetched \emph{N} times (for these experiments ten times), and the most appeared ones are stored. Then for observed rankings, the system requests recommendations either from the single or multiple partitions. If the evaluated system is multi-partition, the data needs to get fused into a single representation. Finally, the results are assessed against the baseline, and the evaluation metric (MAP@K or RBO) is calculated.}
     \label{fig:flowchart-evaluation-pipeline}
 \end{figure}
 

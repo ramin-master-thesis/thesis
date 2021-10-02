@@ -142,14 +142,14 @@ Diagram \ref{plot:hyperparameter-recommendation-quality} shows the computed mean
 \begin{figure}[!htb]
     \centering
     \input{plots/recommendation/hyperparameter-edge-distribution}
-    \caption{Edge distribution of test dataset; sharded with different trained models over two partitions}
+    \caption{Edge distribution of test dataset; sharded with different trained models over two partitions. The StarSpace models distribute the data unevenly. However, model numbers 9 and 11 keep the partitions balanced, whereas model number 8 fails to maintain balanced partitions.}
     \label{plot:edge-distribution}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
     \input{plots/recommendation/hyperparameter-map-at-10}
-    \caption{Comparing recommendation quality of different partitioning methods and models for 500 users}
+    \caption{Comparing recommendation quality of different partitioning methods and models for 500 users. The results of the StarSpace models outperform the baseline partitioning method (Murmur2). Model 15 delivers a 30\% improvement, compared to the Murmur2 result.}
     \label{plot:hyperparameter-recommendation-quality}
 \end{figure}
 
@@ -160,12 +160,12 @@ Another promising finding is that the text normalization does not impact the ove
 The tweets data set explains why trained models with no text normalization are delivering a better performance than those with text normalization enabled. The tweets are noisy and contain emojis and special characters that do not land in any of the text normalization buckets (see section \ref{subsubsec:star-space-text-normalization}). Therefore, the text normalization delivers a bad performance on this specific dataset.
 
 
-As explained in the begining of this section the hyperparameter tests are also done over 2000 users to see if the number of sampled users affects the MAP value. The experiments do not significantly increase or decrease in the overall MAP value in each model and partitioning method. This can be seen in the chart \ref{plot:hyperparameter-recommendation-quality-2000-users}. Therefore all other experiments are done over 500 sampled users.
+As explained in the begining of this section the hyperparameter tests are also done over 2000 users to investigate the consistency of the results and if the number of sampled users affects the overall MAP value. The experiments do not significantly increase or decrease in the overall MAP value in each model and partitioning method. This can be seen in the chart \ref{plot:hyperparameter-recommendation-quality-2000-users}. Therefore all other experiments are done over 500 sampled users.
 
 \begin{figure}[!htb]
     \centering
     \input{plots/recommendation/hyperparameter-map-at-10-2000-users}
-    \caption{Comparing recommendation quality of different partitioning methods and models for 2000 users}
+    \caption{Comparing recommendation quality of different partitioning methods and models for 2000 users to investigate the consistency of the results. The results indicate consistency of the results.}
     \label{plot:hyperparameter-recommendation-quality-2000-users}
 \end{figure}
 
