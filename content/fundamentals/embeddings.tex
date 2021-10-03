@@ -39,9 +39,9 @@ The text normalization process categorizes long strings into the following bucke
 
 \subsection{Dimensionality Reduction}
 \label{subsec:dimension-reduction}
-The output vector of the embedding model has enormous dimensions. The dimensions can go up to 300. They are different approaches to reduce the dimension and at the same time minimize the information loss. The dimension reduction in this thesis relies on a dimensionality reduction method called \emph{Prenciple Component Analysis (PCA)} \cite{woldPrincipalComponentAnalysis1987}.
+The output vector of the embedding model has enormous dimensions. The dimensions can go up to 300. They are different approaches to reduce the dimension and at the same time minimize the information loss. The dimension reduction in this thesis relies on a dimensionality reduction method called \emph{Principal Component Analysis (PCA)} \cite{woldPrincipalComponentAnalysis1987}.
 
-\subsubsection{Prenciple Componenent Analysis (PCA)}
+\subsubsection{Principal Component Analysis (PCA)}
 \label{subsubsec:pca}
 Principal component analysis (PCA), in essence, is a linear projection operator that maps a variable of interest to a new coordinate frame where the axes represent maximal variability. Expressed mathematically, an input data matrix X$_{N \times D}$ where is N the number of points, D being the dimension of data. PCA transforms the matrix X to an output Y$_{N \times D\prime}$. D$\prime$ being the reduced dimensions (D$\prime$ $\leq$ D). This reduction from D to D$\prime$ can be achieved by the dot product of X and a so-called \emph{projection matrix} P$_{D \times D\prime}$.
     \begin{equation}
@@ -49,7 +49,7 @@ Principal component analysis (PCA), in essence, is a linear projection operator 
         Y = XP
     \end{equation}
 
-\noindent Each column of the projection matrix P is called a principal component (PC). 
+\noindent Each column of the projection matrix P is called a principal component (PC)\footnote{\url{http://www.cs.cmu.edu/~tom/10601_fall2012/slides/pca.pdf}}. 
 
 
 \subsubsection{Related Work}
